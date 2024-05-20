@@ -1,0 +1,22 @@
+{
+    "name": "shop/manager",
+    "description": "A plugin for manage WooCommerce shop",
+    "type": "wordpress-plugin",
+    "license": "GPLv2 or later",
+    "authors": [
+        {
+            "name": "Osman Haider",
+            "email": "osmanhaider159@gmail.com"
+        }
+    ],
+    "autoload": {
+		"psr-4": {
+			"Shop_Manager_X\\Backend\\": "backend/",
+			"Shop_Manager_X\\Frontend\\": "frontend/",
+			"Shop_Manager_X\\Rest\\": "rest/"
+		},
+		"files": []
+	},
+    "minimum-stability": "dev",
+    "require": {}
+}
