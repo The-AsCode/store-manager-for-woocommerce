@@ -13,7 +13,8 @@
 		"psr-4": {
 			"Shop_Manager_X\\Backend\\": "backend/",
 			"Shop_Manager_X\\Frontend\\": "frontend/",
-			"Shop_Manager_X\\Rest\\": "rest/"
+			"Shop_Manager_X\\Rest\\": "rest/",
+            "Shop_Manager_X\\App\\": "app/"
 		},
 		"files": []
 	},

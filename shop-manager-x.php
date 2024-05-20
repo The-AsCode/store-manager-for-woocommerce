@@ -107,9 +107,9 @@ final class Shop_Manager_X
      */
     public function init_plugin()
     {
-        // if (is_admin()) {
-        //     new AsCode\WooCalculator\Admin();
-        // }
+        if (is_admin()) {
+            new Shop_Manager_X\Backend\Menu();
+        }
 
         // new AsCode\WooCalculator\Front();
     }
