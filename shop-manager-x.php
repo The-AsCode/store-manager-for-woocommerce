@@ -111,6 +111,8 @@ final class Shop_Manager_X
             new Shop_Manager_X\Backend\Menu();
         }
 
+        new Shop_Manager_X\Rest\Api();
+
         // new AsCode\WooCalculator\Front();
     }
 }
