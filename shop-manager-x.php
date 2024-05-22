@@ -105,15 +105,14 @@ final class Shop_Manager_X
      *
      * @return void
      */
-    public function init_plugin()
-    {
+    public function init_plugin() {
         if (is_admin()) {
             new Shop_Manager_X\Backend\Menu();
         }
 
         new Shop_Manager_X\Rest\Api();
 
-        // new AsCode\WooCalculator\Front();
+        new Shop_Manager_X\Backend\Enqueue();
     }
 }
 
