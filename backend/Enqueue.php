@@ -21,9 +21,16 @@ class Enqueue {
 
         // Check if the current admin page matches your target page.
         if ( $page === 'toplevel_page_shop-manager-x' ) {
-            // Enqueue the JavaScript file.
-            wp_enqueue_script('shop-manager-x-dashboard', SHOP_MANAGER_X_ASSETS . '/build/plugin-admin.js', [], false, true);
+             wp_enqueue_style('shop-manager-x-dashboard-css', SHOP_MANAGER_X_URL . '/backend/views/assets/tailwind.css');
 
+            // Enqueue the JavaScript file.
+            wp_enqueue_script('shop-manager-x-dashboard', SHOP_MANAGER_X_ASSETS . '/build/plugin-admin.js', ['wp-element'], true , true);
+            wp_localize_script('shop-manager-x-dashboard',
+                'SMX',
+                array(
+                    'rest_nonce'  => wp_create_nonce( 'wp_rest' ),
+                    'rest_url' => rest_url('smx/v1')
+                ));
         }
     }
 }
