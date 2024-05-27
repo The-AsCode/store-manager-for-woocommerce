@@ -59,7 +59,8 @@ class ProductHelper {
      * @return array
      */
     public static function get_product_categories() {
-        $product_categories = get_terms('product_cat', array(
+        $product_categories = get_terms(array(
+            'taxonomy'   => 'product_cat',
             'hide_empty' => false,
         ));
     

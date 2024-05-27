@@ -21,10 +21,10 @@ class Enqueue {
 
         // Check if the current admin page matches your target page.
         if ( $page === 'toplevel_page_store-manager' ) {
-             wp_enqueue_style('store-manager-dashboard-css', STORE_MANAGER_URL . '/backend/views/assets/tailwind.css');
+             wp_enqueue_style('store-manager-dashboard-css', STORE_MANAGER_URL . '/backend/views/assets/tailwind.css', [], '1.0.0', 'all');
 
             // Enqueue the JavaScript file.
-            wp_enqueue_script('store-manager-dashboard', STORE_MANAGER_ASSETS . '/build/plugin-admin.js', ['wp-element'], true , true);
+            wp_enqueue_script('store-manager-dashboard', STORE_MANAGER_ASSETS . '/build/plugin-admin.js', ['wp-element'], '1.0.0' , true);
             wp_localize_script('store-manager-dashboard',
                 'SMX',
                 array(

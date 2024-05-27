@@ -1,6 +1,6 @@
 === Store Manager for WooCommerce ===
 Contributors: shopmanagerx
-Tags: inventory management, woocommerce stock management, stock control, product management, shop manager, woocommerce shop manager
+Tags: inventory management, woocommerce stock management, store manager, product management
 Requires at least: 4.9
 Tested up to: 6.5.3
 WC requires at least: 3.1
@@ -11,11 +11,11 @@ License URI: http://www.gnu.org/licenses/gpl-3.0.html
 Requires PHP: 7.4
 Donate link: https://osmanhaideradnan.wordpress.com/
 
-Welcome to the WooCommerce Stock Management Plugin! This plugin is designed to simplify the process of managing product stock on your WordPress-based online store.
+This plugin is designed to simplify the process of managing product stock on your WordPress-based online store.
 
 == Description ==
 
-The WordPress plugin is a powerful tool designed to efficiently manage product stock for your online store. With user-friendly features, it allows you to effortlessly track and update inventory levels, ensuring accurate stock information on your website. This plugin streamlines the stock management process, helping you maintain optimal inventory control and providing a seamless experience for both you and your customers. Say goodbye to manual stock tracking and welcome a more organized and efficient approach to managing your product inventory with this WordPress plugin.
+The WordPress plugin is a powerful tool designed to efficiently manage product stock for your online store.
 
 == Installation ==
 

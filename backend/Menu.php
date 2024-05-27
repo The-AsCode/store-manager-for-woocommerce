@@ -8,13 +8,13 @@ namespace STORE_MANAGER\Backend;
 class Menu {
 
     public function __construct() {
-        add_action('admin_menu', [$this, 'STORE_MANAGER_admin_menu']);
+        add_action('admin_menu', [$this, 'store_manager_admin_menu']);
     }
 
-    public function STORE_MANAGER_admin_menu() {
+    public function store_manager_admin_menu() {
         add_menu_page(
-            __('Manager X', 'store-manager'),
-            __('Manager X', 'store-manager'),
+            __('Store Manager', 'store-manager-for-woocommerce'),
+            __('Store Manager', 'store-manager-for-woocommerce'),
             'manage_options',
             'store-manager',
             [$this, 'plugin_page'],
