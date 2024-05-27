@@ -2,7 +2,7 @@
 
 /** 
  * Plugin Name:       Store Manager for WooCommerce
- * Plugin URI:        https://osmanhaideradnan.wordpress.com/
+ * Plugin URI:        https://github.com/The-AsCode/store-manager-for-woocommerce/
  * Description:       A ultimate plugin for manage WooCommerce Store.
  * Version:           1.0.0
  * Requires at least: 5.2
