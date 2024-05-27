@@ -10,11 +10,11 @@ const router = createHashRouter( [
 		children: [
 			{
 				path: '/',
-				element: <div> { __('Dashboard Comming Soon', 'store-manager-for-woocommerce')}</div>,
+				element: <StockManager />
 			},
 			{
-				path: '/stock-manager',
-				element: <StockManager />,
+				path: '/dashboard',
+				element: <div> { __('Dashboard Comming Soon', 'store-manager-for-woocommerce')}</div>
 			},
 			{
 				path: '/badge-manager',

@@ -1,3 +1,3 @@
-<div id="store-manager-dashboard">Hello from Woo Manager X</div>
+<div id="store-manager-dashboard"></div>
 
 <?php

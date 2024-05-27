@@ -4,6 +4,8 @@ import { RootState } from '../../../app/store';
 import Button from '../../../components/Button';
 import Input from '../../../components/Input';
 import SearchSelect from '../../../components/SearchSelect';
+import { __ } from '@wordpress/i18n';
+
 import {
 	useGetProductsCategoriesQuery,
 	useGetProductsTypeQuery,
@@ -56,7 +58,7 @@ const ProductFilters = () => {
 			<div className="wmx-flex wmx-items-end wmx-gap-6">
 				<div>
 					<p className="wmx-text-[15px] wmx-font-medium wmx-text-gray-500 wmx-mb-1">
-						Select Category
+						{__('Select Category', 'store-manager-for-woocommerce')}
 					</p>
 					<SearchSelect
 						items={ categories }
@@ -74,7 +76,7 @@ const ProductFilters = () => {
 				</div>
 				<div>
 					<p className="wmx-text-[15px] wmx-font-medium wmx-text-gray-500 wmx-mb-1">
-						Select Product Type
+						{__('Select Product Type', 'store-manager-for-woocommerce')}
 					</p>
 					<SearchSelect
 						selected={
@@ -90,11 +92,11 @@ const ProductFilters = () => {
 			<div className="wmx-flex wmx-gap-4 wmx-items-center">
 				<Input
 					className="wmx-w-64"
-					placeholder="Search Product"
+					placeholder= { __('Search Product', 'store-manager-for-woocommerce' )}
 					onChange={ handleChange }
 					type="text"
 				/>
-				<Button onClick={ handleSearch }>Search</Button>
+				<Button onClick={ handleSearch }> { __('Search', 'store-manager-for-woocommerce' )}</Button>
 			</div>
 		</div>
 	);
