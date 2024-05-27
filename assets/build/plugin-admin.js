@@ -9733,13 +9733,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__);
+
 const navRoutes = {
-  '/': 'Dashboard',
-  'stock-manager': 'Stock Manager',
-  'badge-manager': 'Badge Manager',
-  'customer-manager': 'Customer Manager',
-  'export-import': 'Export / Import',
-  analytics: 'Analytics'
+  '/': (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Dashboard', 'store-manager-for-woocommerce'),
+  'stock-manager': (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Stock Manager', 'store-manager-for-woocommerce'),
+  'badge-manager': (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Badge Manager', 'store-manager-for-woocommerce'),
+  'customer-manager': (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Customer Manager', 'store-manager-for-woocommerce'),
+  'export-import': (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Export / Import', 'store-manager-for-woocommerce'),
+  analytics: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Analytics', 'store-manager-for-woocommerce')
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (navRoutes);
 
@@ -9943,9 +9946,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/dist/index.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/dist/index.js");
 /* harmony import */ var _data_navRoutes__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../data/navRoutes */ "./backend/views/src/data/navRoutes.ts");
 /* harmony import */ var _utils_cn__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../utils/cn */ "./backend/views/src/utils/cn.ts");
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__);
+
 
 
 
@@ -9962,11 +9968,11 @@ const SideNav = () => {
     className: "wmx-flex wmx-flex-col wmx-items-center"
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", {
     className: "wmx-text-lg wmx-font-medium wmx-text-gray-700"
-  }, "WooCommerce"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", {
+  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.__)('WooCommerce', 'store-manager-for-woocommerce')), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", {
     className: "wmx-text-xl wmx-font-bold wmx-text-gray-700"
-  }, "Manager X"))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("nav", {
+  }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.__)('Store Manager', 'store-manager-for-woocommerce')))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("nav", {
     className: "wmx-flex wmx-flex-col wmx-mt-10"
-  }, routes.map(navItem => (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react_router_dom__WEBPACK_IMPORTED_MODULE_3__.NavLink, {
+  }, routes.map(navItem => (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react_router_dom__WEBPACK_IMPORTED_MODULE_4__.NavLink, {
     key: navItem,
     to: navItem,
     className: ({
@@ -10140,12 +10146,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _heroicons_react_24_outline__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @heroicons/react/24/outline */ "./node_modules/@heroicons/react/24/outline/esm/CubeIcon.js");
-/* harmony import */ var _heroicons_react_24_outline__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @heroicons/react/24/outline */ "./node_modules/@heroicons/react/24/outline/esm/ExclamationTriangleIcon.js");
+/* harmony import */ var _heroicons_react_24_outline__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @heroicons/react/24/outline */ "./node_modules/@heroicons/react/24/outline/esm/CubeIcon.js");
+/* harmony import */ var _heroicons_react_24_outline__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @heroicons/react/24/outline */ "./node_modules/@heroicons/react/24/outline/esm/ExclamationTriangleIcon.js");
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 /* harmony import */ var _features_products_productsApi__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../features/products/productsApi */ "./backend/views/src/features/products/productsApi.ts");
 /* harmony import */ var _features_products_productsSlice__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../features/products/productsSlice */ "./backend/views/src/features/products/productsSlice.ts");
 /* harmony import */ var _utils_cn__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../utils/cn */ "./backend/views/src/utils/cn.ts");
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__);
+
 
 
 
@@ -10194,37 +10203,37 @@ const StockStatus = () => {
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(StatusCard, {
     onClick: () => handleCountFilterType('all'),
     active: query.status === 'all',
-    title: "Total Products",
+    title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__.__)('Total Products', 'store-manager-for-woocommerce'),
     isLoading: isLoading,
     count: data?.total_products,
-    icon: (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_heroicons_react_24_outline__WEBPACK_IMPORTED_MODULE_5__["default"], {
+    icon: (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_heroicons_react_24_outline__WEBPACK_IMPORTED_MODULE_6__["default"], {
       className: "wmx-w-6 wmx-h-6"
     })
   }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(StatusCard, {
     onClick: () => handleCountFilterType('managed'),
     active: query.status === 'managed',
-    title: "Managed By WC",
+    title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__.__)('Managed By WC', 'store-manager-for-woocommerce'),
     isLoading: isLoading,
     count: data?.managed_products,
-    icon: (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_heroicons_react_24_outline__WEBPACK_IMPORTED_MODULE_5__["default"], {
+    icon: (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_heroicons_react_24_outline__WEBPACK_IMPORTED_MODULE_6__["default"], {
       className: "wmx-w-6 wmx-h-6"
     })
   }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(StatusCard, {
     onClick: () => handleCountFilterType('low_stock'),
     active: query.status === 'low_stock',
-    title: "Low In Stock",
+    title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__.__)('Low In Stock', 'store-manager-for-woocommerce'),
     isLoading: isLoading,
     count: data?.low_stock_products,
-    icon: (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_heroicons_react_24_outline__WEBPACK_IMPORTED_MODULE_6__["default"], {
+    icon: (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_heroicons_react_24_outline__WEBPACK_IMPORTED_MODULE_7__["default"], {
       className: "wmx-w-6 wmx-h-6"
     })
   }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(StatusCard, {
     onClick: () => handleCountFilterType('out_of_stock'),
     active: query.status === 'out_of_stock',
-    title: "Out Of Stock",
+    title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__.__)('Out Of Stock', 'store-manager-for-woocommerce'),
     isLoading: isLoading,
     count: data?.out_of_stock_products,
-    icon: (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_heroicons_react_24_outline__WEBPACK_IMPORTED_MODULE_6__["default"], {
+    icon: (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_heroicons_react_24_outline__WEBPACK_IMPORTED_MODULE_7__["default"], {
       className: "wmx-w-6 wmx-h-6"
     })
   }));
@@ -10638,38 +10647,41 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/dist/index.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/dist/index.js");
 /* harmony import */ var _layout_Main__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../layout/Main */ "./backend/views/src/layout/Main.tsx");
 /* harmony import */ var _pages_StockManager_StockManager__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../pages/StockManager/StockManager */ "./backend/views/src/pages/StockManager/StockManager.tsx");
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__);
 
 
 
 
-const router = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_3__.createHashRouter)([{
+
+const router = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_4__.createHashRouter)([{
   path: '/',
   element: (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_layout_Main__WEBPACK_IMPORTED_MODULE_1__["default"], null),
   children: [{
     path: '/',
-    element: (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", null, "Dashboard")
+    element: (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", null, " ", (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.__)('Dashboard Comming Soon', 'store-manager-for-woocommerce'))
   }, {
     path: '/stock-manager',
     element: (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_pages_StockManager_StockManager__WEBPACK_IMPORTED_MODULE_2__["default"], null)
   }, {
     path: '/badge-manager',
-    element: (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", null, "Badge Manager")
+    element: (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.__)('Badge Manager Comming Soon', 'store-manager-for-woocommerce'))
   }, {
     path: '/customer-manager',
-    element: (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", null, "Customer Manager")
+    element: (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", null, " ", (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.__)('Customer Manager Comming Soon', 'store-manager-for-woocommerce'))
   }, {
     path: '/export-import',
-    element: (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", null, "Export Import")
+    element: (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", null, " ", (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.__)('Export Import Comming Soon', 'store-manager-for-woocommerce'))
   }, {
     path: '/analytics',
-    element: (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", null, "Analytics")
+    element: (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", null, " ", (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.__)('Analytics Comming Soon', 'store-manager-for-woocommerce'))
   }]
 }, {
   path: '*',
-  element: (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", null, "Page Not Found")
+  element: (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", null, " ", (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.__)('Page Not Found', 'store-manager-for-woocommerce'))
 }]);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (router);
 
@@ -17667,6 +17679,16 @@ module.exports = window["React"];
 /***/ ((module) => {
 
 module.exports = window["ReactDOM"];
+
+/***/ }),
+
+/***/ "@wordpress/i18n":
+/*!******************************!*\
+  !*** external ["wp","i18n"] ***!
+  \******************************/
+/***/ ((module) => {
+
+module.exports = window["wp"]["i18n"];
 
 /***/ }),
 

@@ -5,6 +5,7 @@ import { RootState } from '../../../app/store';
 import { useGetProductsCountQuery } from '../../../features/products/productsApi';
 import { changeQueryParams } from '../../../features/products/productsSlice';
 import cn from '../../../utils/cn';
+import { __ } from '@wordpress/i18n';
 
 type StatusCardPropsType = {
 	title: string;
@@ -61,7 +62,7 @@ const StockStatus = () => {
 			<StatusCard
 				onClick={ () => handleCountFilterType( 'all' ) }
 				active={ query.status === 'all' }
-				title="Total Products"
+				title={ __('Total Products', 'store-manager-for-woocommerce')}
 				isLoading={ isLoading }
 				count={ data?.total_products }
 				icon={ <CubeIcon className="wmx-w-6 wmx-h-6" /> }
@@ -69,7 +70,7 @@ const StockStatus = () => {
 			<StatusCard
 				onClick={ () => handleCountFilterType( 'managed' ) }
 				active={ query.status === 'managed' }
-				title="Managed By WC"
+				title= { __('Managed By WC', 'store-manager-for-woocommerce')}
 				isLoading={ isLoading }
 				count={ data?.managed_products }
 				icon={ <CubeIcon className="wmx-w-6 wmx-h-6" /> }
@@ -77,7 +78,7 @@ const StockStatus = () => {
 			<StatusCard
 				onClick={ () => handleCountFilterType( 'low_stock' ) }
 				active={ query.status === 'low_stock' }
-				title="Low In Stock"
+				title={ __('Low In Stock', 'store-manager-for-woocommerce')}
 				isLoading={ isLoading }
 				count={ data?.low_stock_products }
 				icon={ <ExclamationTriangleIcon className="wmx-w-6 wmx-h-6" /> }
@@ -85,7 +86,7 @@ const StockStatus = () => {
 			<StatusCard
 				onClick={ () => handleCountFilterType( 'out_of_stock' ) }
 				active={ query.status === 'out_of_stock' }
-				title="Out Of Stock"
+				title={ __('Out Of Stock', 'store-manager-for-woocommerce')}
 				isLoading={ isLoading }
 				count={ data?.out_of_stock_products }
 				icon={ <ExclamationTriangleIcon className="wmx-w-6 wmx-h-6" /> }

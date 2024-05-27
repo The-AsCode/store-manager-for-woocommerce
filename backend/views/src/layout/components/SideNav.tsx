@@ -1,6 +1,7 @@
 import { NavLink } from 'react-router-dom';
 import navRoutes from '../../data/navRoutes';
 import cn from '../../utils/cn';
+import { __ } from '@wordpress/i18n';
 
 const SideNav = () => {
 	type RouteType = keyof typeof navRoutes;
@@ -12,10 +13,10 @@ const SideNav = () => {
 				<div className="wmx-mt-8">
 					<h3 className="wmx-flex wmx-flex-col wmx-items-center">
 						<span className="wmx-text-lg wmx-font-medium wmx-text-gray-700">
-							WooCommerce
+							{__('WooCommerce', 'store-manager-for-woocommerce')}
 						</span>
 						<span className="wmx-text-xl wmx-font-bold wmx-text-gray-700">
-							Manager X
+							{__('Store Manager', 'store-manager-for-woocommerce')}
 						</span>
 					</h3>
 				</div>

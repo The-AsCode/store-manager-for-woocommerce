@@ -1,6 +1,7 @@
 import { createHashRouter } from 'react-router-dom';
 import Main from '../layout/Main';
 import StockManager from '../pages/StockManager/StockManager';
+import { __ } from '@wordpress/i18n';
 
 const router = createHashRouter( [
 	{
@@ -9,7 +10,7 @@ const router = createHashRouter( [
 		children: [
 			{
 				path: '/',
-				element: <div>Dashboard</div>,
+				element: <div> { __('Dashboard Comming Soon', 'store-manager-for-woocommerce')}</div>,
 			},
 			{
 				path: '/stock-manager',
@@ -17,25 +18,25 @@ const router = createHashRouter( [
 			},
 			{
 				path: '/badge-manager',
-				element: <div>Badge Manager</div>,
+				element: <div>{ __('Badge Manager Comming Soon', 'store-manager-for-woocommerce')}</div>,
 			},
 			{
 				path: '/customer-manager',
-				element: <div>Customer Manager</div>,
+				element: <div> { __('Customer Manager Comming Soon', 'store-manager-for-woocommerce')}</div>,
 			},
 			{
 				path: '/export-import',
-				element: <div>Export Import</div>,
+				element: <div> { __('Export Import Comming Soon', 'store-manager-for-woocommerce')}</div>,
 			},
 			{
 				path: '/analytics',
-				element: <div>Analytics</div>,
+				element: <div> { __('Analytics Comming Soon', 'store-manager-for-woocommerce')}</div>,
 			},
 		],
 	},
 	{
 		path: '*',
-		element: <div>Page Not Found</div>,
+		element: <div> { __('Page Not Found', 'store-manager-for-woocommerce')}</div>,
 	},
 ] );
 
