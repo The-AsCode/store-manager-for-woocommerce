@@ -1,7 +1,7 @@
 <?php
 
 /** 
- * Plugin Name:       Shop Manager X
+ * Plugin Name:       Store Manager For WooCommerce
  * Plugin URI:        https://osmanhaideradnan.wordpress.com/
  * Description:       A Plugin for manage WooCommerce shop.
  * Version:           1.1.5
@@ -9,7 +9,7 @@
  * Requires PHP:      7.4
  * Author:            Osman Haider Adnan
  * Author URI:        https://osmanhaideradnan.wordpress.com/
- * Text Domain:       shop-manager-x
+ * Text Domain:       store-manager-for-woocommerce-for-woocommerce
  * Domain Path:       /languages
  * @package     AsCode Woo Calculator
  * @author      Adnan <osmanhaider159@gmail.com>
@@ -33,7 +33,7 @@ require_once __DIR__ . '/vendor/autoload.php';
 /**
  * Plugin main class
  */
-final class Shop_Manager_X
+final class STORE_MANAGER
 {
 
     /**
@@ -78,11 +78,11 @@ final class Shop_Manager_X
      */
     function define_constants()
     {
-        define('SHOP_MANAGER_X_VERSION', self::version);
-        define('SHOP_MANAGER_X_FILE', __FILE__);
-        define('SHOP_MANAGER_X_DIR_PATH', plugin_dir_path(SHOP_MANAGER_X_FILE));
-        define('SHOP_MANAGER_X_URL', plugin_dir_url(SHOP_MANAGER_X_FILE));
-        define('SHOP_MANAGER_X_ASSETS', SHOP_MANAGER_X_URL . 'assets');
+        define('STORE_MANAGER_VERSION', self::version);
+        define('STORE_MANAGER_FILE', __FILE__);
+        define('STORE_MANAGER_DIR_PATH', plugin_dir_path(STORE_MANAGER_FILE));
+        define('STORE_MANAGER_URL', plugin_dir_url(STORE_MANAGER_FILE));
+        define('STORE_MANAGER_ASSETS', STORE_MANAGER_URL . 'assets');
     }
 
     /**
@@ -96,7 +96,7 @@ final class Shop_Manager_X
         $installed = get_option('shop_manager_install_time_x');
 
         if (!$installed) {
-            update_option('shop_manager_x_install_time', time());
+            update_option('STORE_MANAGER_install_time', time());
         }
     }
 
@@ -107,12 +107,12 @@ final class Shop_Manager_X
      */
     public function init_plugin() {
         if (is_admin()) {
-            new Shop_Manager_X\Backend\Menu();
+            new STORE_MANAGER\Backend\Menu();
         }
 
-        new Shop_Manager_X\Rest\Api();
+        new STORE_MANAGER\Rest\Api();
 
-        new Shop_Manager_X\Backend\Enqueue();
+        new STORE_MANAGER\Backend\Enqueue();
     }
 }
 
@@ -121,10 +121,10 @@ final class Shop_Manager_X
  *
  * @return shop_manager
  */
-function shop_manager_x()
+function STORE_MANAGER()
 {
-    return shop_manager_x::init();
+    return STORE_MANAGER::init();
 }
 
 // Kick-off the plugin.
-shop_manager_x();
+STORE_MANAGER();

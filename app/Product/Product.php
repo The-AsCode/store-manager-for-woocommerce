@@ -1,6 +1,6 @@
 <?php
 
-namespace Shop_Manager_X\App\Product;
+namespace STORE_MANAGER\App\Product;
 
 class Product {
 

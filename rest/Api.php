@@ -1,6 +1,6 @@
 <?php
 
-namespace Shop_Manager_X\Rest;
+namespace STORE_MANAGER\Rest;
 
 
 /**

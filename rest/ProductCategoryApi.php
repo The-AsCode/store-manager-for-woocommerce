@@ -1,14 +1,14 @@
 <?php 
 
-namespace Shop_Manager_X\Rest;
+namespace STORE_MANAGER\Rest;
 
 use WP_REST_Controller;
 use WP_REST_Server;
-use Shop_Manager_X\App\Utilities\ProductHelper;
+use STORE_MANAGER\App\Utilities\ProductHelper;
 
 /**
  * Class ProductCategoryApi
- * @package Shop_Manager_X\Rest
+ * @package STORE_MANAGER\Rest
  */
 class ProductCategoryApi extends WP_REST_Controller {
 
@@ -84,18 +84,18 @@ class ProductCategoryApi extends WP_REST_Controller {
             'type'       => 'object',
             'properties' => array(
                 'id'   => array(
-                    'description' => __( 'Unique identifier for the object.', 'shop-manager-x' ),
+                    'description' => __( 'Unique identifier for the object.', 'store-manager-for-woocommerce' ),
                     'type'        => 'integer',
                     'context'     => array( 'view' ),
                     'readonly'    => true,
                 ),
                 'name' => array(
-                    'description' => __( 'Category name.', 'shop-manager-x' ),
+                    'description' => __( 'Category name.', 'store-manager-for-woocommerce' ),
                     'type'        => 'string',
                     'context'     => array( 'view' ),
                 ),
                 'slug' => array(
-                    'description' => __( 'Category slug.', 'shop-manager-x' ),
+                    'description' => __( 'Category slug.', 'store-manager-for-woocommerce' ),
                     'type'        => 'string',
                     'context'     => array( 'view' ),
                 ),

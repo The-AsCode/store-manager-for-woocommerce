@@ -1,6 +1,6 @@
 <?php 
 
-namespace Shop_Manager_X\App\Utilities;
+namespace STORE_MANAGER\App\Utilities;
 
 class ProductHelper {
 

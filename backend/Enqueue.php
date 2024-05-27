@@ -1,6 +1,6 @@
 <?php
 
-namespace Shop_Manager_X\Backend;
+namespace STORE_MANAGER\Backend;
 
 class Enqueue {
 
@@ -17,15 +17,15 @@ class Enqueue {
     public function admin_script( $page ) {
 
         // // Enqueue the CSS file.
-        // wp_enqueue_style('ascode-woo-calculator-css', SHOP_MANAGER_X_ASSETS . '/admin/css/output.css');
+        // wp_enqueue_style('ascode-woo-calculator-css', STORE_MANAGER_ASSETS . '/admin/css/output.css');
 
         // Check if the current admin page matches your target page.
-        if ( $page === 'toplevel_page_shop-manager-x' ) {
-             wp_enqueue_style('shop-manager-x-dashboard-css', SHOP_MANAGER_X_URL . '/backend/views/assets/tailwind.css');
+        if ( $page === 'toplevel_page_store-manager' ) {
+             wp_enqueue_style('store-manager-dashboard-css', STORE_MANAGER_URL . '/backend/views/assets/tailwind.css');
 
             // Enqueue the JavaScript file.
-            wp_enqueue_script('shop-manager-x-dashboard', SHOP_MANAGER_X_ASSETS . '/build/plugin-admin.js', ['wp-element'], true , true);
-            wp_localize_script('shop-manager-x-dashboard',
+            wp_enqueue_script('store-manager-dashboard', STORE_MANAGER_ASSETS . '/build/plugin-admin.js', ['wp-element'], true , true);
+            wp_localize_script('store-manager-dashboard',
                 'SMX',
                 array(
                     'rest_nonce'  => wp_create_nonce( 'wp_rest' ),

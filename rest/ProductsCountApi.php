@@ -1,14 +1,14 @@
 <?php
 
-namespace Shop_Manager_X\Rest;
+namespace STORE_MANAGER\Rest;
 
 use WP_REST_Controller;
 use WP_REST_Server;
-use Shop_Manager_X\App\Utilities\ProductHelper;
+use STORE_MANAGER\App\Utilities\ProductHelper;
 
 /**
  * Class ProductsCountApi
- * @package Shop_Manager_X\Rest
+ * @package STORE_MANAGER\Rest
  */
 class ProductsCountApi extends WP_REST_Controller {
 
@@ -75,22 +75,22 @@ class ProductsCountApi extends WP_REST_Controller {
             'type'       => 'object',
             'properties' => array(
                 'total_products' => array(
-                    'description' => __( 'The number of products', 'shop-manager-x' ),
+                    'description' => __( 'The number of products', 'store-manager-for-woocommerce' ),
                     'type'        => 'integer',
                     'context'     => array( 'view' ),
                 ),
                 'managed_products' => array(
-                    'description' => __( 'The number of managed products', 'shop-manager-x' ),
+                    'description' => __( 'The number of managed products', 'store-manager-for-woocommerce' ),
                     'type'        => 'integer',
                     'context'     => array( 'view' ),
                 ),
                 'low_stock_products' => array(
-                    'description' => __( 'The number of low stock products', 'shop-manager-x' ),
+                    'description' => __( 'The number of low stock products', 'store-manager-for-woocommerce' ),
                     'type'        => 'integer',
                     'context'     => array( 'view' ),
                 ),
                 'out_of_stock_products' => array(
-                    'description' => __( 'The number of out of stock products', 'shop-manager-x' ),
+                    'description' => __( 'The number of out of stock products', 'store-manager-for-woocommerce' ),
                     'type'        => 'integer',
                     'context'     => array( 'view' ),
                 ),

@@ -22689,7 +22689,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-const admin = document.getElementById('shop-manager-x-dashboard');
+const admin = document.getElementById('store-manager-dashboard');
 const root = (0,react_dom_client__WEBPACK_IMPORTED_MODULE_1__.createRoot)(admin);
 root.render((0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_backend_views_src_App__WEBPACK_IMPORTED_MODULE_2__["default"], null));
 })();

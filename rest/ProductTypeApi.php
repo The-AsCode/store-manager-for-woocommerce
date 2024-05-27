@@ -1,14 +1,14 @@
 <?php
 
-namespace Shop_Manager_X\Rest;
+namespace STORE_MANAGER\Rest;
 
 use WP_REST_Controller;
 use WP_REST_Server;
-use Shop_Manager_X\App\Utilities\ProductHelper;
+use STORE_MANAGER\App\Utilities\ProductHelper;
 
 /**
  * Class ProductTypeApi
- * @package Shop_Manager_X\Rest
+ * @package STORE_MANAGER\Rest
  */
 class ProductTypeApi extends WP_REST_Controller {
 
@@ -73,13 +73,13 @@ class ProductTypeApi extends WP_REST_Controller {
             'type'       => 'object',
             'properties' => array(
                 'product_type' => array(
-                    'description' => __('Product type.', 'shop-manager-x' ),
+                    'description' => __('Product type.', 'store-manager-for-woocommerce' ),
                     'type'        => 'string',
                     'context'     => array('view'),
                     'required'    => true,
                 ),
                 'slug'         => array(
-                    'description' => __('An alphanumeric identifier for the resource unique to its type.', 'shop-manager-x'),
+                    'description' => __('An alphanumeric identifier for the resource unique to its type.', 'store-manager-for-woocommerce'),
                     'type'        => 'string',
                     'context'     => array('view'),
                     'readonly'    => true,

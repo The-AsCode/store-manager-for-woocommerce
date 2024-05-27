@@ -1,8 +1,8 @@
 <?php
 
-namespace Shop_Manager_X\Rest;
+namespace STORE_MANAGER\Rest;
 
-use Shop_Manager_X\App\Product\Product;
+use STORE_MANAGER\App\Product\Product;
 use WP_REST_Controller;
 
 class ProductApi extends WP_REST_Controller {
@@ -131,37 +131,37 @@ class ProductApi extends WP_REST_Controller {
     public function get_collection_params() {
         return array(
             'product_category' => array(
-                'description'       => __( 'Product category slug', 'shop-manager-x' ),
+                'description'       => __( 'Product category slug', 'store-manager-for-woocommerce' ),
                 'type'              => 'string',
                 'sanitize_callback' => 'sanitize_text_field',
                 'validate_callback' => 'rest_validate_request_arg',
             ),
             'product_type' => array(
-                'description'       => __( 'Product type', 'shop-manager-x' ),
+                'description'       => __( 'Product type', 'store-manager-for-woocommerce' ),
                 'type'              => 'string',
                 'sanitize_callback' => 'sanitize_text_field',
                 'validate_callback' => 'rest_validate_request_arg',
             ),
             'paged' => array(
-                'description'       => __( 'Current page', 'shop-manager-x' ),
+                'description'       => __( 'Current page', 'store-manager-for-woocommerce' ),
                 'type'              => 'integer',
                 'sanitize_callback' => 'absint',
                 'validate_callback' => 'rest_validate_request_arg',
             ),
             'per_page' => array(
-                'description'       => __( 'Number of products to display per page', 'shop-manager-x' ),
+                'description'       => __( 'Number of products to display per page', 'store-manager-for-woocommerce' ),
                 'type'              => 'integer',
                 'sanitize_callback' => 'absint',
                 'validate_callback' => 'rest_validate_request_arg',
             ),
             'search' => array(
-                'description'       => __( 'Search term', 'shop-manager-x' ),
+                'description'       => __( 'Search term', 'store-manager-for-woocommerce' ),
                 'type'              => 'string',
                 'sanitize_callback' => 'sanitize_text_field',
                 'validate_callback' => 'rest_validate_request_arg',
             ),
             'status' => array(
-                'description'       => __( 'Product status', 'shop-manager-x' ),
+                'description'       => __( 'Product status', 'store-manager-for-woocommerce' ),
                 'type'              => 'string',
                 'sanitize_callback' => 'sanitize_text_field',
                 'validate_callback' => 'rest_validate_request_arg',
@@ -181,61 +181,61 @@ class ProductApi extends WP_REST_Controller {
             'type'       => 'object',
             'properties' => array(
                 'id'   => array(
-                    'description' => __( 'Unique identifier for the object.', 'shop-manager-x' ),
+                    'description' => __( 'Unique identifier for the object.', 'store-manager-for-woocommerce' ),
                     'type'        => 'integer',
                     'context'     => array( 'view' ),
                     'readonly'    => true,
                 ),
                 'name' => array(
-                    'description' => __( 'Product name.', 'shop-manager-x' ),
+                    'description' => __( 'Product name.', 'store-manager-for-woocommerce' ),
                     'type'        => 'string',
                     'context'     => array( 'view' ),
                     'readonly'    => true,
                 ),
                 'sku' => array(
-                    'description' => __( 'Product SKU.', 'shop-manager-x' ),
+                    'description' => __( 'Product SKU.', 'store-manager-for-woocommerce' ),
                     'type'        => 'string',
                     'context'     => array( 'view' ),
                     'readonly'    => true,
                 ),
                 'regular_price' => array(
-                    'description' => __( 'Product regular price.', 'shop-manager-x' ),
+                    'description' => __( 'Product regular price.', 'store-manager-for-woocommerce' ),
                     'type'        => 'string',
                     'context'     => array( 'view' ),
                     'readonly'    => true,
                 ),
                 'sale_price' => array(
-                    'description' => __( 'Product sale price.', 'shop-manager-x' ),
+                    'description' => __( 'Product sale price.', 'store-manager-for-woocommerce' ),
                     'type'        => 'string',
                     'context'     => array( 'view' ),
                     'readonly'    => true,
                 ),
                 'stock_quantity' => array(
-                    'description' => __( 'Product stock quantity.', 'shop-manager-x' ),
+                    'description' => __( 'Product stock quantity.', 'store-manager-for-woocommerce' ),
                     'type'        => 'integer',
                     'context'     => array( 'view' ),
                     'readonly'    => true,
                 ),
                 'stock_status' => array(
-                    'description' => __( 'Product stock status.', 'shop-manager-x' ),
+                    'description' => __( 'Product stock status.', 'store-manager-for-woocommerce' ),
                     'type'        => 'string',
                     'context'     => array( 'view' ),
                     'readonly'    => true,
                 ),
                 'backorder' => array(
-                    'description' => __( 'Product backorder status.', 'shop-manager-x' ),
+                    'description' => __( 'Product backorder status.', 'store-manager-for-woocommerce' ),
                     'type'        => 'string',
                     'context'     => array( 'view' ),
                     'readonly'    => true,
                 ),
                 'product_type' => array(
-                    'description' => __( 'Product type.', 'shop-manager-x' ),
+                    'description' => __( 'Product type.', 'store-manager-for-woocommerce' ),
                     'type'        => 'string',
                     'context'     => array( 'view' ),
                     'readonly'    => true,
                 ),
                 'wc_stock' => array(
-                    'description' => __( 'Product stock management.', 'shop-manager-x' ),
+                    'description' => __( 'Product stock management.', 'store-manager-for-woocommerce' ),
                     'type'        => 'boolean',
                     'context'     => array( 'view' ),
                     'readonly'    => true,

@@ -1,6 +1,6 @@
 <?php
 
-namespace Shop_Manager_X\Backend;
+namespace STORE_MANAGER\Backend;
 
 /**
  * The menu handler class
@@ -8,15 +8,15 @@ namespace Shop_Manager_X\Backend;
 class Menu {
 
     public function __construct() {
-        add_action('admin_menu', [$this, 'shop_manager_x_admin_menu']);
+        add_action('admin_menu', [$this, 'STORE_MANAGER_admin_menu']);
     }
 
-    public function shop_manager_x_admin_menu() {
+    public function STORE_MANAGER_admin_menu() {
         add_menu_page(
-            __('Manager X', 'shop-manager-x'),
-            __('Manager X', 'shop-manager-x'),
+            __('Manager X', 'store-manager'),
+            __('Manager X', 'store-manager'),
             'manage_options',
-            'shop-manager-x',
+            'store-manager',
             [$this, 'plugin_page'],
             'dashicons-welcome-widgets-menus' // Icon for the menu item
         );
@@ -27,6 +27,6 @@ class Menu {
      */
     public function plugin_page() {
         // Load the view from the plugin directory.
-        require_once SHOP_MANAGER_X_DIR_PATH . '/backend/views/admin-view.php';
+        require_once STORE_MANAGER_DIR_PATH . '/backend/views/admin-view.php';
     }
 }

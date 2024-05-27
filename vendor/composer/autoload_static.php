@@ -4,47 +4,42 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit9cb0b532bb3cc4e35ab488faa6900d4c
+class ComposerStaticInit8ca1004d92518d0dd9664a19c4b4e376
 {
     public static $prefixLengthsPsr4 = array (
         'S' => 
         array (
-            'Shop_Manager_X\\Rest\\' => 20,
-            'Shop_Manager_X\\Frontend\\' => 24,
-            'Shop_Manager_X\\Backend\\' => 23,
-            'Shop_Manager_X\\App\\' => 19,
+            'STORE_MANAGER\\Rest\\' => 19,
+            'STORE_MANAGER\\Frontend\\' => 23,
+            'STORE_MANAGER\\Backend\\' => 22,
+            'STORE_MANAGER\\App\\' => 18,
         ),
     );
 
     public static $prefixDirsPsr4 = array (
-        'Shop_Manager_X\\Rest\\' => 
+        'STORE_MANAGER\\Rest\\' => 
         array (
             0 => __DIR__ . '/../..' . '/rest',
         ),
-        'Shop_Manager_X\\Frontend\\' => 
+        'STORE_MANAGER\\Frontend\\' => 
         array (
             0 => __DIR__ . '/../..' . '/frontend',
         ),
-        'Shop_Manager_X\\Backend\\' => 
+        'STORE_MANAGER\\Backend\\' => 
         array (
             0 => __DIR__ . '/../..' . '/backend',
         ),
-        'Shop_Manager_X\\App\\' => 
+        'STORE_MANAGER\\App\\' => 
         array (
             0 => __DIR__ . '/../..' . '/app',
         ),
     );
 
-    public static $classMap = array (
-        'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
-    );
-
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit9cb0b532bb3cc4e35ab488faa6900d4c::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit9cb0b532bb3cc4e35ab488faa6900d4c::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInit9cb0b532bb3cc4e35ab488faa6900d4c::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit8ca1004d92518d0dd9664a19c4b4e376::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit8ca1004d92518d0dd9664a19c4b4e376::$prefixDirsPsr4;
 
         }, null, ClassLoader::class);
     }
