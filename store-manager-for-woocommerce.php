@@ -35,14 +35,14 @@ require_once __DIR__ . '/vendor/autoload.php';
 /**
  * Plugin main class
  */
-final class STORE_MANAGER {
+final class Store_Manager {
 
     /**
      * Define plugin version
      * 
      * @var string
      */
-    const version = '1.0.0';
+    const store_manager_version = '1.0.0';
 
     // Private constructor to enforce singleton pattern.
     private function __construct()
@@ -59,7 +59,7 @@ final class STORE_MANAGER {
     /**
      * Singleton instance
      *
-     * @return shop_manager
+     * @return store_manager
      */
     public static function init()
     {
@@ -79,7 +79,7 @@ final class STORE_MANAGER {
      */
     function define_constants()
     {
-        define('STORE_MANAGER_VERSION', self::version);
+        define('STORE_MANAGER_VERSION', self::store_manager_version);
         define('STORE_MANAGER_FILE', __FILE__);
         define('STORE_MANAGER_DIR_PATH', plugin_dir_path(STORE_MANAGER_FILE));
         define('STORE_MANAGER_URL', plugin_dir_url(STORE_MANAGER_FILE));
@@ -124,7 +124,7 @@ final class STORE_MANAGER {
  */
 function store_manager()
 {
-    return STORE_MANAGER::init();
+    return Store_Manager::init();
 }
 
 // Kick-off the plugin.
