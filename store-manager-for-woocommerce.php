@@ -4,7 +4,7 @@
  * Plugin Name:       Store Manager for WooCommerce
  * Plugin URI:        https://github.com/The-AsCode/store-manager-for-woocommerce/
  * Description:       A ultimate plugin for manage WooCommerce Store.
- * Version:           1.0.0
+ * Version:           1.0.1
  * Requires at least: 5.2
  * Requires PHP:      7.4
  * Author:            Osman Haider Adnan
@@ -42,7 +42,7 @@ final class Store_Manager {
      * 
      * @var string
      */
-    const store_manager_version = '1.0.0';
+    const store_manager_version = '1.0.1';
 
     // Private constructor to enforce singleton pattern.
     private function __construct()
