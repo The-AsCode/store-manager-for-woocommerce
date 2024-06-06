@@ -20,6 +20,7 @@ Class Api {
 	public const PRODUCT_CATEGORY_ROUTE_NAME = 'product-category';
 	public const PRODUCT_TYPE_ROUTE_NAME = 'product-type';
 	public const PRODUCT_ROUTE_NAME = 'product';
+	public const SEARCH_ROUTE_NAME = 'search';
 
     /**
 	 * Register REST API
@@ -44,5 +45,8 @@ Class Api {
 		//wp-json/smx/v1/product/product_id?manage_stock=yes/no&stock_quantity=20&stock_status=instock/outofstock/onbackorder&backorders=yes/no/notify
 		$product = new ProductApi;
 		$product->register_route();
+
+		$search = new SrearchApi();
+		$search->register_routes();
 	}
 }
