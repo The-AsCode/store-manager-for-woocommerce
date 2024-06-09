@@ -18,11 +18,7 @@ class SrearchApi extends WP_REST_Controller {
 			'/product/'   => 'get_products',
 			'/category/'  => 'get_categories',
 			'/tag/'       => 'get_tags',
-			// '/attribute/' => 'get_attributes',
-			// '/coupon/'    => 'get_coupons',
-			// '/customer/'  => 'get_customers',
-			// '/state/'     => 'get_states',
-			// '/country/'   => 'get_countries',
+			'/attribute/' => 'get_attributes'
 		);
 
 		foreach ( $endpoints as $endpoint => $callback ) {

@@ -145,12 +145,11 @@ class Search { //phpcs:ignore
 	 * @param string $like Search Term.
 	 * @return array
 	 */
-	// public static function attributes( $like = ' ' ) {
-	// 	$attributes        = self::get_global_attributes( $like );
-	// 	$custom_attributes = self::get_custom_attributes( $like );
-
-	// 	return array_merge( $attributes, $custom_attributes );
-	// }
+	public static function attributes( $like = ' ' ) {
+		$attributes        = self::get_global_attributes( $like );
+		$custom_attributes = self::get_custom_attributes( $like );
+		return array_merge( $attributes, $custom_attributes );
+	}
 
 	/**
 	 * Search Attributes by Attribute Name.
@@ -158,32 +157,28 @@ class Search { //phpcs:ignore
 	 * @param string $like Search Term.
 	 * @return array
 	 */
-	// protected static function get_global_attributes( $like ) {
-	// 	$global_attributes = Cache::remember(
-	// 		'wc_global_attributes',
-	// 		array(
-	// 			new Model,
-	// 			'wc_global_attribute_query',
-	// 		),
-	// 		array( $like )
-	// 	);
-	// 	$result            = array();
+	protected static function get_global_attributes( $like ) {
 
-	// 	if ( is_array( $global_attributes ) && ! empty( $global_attributes ) ) {
-	// 		foreach ( $global_attributes as $attribute ) {
-	// 			if ( ! isset( $attribute->attribute_name, $attribute->attribute_label ) ) {
-	// 				continue;
-	// 			}
+		global $wpdb;
+		$query = $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}woocommerce_attribute_taxonomies WHERE attribute_name != '' AND attribute_name LIKE %s", $like . '%' );
 
-	// 			$result[] = array(
-	// 				'id'   => $attribute->attribute_name,
-	// 				'name' => $attribute->attribute_label,
-	// 			);
-	// 		}
-	// 	}
+		$global_attributes = $wpdb->get_results( $query ); //phpcs:ignore
 
-	// 	return $result;
-	// }
+		if ( is_array( $global_attributes ) && ! empty( $global_attributes ) ) {
+			foreach ( $global_attributes as $attribute ) {
+				if ( ! isset( $attribute->attribute_name, $attribute->attribute_label ) ) {
+					continue;
+				}
+
+				$result[] = array(
+					'id'   => $attribute->attribute_name,
+					'name' => $attribute->attribute_label,
+				);
+			}
+		}
+
+		return $result;
+	}
 
 	/**
 	 * Get all product custom attributes.
@@ -191,31 +186,28 @@ class Search { //phpcs:ignore
 	 * @param string $like Search Term.
 	 * @return array
 	 */
-	// protected static function get_custom_attributes( $like ) {
-	// 	$custom_attributes = Cache::remember(
-	// 		'wc_custom_attributes',
-	// 		array(
-	// 			new \Disco\App\Utility\Model,
-	// 			'wc_custom_attribute_query',
-	// 		),
-	// 		array( $like )
-	// 	);
-	// 	$result            = array();
+	protected static function get_custom_attributes( $like ) {
+		global $wpdb;
+		$query = $wpdb->prepare( 'SELECT meta.meta_id, meta.meta_key as name, meta.meta_value as type FROM ' . $wpdb->postmeta . ' AS meta, ' . $wpdb->posts . " AS posts WHERE meta.post_id = posts.id AND posts.post_type LIKE %s AND meta.meta_key='_product_attributes'", $like . '%' );
 
-	// 	if ( is_array( $custom_attributes ) && ! empty( $custom_attributes ) ) {
-	// 		foreach ( $custom_attributes as $value ) {
-	// 			$product_attr = maybe_unserialize( $value->type );
+		$custom_attributes = $wpdb->get_results( $query ); //phpcs:ignore
 
-	// 			if ( ! is_array( $product_attr ) ) {
-	// 				continue;
-	// 			}
+		$result = [];
 
-	// 			$result = array_merge( $result, self::filter_product_attributes( $product_attr, $like ) );
-	// 		}
-	// 	}
+		if ( is_array( $custom_attributes ) && ! empty( $custom_attributes ) ) {
+			foreach ( $custom_attributes as $value ) {
+				$product_attr = maybe_unserialize( $value->type );
 
-	// 	return $result;
-	// }
+				if ( ! is_array( $product_attr ) ) {
+					continue;
+				}
+
+				$result = array_merge( $result, self::filter_product_attributes( $product_attr, $like ) );
+			}
+		}
+
+		return $result;
+	}
 
 	/**
 	 * Filter Product Attributes.
