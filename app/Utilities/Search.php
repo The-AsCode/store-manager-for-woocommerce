@@ -164,6 +164,8 @@ class Search { //phpcs:ignore
 
 		$global_attributes = $wpdb->get_results( $query ); //phpcs:ignore
 
+		$result = [];
+
 		if ( is_array( $global_attributes ) && ! empty( $global_attributes ) ) {
 			foreach ( $global_attributes as $attribute ) {
 				if ( ! isset( $attribute->attribute_name, $attribute->attribute_label ) ) {
