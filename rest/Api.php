@@ -46,6 +46,9 @@ Class Api {
 		$product = new ProductApi;
 		$product->register_route();
 
+		//wp-json/smx/v1/search/product?search=product_name
+		//wp-json/smx/v1/search/category?search=category_name
+		//wp-json/smx/v1/search/product?tag=tag_name
 		$search = new SrearchApi();
 		$search->register_routes();
 	}
