@@ -2,7 +2,6 @@
 
 namespace STORE_MANAGER\Rest;
 
-
 /**
  * Class Api
  *
@@ -21,6 +20,7 @@ Class Api {
 	public const PRODUCT_TYPE_ROUTE_NAME = 'product-type';
 	public const PRODUCT_ROUTE_NAME = 'product';
 	public const SEARCH_ROUTE_NAME = 'search';
+	public const DROPDOWN_ROUTE_NAME = 'dropdown';
 
     /**
 	 * Register REST API
@@ -48,8 +48,12 @@ Class Api {
 
 		//wp-json/smx/v1/search/product?search=product_name
 		//wp-json/smx/v1/search/category?search=category_name
-		//wp-json/smx/v1/search/product?tag=tag_name
+		//wp-json/smx/v1/search/search/tag?search=tag_name
+		//wp-json/smx/v1/search/attribute?search=attribute_name
 		$search = new SrearchApi();
 		$search->register_routes();
+
+		$dropdowm = new DropDownApi();
+		$dropdowm->register_routes();
 	}
 }
