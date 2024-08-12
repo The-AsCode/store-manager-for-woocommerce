@@ -5,7 +5,32 @@ namespace STORE_MANAGER\App;
 class Filter {
 
     public function get_filters() {
-        return [];
+        $filters = $this->get_rows();
+
+		if ( ! is_array( $filters ) ) {
+			return array();
+		}
+
+        $results = array_map(
+            static function ( $filter ) {
+                if ( isset( $filter->filter_data, $filter->id ) ) {
+                    $data       = json_decode( $filter->filter_data, true );
+                    $data       = (array) $data;
+                    $data['id'] = $filter->id;
+
+                    return  $data;
+                }
+
+                return false;
+            },
+            $filters
+        );
+
+        if ( is_array( $results ) ) {
+            return $results;
+        }
+
+        return array();
     }
 
     /**
@@ -30,7 +55,7 @@ class Filter {
         if ( ! $filter ) {
             return new \WP_Error(
                 'rest_not_added',
-                __( 'Sorry, Failed to Save filter.', 'disco' ),
+                __( 'Sorry, Failed to Save filter.', 'store-manager-for-woocommerce' ),
                 array( 'status' => 400 )
             );
         }
@@ -46,9 +71,42 @@ class Filter {
     }
 
     /**
-     * Insert campaign into database.
+     * Get a filter by id.
      *
-     * @param array $config Campaign config.
+     * @param int|mixed $id filter id.
+     * @return \SMX\App\Utility\Config|\WP_Error
+     * @since 1.0.0
+     */
+    public function get_filter( $id ) {
+        $filter = $this->get_row( $id );
+
+        if ( ! $filter ) {
+            return new \WP_Error(
+                'rest_not_found',
+                __( 'Sorry, Invalid filter id.', 'store-manager-for-woocommerce' ),
+                array( 'status' => 400 )
+            );
+        }
+
+        if ( isset( $filter->data ) ) {
+            $filter       = json_decode( $filter->data, true );
+            $filter       = (array) $filter;
+            $filter['id'] = $id;
+
+            return  $filter ;
+        }
+
+        return new \WP_Error(
+            'rest_not_found',
+            __( 'Sorry, Invalid filter data.', 'store-manager-for-woocommerce' ),
+            array( 'status' => 400 )
+        );
+    }
+
+    /**
+     * Insert filter into database.
+     *
+     * @param array $config filter config.
      * @return int
      * @since 1.0.0
      */
@@ -78,6 +136,26 @@ class Filter {
         }
 
         return 0;
+    }
+
+    /**
+     * Get all rows from database.
+     *
+     * @noinspection SqlResolve
+     * @return array|null
+     * @since        1.0.0
+     */
+    public function get_rows() {
+        global $wpdb;
+        // Get all rows
+		$get_filters = $wpdb->get_results( "SELECT * FROM {$wpdb->prefix}store_manager_filters", OBJECT ); //phpcs:ignore
+        $filters     = array();
+
+        foreach ( $get_filters as $result ) {
+            $filters[ $result->id ] = $result;
+        }
+
+        return $filters;
     }
 
      /**

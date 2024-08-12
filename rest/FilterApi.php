@@ -118,6 +118,62 @@ class FilterApi extends WP_REST_Controller {
 		return $response;
 	}
 
+	/**
+	 * Retrieves a list of filter items.
+	 *
+	 * @param \WP_REST_Request $request Full data about the request.
+	 * @return \WP_REST_Response|\WP_Error
+	 */
+	public function get_items( $request ) {
+		$params = $this->get_collection_params();
+		$args   = array_intersect_key( $request->get_params(), $params );
+
+		// unset others.
+		unset( $args['per_page'], $args['page'] );
+
+		$data      = array();
+		$filters = ( new Filter )->get_filters();
+
+		if ( empty( $filters ) ) {
+			return new \WP_Error(
+				'rest_filter_not_available',
+				__( 'No filter available. Create a filter first', 'store-manager-for-woocommerce' ),
+				array( 'status' => 404 )
+			);
+		}
+
+		foreach ( $filters as $filter ) {
+			$response = $this->prepare_item_for_response( $filter, $request );
+			$data[]   = $this->prepare_response_for_collection( $response );
+		}
+
+		$total    = count( $filters );
+		$response = rest_ensure_response( $data );
+
+		$response->header( 'X-WP-Total', (int) $total );
+		$response->header( 'X-WP-TotalPages', (int) $total );
+
+		return $response;
+	}
+
+	/**
+	 * Retrieves one item from the collection.
+	 *
+	 * @param \WP_REST_Request $request Full data about the request.
+	 * @return \WP_Error|\WP_REST_Response
+	 */
+	public function get_item( $request ) {
+		$filter= ( new Filter )->get_filter( absint( $request['id'] ) );
+
+		if ( is_wp_error( $filter ) ) {
+			return $filter;
+		}
+
+		$response = $this->prepare_item_for_response( $filter, $request );
+
+		return rest_ensure_response( $response );
+	}
+
 
 
     /**
@@ -138,7 +194,7 @@ class FilterApi extends WP_REST_Controller {
 		}
 
 		// if ( isset( $request['id'] ) ) {
-		// 	$filter = $this->get_campaign( absint( $request['id'] ) );
+		// 	$filter = $this->get_filter( absint( $request['id'] ) );
 
 		// 	if ( is_wp_error( $filter ) ) {
 		// 		return $filter;
@@ -207,9 +263,6 @@ class FilterApi extends WP_REST_Controller {
 	 * @return \WP_Error|\WP_HTTP_Response|\WP_REST_Response
 	 */
 	public function prepare_item_for_response( $item, $request ) {//phpcs:ignore
-
-		error_log(print_r($item, true));
-
 		$data       = array();
 
 		$data['id'] = 0;
