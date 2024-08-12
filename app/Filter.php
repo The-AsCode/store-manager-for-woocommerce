@@ -53,7 +53,6 @@ class Filter {
      * @since 1.0.0
      */
     public function insert( $config ) {
-        error_log(print_r($config, true));
         global $wpdb;
 
 		$insert = $wpdb->insert( // phpcs:ignore

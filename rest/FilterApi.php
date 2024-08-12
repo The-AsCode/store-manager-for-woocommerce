@@ -11,6 +11,7 @@
 
 namespace STORE_MANAGER\Rest;
 
+use Error;
 use STORE_MANAGER\App\Filter;
 use WP_REST_Controller;
 use WP_REST_Server;
@@ -106,26 +107,15 @@ class FilterApi extends WP_REST_Controller {
 		$config   = (array) $config;
 		$filter = ( new Filter )->save_filter( $config );
 
-		return $filter;
+		if ( is_wp_error( $filter ) ) {
+			$filter->add_data( array( 'status' => 400 ) );
 
-		// if ( is_wp_error( $filter ) ) {
-		// 	$filter->add_data( array( 'status' => 400 ) );
+			return $filter;
+		}
 
-		// 	return $filter;
-		// }
+		$response = $this->prepare_item_for_response( $filter, $request );
 
-		// $response = $this->prepare_item_for_response( $filter, $request );
-
-		// $response->set_status( 201 );
-		// $campaign_id = 0;
-
-		// if ( isset( $filter->id ) ) {
-		// 	$campaign_id = $filter->id;
-		// }
-
-		// $response->header( 'Location', rest_url( sprintf( '%s/%s/%d', $this->namespace, $this->rest_base, $campaign_id ) ) );
-
-		// return rest_ensure_response( $response );
+		return $response;
 	}
 
 
@@ -207,6 +197,81 @@ class FilterApi extends WP_REST_Controller {
 				'href' => rest_url( $base ),
 			),
 		);
+	}
+
+	/**
+	 * Prepares the item for the REST response.
+	 *
+	 * @param object           $item    WordPress's representation of the item.
+	 * @param \WP_REST_Request $request Full data about the request.
+	 * @return \WP_Error|\WP_HTTP_Response|\WP_REST_Response
+	 */
+	public function prepare_item_for_response( $item, $request ) {//phpcs:ignore
+
+		error_log(print_r($item, true));
+
+		$data       = array();
+
+		$data['id'] = 0;
+
+		if ( ! empty( $item['id'] ) ) {
+			$data['id'] = $item['id'];
+		}
+
+		$data['name'] = '';
+
+		if ( ! empty( $item['name'] ) ) {
+			$data['name'] = $item['name'];
+		}
+
+		$data['products'] = array();
+
+		if ( ! empty( $item['products'] ) ) {
+			$data['products'] = $item['products'];
+		}
+
+		$data['conditions'] = array();
+
+		if ( ! empty( $item['conditions'] ) ) {
+			$data['conditions'] = $item['conditions'];
+		}
+
+		$data['created_by'] = '';
+
+		if ( ! empty( $item['created_by'] ) ) {
+			$data['created_by'] = $item['created_by'];
+		}
+
+		$data['created_date'] = '';
+
+		if ( ! empty( $item['created_date'] ) ) {
+			$created_date = gmdate( DATE_W3C, strtotime( $item['created_date'] ) );
+
+			$data['created_date'] = $created_date;
+		}
+
+		$data['modified_by'] = '';
+
+		if ( ! empty( $item['modified_by'] ) ) {
+			$data['modified_by'] = $item['modified_by'];
+		}
+
+		$data['updated_date'] = '';
+
+		if ( ! empty( $item['updated_date'] ) ) {
+			$modified_date = gmdate( DATE_W3C, strtotime( $item['updated_date'] ) );
+
+			$data['updated_date'] = $modified_date;
+		}
+
+		$context = ! empty( $request['context'] ) && is_string( $request['context'] ) ? $request['context'] : 'view';//phpcs:ignore
+
+		$data = $this->filter_response_by_context( $data, $context );
+
+		$response = rest_ensure_response( $data );
+		$response->add_links( $this->prepare_links( $item ) );
+
+		return $response;
 	}
 
 }
