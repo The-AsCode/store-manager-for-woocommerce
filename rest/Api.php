@@ -21,6 +21,7 @@ Class Api {
 	public const PRODUCT_ROUTE_NAME = 'product';
 	public const SEARCH_ROUTE_NAME = 'search';
 	public const DROPDOWN_ROUTE_NAME = 'dropdown';
+	public const FILTER_ROUTE_NAME = 'filters';
 
     /**
 	 * Register REST API
@@ -53,7 +54,13 @@ Class Api {
 		$search = new SrearchApi();
 		$search->register_routes();
 
-		$dropdowm = new DropDownApi();
-		$dropdowm->register_routes();
+		//wp-json/smx/v1/dropdown/?search=conditions
+		//wp-json/smx/v1/dropdown/?search=filters
+		//wp-json/smx/v1/dropdown/?search=products
+		$dropdown = new DropDownApi();
+		$dropdown->register_routes();
+
+		$filter = new FilterApi();
+		$filter->register_routes();
 	}
 }
