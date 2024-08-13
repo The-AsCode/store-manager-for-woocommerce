@@ -193,14 +193,6 @@ class FilterApi extends WP_REST_Controller {
 			);
 		}
 
-		// if ( isset( $request['id'] ) ) {
-		// 	$filter = $this->get_filter( absint( $request['id'] ) );
-
-		// 	if ( is_wp_error( $filter ) ) {
-		// 		return $filter;
-		// 	}
-		// }
-
 		return $permission;
 	}
 

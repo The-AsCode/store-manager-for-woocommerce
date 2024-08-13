@@ -88,8 +88,8 @@ class Filter {
             );
         }
 
-        if ( isset( $filter->data ) ) {
-            $filter       = json_decode( $filter->data, true );
+        if ( isset( $filter->filter_data ) ) {
+            $filter       = json_decode( $filter->filter_data, true );
             $filter       = (array) $filter;
             $filter['id'] = $id;
 
