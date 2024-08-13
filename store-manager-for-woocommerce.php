@@ -4,7 +4,7 @@
  * Plugin Name:       Store Manager for WooCommerce
  * Plugin URI:        https://github.com/The-AsCode/store-manager-for-woocommerce/
  * Description:       A ultimate plugin for manage WooCommerce Store.
- * Version:           1.0.1
+ * Version:           1.0.2
  * Requires at least: 5.2
  * Requires PHP:      7.4
  * Author:            Osman Haider Adnan
@@ -52,6 +52,9 @@ final class Store_Manager {
         // Register activation hook.
         register_activation_hook(__FILE__, [$this, 'activate']);
 
+        // Hook into the upgrader process to handle plugin updates
+        add_action('upgrader_process_complete', array($this, 'update'), 10, 2);
+
         // Hook into the 'plugins_loaded' action to initialize the plugin.
         add_action('plugins_loaded', [$this, 'init_plugin']);
     }
@@ -98,6 +101,26 @@ final class Store_Manager {
 
         if (!$installed) {
             update_option('store_manager_install_time', time());
+        }
+
+        new STORE_MANAGER\Backend\ActDeact();
+    }
+
+    /**
+     * Update method to be called on plugin update
+     * 
+     * @param $upgrader_object
+     * @param $options
+     * 
+     * @return void
+     */
+    public function update($upgrader_object, $options) {
+        if ($options['action'] == 'update' && $options['type'] == 'plugin') {
+            // Check if plugin is being updated
+            $our_plugin = plugin_basename(__FILE__);
+            if (isset($options['plugins']) && in_array($our_plugin, $options['plugins'])) {
+                \STORE_MANAGER\Backend\ActDeact :: create_plugin_table();
+            }
         }
     }
 
