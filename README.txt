@@ -2,10 +2,10 @@
 Contributors: shopmanagerx
 Tags: inventory management, woocommerce, store manager, product management
 Requires at least: 4.9
-Tested up to: 6.5.3
+Tested up to: 6.6.1
 WC requires at least: 3.1
-WC tested up to: 8.9.1
-Stable tag: 1.0.2
+WC tested up to: 9.1.4
+Stable tag: 1.0.3
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 Requires PHP: 7.4
@@ -63,11 +63,16 @@ Yes, the plugin provides inventory control features, including alerts for low st
 
 
 == Changelog ==
+= 1.0.3 (13 August 2024) =
+* Fix: Error in plugin activation.
+* Tweak : WordPress version 6.6 compatibility checked.
+* Tweak: WooCommerce version 9.0 compatibility checked.
+
 = 1.0.2 (23 June 2024) =
-* Plugin custom table created
+* Add: Plugin custom table.
 
 = 1.0.1 (03 June 2024) =
-* Change tag name
+* Tweak: Change tag name
 
 = 1.0.0 (01 June 2024) =
 * Initial Release
