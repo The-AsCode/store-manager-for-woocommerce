@@ -104,6 +104,111 @@ class Filter {
     }
 
     /**
+     * Delete filter from database.
+     *
+     * @param int $id Filter id.
+     * @return int|bool
+     * @since 1.0.0
+     */
+    public function delete_filter( $id ) {
+        return $this->delete( $id );
+    }
+
+    /**
+     * Update filter into database.
+     *
+     * @param int   $id     filter id.
+     * @param array $config filter config.
+     * @return \STORE_MANAGER\App\Utility\Config|\WP_Error
+     * @since 1.0.0
+     */
+    public function update_filter( $id, $config ) {
+
+        $id = absint( $id );
+
+        if ( is_user_logged_in() ) {
+            $config['modified_by'] = get_current_user_id();
+        }
+
+        $config['modified_date'] = gmdate( 'Y-m-d H:i:s' );
+        // Get filter from cache or fetch from DB.
+        $filter = $this->get_row( $id );
+
+        if ( ! isset( $config['name'] ) && ! empty( $filter->name ) ) {
+            $config['name'] = $filter->name;
+        }
+
+        // Update filter into database.
+        $update = $this->update( $config, $id );
+
+        if ( ! $update || ! $filter ) {
+            return new \WP_Error(
+                'rest_not_added',
+                __( 'Sorry, the filter could not be updated.', 'store-manager-for-woocommerce' ),
+                array( 'status' => 400 )
+            );
+        }
+
+        $data = array();
+
+        if ( isset( $filter->filter_data ) && isset( $filter->id ) ) {
+            $data       = (array) json_decode( $filter->filter_data, true );
+            $data['id'] = absint( $filter->id );
+        }
+
+        return $data;
+    }
+
+     /**
+     * Delete filter from database.
+     *
+     * @param int $id filter id.
+     * @return bool|int
+     * @since 1.0.0
+     */
+    public function delete( $id ) {
+        global $wpdb;
+
+        $table_name = $wpdb->prefix . 'store_manager_filters';
+
+		return $wpdb->delete( $table_name, array( 'id' => $id ), array( '%d' ) );//phpcs:ignore
+    }
+
+    /**
+     * Update filter into database.
+     *
+     * @param array $config filter config.
+     * @param int   $id     filter id.
+     * @return bool|int
+     * @since 1.0.0
+     */
+    public function update( $config, $id ) {
+        global $wpdb;
+
+        $table_name = $wpdb->prefix . 'store_manager_filters';
+
+		return $wpdb->update(  //phpcs:ignore
+            $table_name,
+            array(
+                'filter_name'   => $config['name'],
+                'filter_data'   => wp_json_encode($config),
+                'created_by'    => $config['created_by'],
+                'created_date'  => $config['created_date'],
+                'updated_date'  => $config['updated_date']
+            ),
+            array( 'id' => $id ),
+            array(
+                '%s', // filter_name
+                '%s', // filter_data
+                '%s', // created_by
+                '%s', // created_date
+                '%s'  // updated_date
+            ),
+            array( '%d' )
+        );
+    }
+
+    /**
      * Insert filter into database.
      *
      * @param array $config filter config.

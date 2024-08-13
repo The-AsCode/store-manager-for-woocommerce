@@ -157,6 +157,42 @@ class FilterApi extends WP_REST_Controller {
 	}
 
 	/**
+	 * Updates one item from the collection.
+	 *
+	 * @param \WP_REST_Request $request Full data about the request.
+	 * @return \WP_Error|\WP_REST_Response
+	 */
+	public function update_item( $request ) {
+		$filter = ( new Filter )->get_filter( absint( $request['id'] ) );
+
+		if ( is_wp_error( $filter ) ) {
+			return $filter;
+		}
+
+		$prepared = (array) $this->prepare_item_for_database( $request );
+
+
+		$updated = ( new Filter )->update_filter( absint( $request['id'] ), $prepared );
+
+		error_log(print_r($updated, true));
+
+		if ( ! $updated ) {
+			return new \WP_Error(
+				'rest_not_updated',
+				__( 'Sorry, the filter could not be updated.', 'store-manager-for-woocommerce' ),
+				array( 'status' => 400 )
+			);
+		}
+
+		$filter = ( new Filter )->get_filter( absint( $request['id'] ) );
+
+		$response = $this->prepare_item_for_response( $filter, $request );
+
+		return rest_ensure_response( $response );
+	}
+	
+
+	/**
 	 * Retrieves one item from the collection.
 	 *
 	 * @param \WP_REST_Request $request Full data about the request.
@@ -174,6 +210,38 @@ class FilterApi extends WP_REST_Controller {
 		return rest_ensure_response( $response );
 	}
 
+	/**
+	 * Deletes one item from the collection.
+	 *
+	 * @param \WP_REST_Request $request Full data about the request.
+	 * @return \WP_REST_Response|\WP_Error
+	 */
+	public function delete_item( $request ) {
+		$filter = ( new Filter )->get_filter( absint( $request['id'] ) );
+
+		if ( is_wp_error( $filter ) ) {
+			return $filter;
+		}
+
+		$previous = $this->prepare_item_for_response( $filter, $request );
+
+		$deleted = ( new Filter )->delete_filter( absint( $request['id'] ) );
+
+		if ( ! $deleted ) {
+			return new \WP_Error(
+				'rest_not_deleted',
+				__( 'Sorry, the filter could not be deleted.', 'store-manager-for-woocommerce' ),
+				array( 'status' => 400 )
+			);
+		}
+
+		$data = array(
+			'deleted'  => true,
+			'previous' => $previous->get_data(),
+		);
+
+		return rest_ensure_response( $data );
+	}
 
 
     /**

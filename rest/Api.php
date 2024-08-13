@@ -60,6 +60,8 @@ Class Api {
 		$dropdown = new DropDownApi();
 		$dropdown->register_routes();
 
+		//wp-json/smx/v1/filters/43
+		//wp-json/smx/v1/filters
 		$filter = new FilterApi();
 		$filter->register_routes();
 	}
