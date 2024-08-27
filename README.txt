@@ -5,7 +5,7 @@ Requires at least: 4.9
 Tested up to: 6.6.1
 WC requires at least: 3.1
 WC tested up to: 9.2.2
-Stable tag: 1.0.4
+Stable tag: 1.0.5
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 Requires PHP: 7.4
@@ -63,7 +63,11 @@ Yes, the plugin provides inventory control features, including alerts for low st
 
 
 == Changelog ==
-= 1.0.4 (13 August 2024) =
+= 1.0.4 (27 August 2024) =
+* Add: Plugin icon added.
+* Fix: Menu icon issue fix.
+
+= 1.0.4 (25 August 2024) =
 * Fix: WooCommerce enable issue fix.
 * Tweak: WooCommerce required added.
 * Tweak: WooCommerce version 9.2.2 compatibility checked.

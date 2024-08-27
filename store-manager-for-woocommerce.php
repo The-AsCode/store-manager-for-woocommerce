@@ -4,10 +4,10 @@
  * Plugin Name:       Store Manager for WooCommerce
  * Plugin URI:        https://github.com/The-AsCode/store-manager-for-woocommerce/
  * Description:       A ultimate plugin for manage WooCommerce Store.
- * Version:           1.0.4
+ * Version:           1.0.5
  * Requires at least: 5.2
  * Requires PHP:      7.4
- * Author:            Osman Haider Adnan
+ * Author:            Shop ManagerX
  * Author URI:        https://osmanhaideradnan.wordpress.com/
  * License:           GPLv3 or later
  * License URI:       http://www.gnu.org/licenses/gpl-3.0.txt
