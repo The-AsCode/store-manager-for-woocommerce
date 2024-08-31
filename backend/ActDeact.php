@@ -29,12 +29,13 @@ class ActDeact {
     
         $sql = "CREATE TABLE $table_name (
             id mediumint(9) NOT NULL AUTO_INCREMENT,
-            filter_id mediumint(9) NOT NULL,
+            filter_id mediumint(9) DEFAULT NULL,  /* Set default to NULL */
             badge_name varchar(255) NOT NULL,
             badge_type varchar(100) NOT NULL,
             user_id mediumint(9) NOT NULL,
             priority tinyint(3) NOT NULL DEFAULT 0,
             badge_style text NOT NULL,
+            badge_data text NOT NULL,  /* New column added */
             created_at datetime DEFAULT CURRENT_TIMESTAMP NOT NULL,
             updated_at datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL,
             PRIMARY KEY  (id)
