@@ -120,7 +120,7 @@ final class Store_Manager {
             // Check if plugin is being updated
             $our_plugin = plugin_basename(__FILE__);
             if (isset($options['plugins']) && in_array($our_plugin, $options['plugins'])) {
-                \STORE_MANAGER\Backend\ActDeact :: create_plugin_table();
+                new \STORE_MANAGER\Backend\ActDeact();
             }
         }
     }
