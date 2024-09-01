@@ -14,8 +14,7 @@ namespace STORE_MANAGER\Rest;
 use WP_Error;
 use WP_REST_Controller;
 use WP_REST_Server;
-use STORE_MANAGER\App\Product\BadgeHelper;
-use STORE_MANAGER\App\Utilities\BadgeHelper as UtilitiesBadgeHelper;
+use STORE_MANAGER\App\Utilities\BadgeHelper;
 
 class BadgeApi extends WP_REST_Controller {
 
@@ -27,11 +26,6 @@ class BadgeApi extends WP_REST_Controller {
 		$this->rest_base = Api::BADGE_ROUTE_NAME;
 	}
 
-    /**
-     * Registers the routes for the objects of the controller.
-     *
-     * @return void
-     */
     /**
 	 * Registers the routes for the objects of the controller.
 	 *
@@ -101,7 +95,18 @@ class BadgeApi extends WP_REST_Controller {
 	 * @return \WP_REST_Response|\WP_Error
 	 */
     public function get_items( $request ) {
-        return 'hello form get badges';
+        $badges = BadgeHelper::get_badges();
+
+        if( empty( $badges ) ) {
+            return array();
+        }
+
+        $response_badge = array();
+        foreach( $badges as $badge ) {
+            $response_badge[] = $this->prepare_item_for_response( $badge, $request );
+        }
+
+        return $response_badge;
     }
 
     /**
@@ -112,7 +117,7 @@ class BadgeApi extends WP_REST_Controller {
 	 */
     public function create_item( $request ) {
         $badge_data = $this->prepare_item_for_database( $request );
-        $inserted_id = UtilitiesBadgeHelper::save_badge( $badge_data );
+        $inserted_id = BadgeHelper::save_badge( $badge_data );
         return $inserted_id;
     }
 
@@ -384,10 +389,10 @@ class BadgeApi extends WP_REST_Controller {
 			$data['id'] = $item['id'];
 		}
 
-		$data['name'] = '';
+		$data['badge_name'] = '';
 
-		if ( ! empty( $item['name'] ) ) {
-			$data['name'] = $item['name'];
+		if ( ! empty( $item['badge_name'] ) ) {
+			$data['badge_name'] = $item['badge_name'];
 		}
 
 		$data['badge_data'] = array();
