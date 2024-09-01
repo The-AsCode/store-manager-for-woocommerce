@@ -109,6 +109,12 @@ class BadgeApi extends WP_REST_Controller {
         return $response_badge;
     }
 
+    /**
+	 * Get a item for badge.
+	 *
+	 * @param \WP_REST_Request $request Full data about the request.
+	 * @return \WP_REST_Response|\WP_Error
+	 */
     public function get_item( $request ) {
         $badge_id = $request['id'];
         $result = BadgeHelper::get_badge( $badge_id );
