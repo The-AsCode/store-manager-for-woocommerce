@@ -136,4 +136,54 @@ class BadgeHelper {
         // Return the ID of the updated badge
         return $badge_id;
     }
+
+    /**
+     * Delete badge
+     * 
+     * @param int $badge_id ID of the badge to delete
+     * 
+     * @return mixed Array of deleted badge data on success, WP_Error on failure
+     */
+    public static function delete_badge($badge_id) {
+        global $wpdb;
+
+        $table_name = $wpdb->prefix . 'store_manager_badges';
+
+        // Ensure the badge ID is valid
+        if ( ! is_numeric( $badge_id ) || $badge_id <= 0 ) {
+            return new \WP_Error(
+                'rest_invalid_id',
+                __('Invalid badge ID.', 'store-manager-for-woocommerce'),
+                array('status' => 400)
+            );
+        }
+
+        // Retrieve the badge data before deletion
+        $previous = self::get_badge($badge_id);
+
+        if ( empty( $previous ) ) {
+            return new \WP_Error(
+                'rest_not_found',
+                __('Badge not found.', 'store-manager-for-woocommerce'),
+                array('status' => 404)
+            );
+        }
+
+        // Prepare and execute the query to delete the specific badge
+        $where = array('id' => $badge_id);
+        $deleted = $wpdb->delete($table_name, $where);
+
+        if ( false === $deleted ) {
+            return new \WP_Error(
+                'rest_not_deleted',
+                __('Sorry, the badge could not be deleted.', 'store-manager-for-woocommerce'),
+                array('status' => 400)
+            );
+        }
+
+        // Return the deleted badge data
+        return $previous;
+    }
+
+
 }

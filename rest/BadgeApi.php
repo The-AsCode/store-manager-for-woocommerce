@@ -141,11 +141,22 @@ class BadgeApi extends WP_REST_Controller {
     public function update_item( $request ) {
         $badge_id = $request['id'];
         $update_data = $request->get_json_params();
-        $badge_data = $this->prepare_item_for_database( $update_data );
-        $inserted_id = BadgeHelper::update_badge( $badge_id, $badge_data );
-        $inserted_data = BadgeHelper::get_badge( $inserted_id );
+        $updated_id = BadgeHelper::update_badge( $badge_id, $update_data );
+        $updated_data = BadgeHelper::get_badge( $updated_id );
 
-        return $this->prepare_item_for_response( $inserted_data, $request );
+        return $this->prepare_item_for_response( $updated_data, $request );
+    }
+
+    /**
+	 * Update a item for badge.
+	 *
+	 * @param \WP_REST_Request $request Full data about the request.
+	 * @return \WP_REST_Response|\WP_Error
+	 */
+    public function delete_item( $request ) {
+        $badge_id = $request['id'];
+        $deleted_data = BadgeHelper::delete_badge( $badge_id );
+        return $this->prepare_item_for_response( $deleted_data, $request );
     }
 
     /**
@@ -321,8 +332,8 @@ class BadgeApi extends WP_REST_Controller {
 	protected function prepare_links( $item ) {
 		$id = 0;
 
-		if ( isset( $item->id ) ) {
-			$id = $item->id;
+		if ( isset( $item['id'] ) ) {
+			$id = $item['id'];
 		}
 
 		$base = sprintf( '%s/%s', $this->namespace, $this->rest_base );
