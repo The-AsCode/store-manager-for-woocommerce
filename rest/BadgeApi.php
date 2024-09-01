@@ -109,6 +109,15 @@ class BadgeApi extends WP_REST_Controller {
         return $response_badge;
     }
 
+    public function get_item( $request ) {
+        $badge_id = $request['id'];
+        $result = BadgeHelper::get_badge( $badge_id );
+
+        $response = $this->prepare_item_for_response( $result, $request );
+
+        return $response;
+    }
+
     /**
 	 * Create a item for badge.
 	 *
@@ -118,7 +127,9 @@ class BadgeApi extends WP_REST_Controller {
     public function create_item( $request ) {
         $badge_data = $this->prepare_item_for_database( $request );
         $inserted_id = BadgeHelper::save_badge( $badge_data );
-        return $inserted_id;
+        $inserted_data = BadgeHelper::get_badge( $inserted_id );
+
+        return $this->prepare_item_for_response( $inserted_data, $request );
     }
 
     /**

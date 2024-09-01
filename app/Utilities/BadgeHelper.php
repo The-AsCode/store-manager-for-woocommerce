@@ -48,23 +48,56 @@ class BadgeHelper {
      * 
      * @return int
      */
-    public static function save_badge( $badge_data ) {
+    public static function save_badge($badge_data) {
         global $wpdb;
         
         $table_name = $wpdb->prefix . 'store_manager_badges';
-
+    
+        // Ensure 'created_by' is set to the current user ID
         $badge_data['created_by'] = get_current_user_id();
         
-        $result = $wpdb->insert($table_name, $badge_data);
-
-        if( empty( $result ) ) {
+        // Insert the badge data into the database
+        $inserted = $wpdb->insert($table_name, $badge_data);
+    
+        // Check if the insert was successful
+        if (false === $inserted) {
             return new \WP_Error(
-				'rest_not_added',
-				__( 'Sorry, the badge could not be added.', 'store-manager-for-woocommerce' ),
-				array( 'status' => 400 )
-			);
+                'rest_not_added',
+                __('Sorry, the badge could not be added.', 'store-manager-for-woocommerce'),
+                array('status' => 400)
+            );
         }
+    
+        // Return the ID of the inserted row
+        return $wpdb->insert_id;
+    }    
 
+    public static function get_badge( $badge_id ) {
+        global $wpdb;
+        
+        $table_name = $wpdb->prefix . 'store_manager_badges';
+        
+        // Prepare and execute the query to get the specific badge
+        $query = $wpdb->prepare("SELECT * FROM $table_name WHERE id = %d", $badge_id);
+        $result = $wpdb->get_row($query, ARRAY_A); // ARRAY_A returns an associative array
+        
+        if (empty($result)) {
+            return new \WP_Error(
+                'rest_no_badge',
+                __( 'Badge not found.', 'store-manager-for-woocommerce' ),
+                array( 'status' => 404 )
+            );
+        }
+        
+        // Decode JSON fields
+        if (!empty($result['badge_data'])) {
+            $result['badge_data'] = json_decode($result['badge_data'], true); // true for associative array
+        }
+        if (!empty($result['badge_style'])) {
+            $result['badge_style'] = json_decode($result['badge_style'], true); // true for associative array
+        }
+        
         return $result;
+        
     }
 }
