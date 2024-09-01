@@ -133,6 +133,22 @@ class BadgeApi extends WP_REST_Controller {
     }
 
     /**
+	 * Update a item for badge.
+	 *
+	 * @param \WP_REST_Request $request Full data about the request.
+	 * @return \WP_REST_Response|\WP_Error
+	 */
+    public function update_item( $request ) {
+        $badge_id = $request['id'];
+        $update_data = $request->get_json_params();
+        $badge_data = $this->prepare_item_for_database( $update_data );
+        $inserted_id = BadgeHelper::update_badge( $badge_id, $badge_data );
+        $inserted_data = BadgeHelper::get_badge( $inserted_id );
+
+        return $this->prepare_item_for_response( $inserted_data, $request );
+    }
+
+    /**
 	 * Checks if a given request has access to read badge.
 	 *
 	 * @param \WP_REST_Request $request Full data about the request.

@@ -72,6 +72,13 @@ class BadgeHelper {
         return $wpdb->insert_id;
     }    
 
+    /**
+     * Get badge
+     * 
+     * @param array $badge_data
+     * 
+     * @return int
+     */
     public static function get_badge( $badge_id ) {
         global $wpdb;
         
@@ -99,5 +106,34 @@ class BadgeHelper {
         
         return $result;
         
+    }
+
+    /**
+     * Update badge
+     * 
+     * @param int   $badge_id   ID of the badge to update
+     * @param array $badge_data Associative array of badge data to update
+     * 
+     * @return mixed Updated badge ID on success, WP_Error on failure
+     */
+    public static function update_badge($badge_id, $badge_data) {
+        global $wpdb;
+        
+        $table_name = $wpdb->prefix . 'store_manager_badges';
+        
+        // Prepare and execute the query to update the specific badge
+        $where = array('id' => $badge_id);
+        $updated = $wpdb->update($table_name, $badge_data, $where);
+        
+        if (false === $updated) {
+            return new \WP_Error(
+                'rest_not_updated',
+                __('Sorry, the badge could not be updated.', 'store-manager-for-woocommerce'),
+                array('status' => 400)
+            );
+        }
+        
+        // Return the ID of the updated badge
+        return $badge_id;
     }
 }
