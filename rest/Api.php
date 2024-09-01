@@ -22,6 +22,7 @@ Class Api {
 	public const SEARCH_ROUTE_NAME = 'search';
 	public const DROPDOWN_ROUTE_NAME = 'dropdown';
 	public const FILTER_ROUTE_NAME = 'filters';
+	public const BADGE_ROUTE_NAME = 'badges';
 
     /**
 	 * Register REST API
@@ -64,5 +65,9 @@ Class Api {
 		//wp-json/smx/v1/filters
 		$filter = new FilterApi();
 		$filter->register_routes();
+
+		//wp-json/smx/v1/badges
+		$badge = new BadgeApi();
+		$badge->register_routes();
 	}
 }
