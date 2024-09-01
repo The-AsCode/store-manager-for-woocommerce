@@ -431,20 +431,20 @@ class BadgeApi extends WP_REST_Controller {
 			$data['created_by'] = $item['created_by'];
 		}
 
-		$data['created_date'] = '';
+		$data['created_at'] = '';
 
-		if ( ! empty( $item['created_date'] ) ) {
-			$created_date = gmdate( DATE_W3C, strtotime( $item['created_date'] ) );
+		if ( ! empty( $item['created_at'] ) ) {
+			$created_date = gmdate( DATE_W3C, strtotime( $item['created_at'] ) );
 
-			$data['created_date'] = $created_date;
+			$data['created_at'] = $created_date;
 		}
 
-		$data['updated_date'] = '';
+		$data['updated_at'] = '';
 
-		if ( ! empty( $item['updated_date'] ) ) {
-			$modified_date = gmdate( DATE_W3C, strtotime( $item['updated_date'] ) );
+		if ( ! empty( $item['updated_at'] ) ) {
+			$modified_date = gmdate( DATE_W3C, strtotime( $item['updated_at'] ) );
 
-			$data['updated_date'] = $modified_date;
+			$data['updated_at'] = $modified_date;
 		}
 
 		$context = ! empty( $request['context'] ) && is_string( $request['context'] ) ? $request['context'] : 'view';//phpcs:ignore
