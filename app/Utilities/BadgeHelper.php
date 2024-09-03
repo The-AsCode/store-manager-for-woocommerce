@@ -30,11 +30,11 @@ class BadgeHelper {
         
         // Decode JSON fields
         foreach ($results as &$badge) {
-            if (!empty($badge['badge_data'])) {
-                $badge['badge_data'] = json_decode($badge['badge_data'], true); // true for associative array
+            if ( ! empty( $badge['filter'] ) ) {
+                $badge['filter'] = maybe_unserialize($badge['filter'], true); // true for associative array
             }
-            if (!empty($badge['badge_style'])) {
-                $badge['badge_style'] = json_decode($badge['badge_style'], true); // true for associative array
+            if ( ! empty($badge['badge_style'] ) ) {
+                $badge['badge_style'] = maybe_unserialize($badge['badge_style'], true); // true for associative array
             }
         }
         
@@ -49,8 +49,8 @@ class BadgeHelper {
      * @return int
      */
     public static function save_badge($badge_data) {
+
         global $wpdb;
-        
         $table_name = $wpdb->prefix . 'store_manager_badges';
     
         // Ensure 'created_by' is set to the current user ID
@@ -97,11 +97,11 @@ class BadgeHelper {
         }
         
         // Decode JSON fields
-        if (!empty($result['badge_data'])) {
-            $result['badge_data'] = json_decode($result['badge_data'], true); // true for associative array
+        if (!empty($result['filter'])) {
+            $result['filter'] = maybe_unserialize($result['filter'], true); // true for associative array
         }
         if (!empty($result['badge_style'])) {
-            $result['badge_style'] = json_decode($result['badge_style'], true); // true for associative array
+            $result['badge_style'] = maybe_unserialize($result['badge_style'], true); // true for associative array
         }
         
         return $result;
@@ -118,7 +118,6 @@ class BadgeHelper {
      */
     public static function update_badge($badge_id, $badge_data) {
         global $wpdb;
-        
         $table_name = $wpdb->prefix . 'store_manager_badges';
         
         // Prepare and execute the query to update the specific badge

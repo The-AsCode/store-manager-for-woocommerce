@@ -147,6 +147,7 @@ class BadgeApi extends WP_REST_Controller {
     public function update_item( $request ) {
         $badge_id = $request['id'];
         $update_data = $request->get_json_params();
+        $update_data = $this->prepare_item_for_database($update_data);
         $updated_id = BadgeHelper::update_badge( $badge_id, $update_data );
         $updated_data = BadgeHelper::get_badge( $updated_id );
 
@@ -215,15 +216,15 @@ class BadgeApi extends WP_REST_Controller {
                 'sanitize_callback' => 'sanitize_text_field',
                 'validate_callback' => 'rest_validate_request_arg',
             ),
-            'badge_data' => array(
-                'description'       => __( 'Badge data', 'store-manager-for-woocommerce' ),
-                'type'              => 'object',
+            'filter' => array(
+                'description'       => __( 'Filter data', 'store-manager-for-woocommerce' ),
+                'type'              => 'array',
                 // 'sanitize_callback' => 'sanitize_text_field',
                 // 'validate_callback' => 'rest_validate_request_arg',
             ),
             'badge_style' => array(
                 'description'       => __( 'Badge Style data', 'store-manager-for-woocommerce' ),
-                'type'              => 'object',
+                'type'              => 'string',
                 // 'sanitize_callback' => 'sanitize_text_field',
                 // 'validate_callback' => 'rest_validate_request_arg',
             ),
@@ -239,14 +240,22 @@ class BadgeApi extends WP_REST_Controller {
                 'sanitize_callback' => 'absint',
                 'validate_callback' => 'rest_validate_request_arg',
             ),
-            'filter_id' => array(
-                'description'       => __( 'Filter id', 'store-manager-for-woocommerce' ),
-                'type'              => 'integer',
-                'sanitize_callback' => 'absint',
+            'valid_from' => array(
+                'description'       => __( 'Badge valid from date', 'store-manager-for-woocommerce' ),
+                'type'              => 'string',
+                'format'            => 'date',
+                'sanitize_callback' => 'sanitize_text_field',
                 'validate_callback' => 'rest_validate_request_arg',
-            )
+            ),
+            'valid_to' => array(
+                'description'       => __( 'Badge valid to date', 'store-manager-for-woocommerce' ),
+                'type'              => 'string',
+                'format'            => 'date',
+                'sanitize_callback' => 'sanitize_text_field',
+                'validate_callback' => 'rest_validate_request_arg',
+            ),
         );
-    }
+    }    
 
     /**
      * Get the Product schema, conforming to JSON Schema.
@@ -277,15 +286,9 @@ class BadgeApi extends WP_REST_Controller {
                     'context'     => array( 'view' ),
                     'readonly'    => true,
                 ),
-                'badge_data' => array(
-                    'description' => __( 'Badge data.', 'store-manager-for-woocommerce' ),
-                    'type'        => 'object',
-                    'context'     => array( 'view' ),
-                    'readonly'    => true,
-                ),
                 'badge_style' => array(
                     'description' => __( 'Badge Style.', 'store-manager-for-woocommerce' ),
-                    'type'        => 'object',
+                    'type'        => 'string',
                     'context'     => array( 'view' ),
                     'readonly'    => true,
                 ),
@@ -301,9 +304,21 @@ class BadgeApi extends WP_REST_Controller {
                     'context'     => array( 'view' ),
                     'readonly'    => true,
                 ),
-                'filter_id' => array(
-                    'description' => __( 'Filter id.', 'store-manager-for-woocommerce' ),
-                    'type'        => 'integer',
+                'filter' => array(
+                    'description' => __( 'Filter.', 'store-manager-for-woocommerce' ),
+                    'type'        => 'array',
+                    'context'     => array( 'view' ),
+                    'readonly'    => true,
+                ),
+                'valid_from' => array(
+                    'description' => __( 'Badge valid from.', 'store-manager-for-woocommerce' ),
+                    'type'        => 'date',
+                    'context'     => array( 'view' ),
+                    'readonly'    => true,
+                ),
+                'valid_to' => array(
+                    'description' => __( 'Badge valid to.', 'store-manager-for-woocommerce' ),
+                    'type'        => 'date',
                     'context'     => array( 'view' ),
                     'readonly'    => true,
                 ),
@@ -386,32 +401,39 @@ class BadgeApi extends WP_REST_Controller {
         }
         $status = absint( $request['status'] );
 
-        // Validate and sanitize the filter_id
-        if ( ! isset( $request['filter_id'] ) || ! is_numeric( $request['filter_id'] ) ) {
-            return new WP_Error( 'invalid_filter_id', __( 'Filter ID must be a valid number.', 'store-manager-for-woocommerce' ), array( 'status' => 400 ) );
+        // Validate and sanitize the filter
+        if ( ! isset( $request['filter'] ) ) {
+            return new WP_Error( 'invalid_filter', __( 'Filter must be a valid.', 'store-manager-for-woocommerce' ), array( 'status' => 400 ) );
         }
-        $filter_id = absint( $request['filter_id'] );
+        $filter = $request['filter'];
 
-        // Badge data (assuming it's an array and already sanitized by another process)
-        if ( ! isset( $request['badge_data'] ) || ! is_array( $request['badge_data'] ) ) {
-            return new WP_Error( 'invalid_badge_data', __( 'Badge data must be a valid array.', 'store-manager-for-woocommerce' ), array( 'status' => 400 ) );
+        // Validate start date
+        if ( ! isset( $request['valid_from'] ) ) {
+            return new WP_Error( 'invalid_date', __( 'Validate from mustbe date.', 'store-manager-for-woocommerce' ), array( 'status' => 400 ) );
         }
-        $badge_data = $request['badge_data'];
+        $valid_from = absint( $request['valid_from'] );
+
+        // Validate end date
+        if ( ! isset( $request['valid_to'] ) ) {
+            return new WP_Error( 'invalid_date', __( 'Validate to mustbe date.', 'store-manager-for-woocommerce' ), array( 'status' => 400 ) );
+        }
+        $valid_to = absint( $request['valid_to'] );
 
         // Badge style (assuming it's an array and already sanitized by another process)
-        if ( ! isset( $request['badge_style'] ) || ! is_array( $request['badge_style'] ) ) {
+        if ( ! isset( $request['badge_style'] ) ) {
             return new WP_Error( 'invalid_badge_style', __( 'Badge style must be a valid array.', 'store-manager-for-woocommerce' ), array( 'status' => 400 ) );
         }
         $badge_style = $request['badge_style'];
-        
+
         $prepared_data = array(
-            'badge_name'  => $badge_name,
-            'badge_type'  => $badge_type,
-            'badge_data'  => json_encode( $badge_data ),
-            'badge_style' => json_encode( $badge_style ),
-            'priority'    => $priority,
-            'status'      => $status,
-            'filter_id'   => $filter_id,
+            'badge_name'    => $badge_name,
+            'badge_type'    => $badge_type,
+            'filter'        => maybe_serialize($filter),
+            'badge_style'   => maybe_serialize( $badge_style ),
+            'priority'      => $priority,
+            'status'        => $status,
+            'valid_from'    => $valid_from,
+            'valid_to'      => $valid_to
         );
         
         return $prepared_data;
@@ -439,10 +461,10 @@ class BadgeApi extends WP_REST_Controller {
 			$data['badge_name'] = $item['badge_name'];
 		}
 
-		$data['badge_data'] = array();
+		$data['filter'] = array();
 
-		if ( ! empty( $item['badge_data'] ) ) {
-			$data['badge_data'] = $item['badge_data'];
+		if ( ! empty( $item['filter'] ) ) {
+			$data['filter'] = $item['filter'];
 		}
 
 		$data['badge_style'] = array();
@@ -463,16 +485,26 @@ class BadgeApi extends WP_REST_Controller {
 			$data['status'] = $item['status'];
 		}
 
-        $data['filter_id'] = '';
-
-		if ( ! empty( $item['filter_id'] ) ) {
-			$data['filter_id'] = $item['filter_id'];
-		}
-
         $data['created_by'] = '';
 
 		if ( ! empty( $item['created_by'] ) ) {
 			$data['created_by'] = $item['created_by'];
+		}
+
+        $data['valid_from'] = '';
+
+		if ( ! empty( $item['valid_from'] ) ) {
+			$created_date = gmdate( DATE_W3C, strtotime( $item['valid_from'] ) );
+
+			$data['valid_from'] = $created_date;
+		}
+
+        $data['valid_to'] = '';
+
+		if ( ! empty( $item['valid_to'] ) ) {
+			$created_date = gmdate( DATE_W3C, strtotime( $item['valid_to'] ) );
+
+			$data['valid_to'] = $created_date;
 		}
 
 		$data['created_at'] = '';
