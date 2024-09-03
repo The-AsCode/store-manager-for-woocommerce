@@ -1,11 +1,11 @@
 === Store Manager for WooCommerce ===
 Contributors: shopmanagerx
-Tags: woocommerce, store-management, shop manager, stock-management
+Tags: woocommerce, store-management, shop-manager,inventory, product-stock
 Requires at least: 4.9
 Tested up to: 6.6.1
 WC requires at least: 3.1
 WC tested up to: 9.2.2
-Stable tag: 1.0.5
+Stable tag: 1.0.6
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 Requires PHP: 7.4
@@ -14,8 +14,8 @@ Donate link: https://osmanhaideradnan.wordpress.com/
 This plugin is designed to simplify the process of managing product stock on your WordPress-based online store.
 
 == Description ==
-
-The WordPress plugin is a powerful tool designed to efficiently manage product stock for your online store.
+**Store Manager for WooCommerce**
+Streamline your WooCommerce product inventory management with this user-friendly plugin. Effectively track and control your stock levels, ensuring accurate product availability information for your customers.
 
 == Installation ==
 
@@ -43,12 +43,35 @@ The WordPress plugin is a powerful tool designed to efficiently manage product s
 
 ## Features
 
-1. **Product Setup**: Navigate to the Shop manager pages in your WordPress admin panel and find the new stock management options.
+1. **Intuitive Stock Management:** Easily update stock quantities, statuses, and out-of-stock notifications.
 
-2. **Stock Tracking**: Update stock levels in real-time as products are bought or restocked.
+2. **Advanced Filtering**: Quickly filter products by name, category, status, and view the number of items in low stock, managed, and out-of-stock.
 
-3. **Inventory Control**: Monitor your inventory and receive alerts for low stock levels.
+3. **One-Page Application**: Enjoy a seamless user experience with a single-page interface, eliminating the need for page reloads.
 
+4. **Customer Notifications**: Keep your customers informed about stock availability through customizable notifications.
+
+5. **Customizable Settings**: Tailor the plugin to your specific requirements with various configuration options.
+
+6. **Support**: For any questions or assistance, feel free to reach out to our friendly support team at [shopmanagerx@gmail.com].
+
+## Benefits
+
+1. **Improved Inventory Accuracy**: Maintain precise stock levels to avoid overselling or stockouts.
+
+2. **Enhanced Customer Experience**: Provide transparent stock information and timely notifications.
+
+3. **Efficient Workflow**: Streamline your stock management tasks with a user-friendly interface.
+
+4. **Increased Sales**: Avoid lost sales due to inaccurate stock information.
+
+## Support
+**For support and troubleshooting, please visit the plugin's support forum on WordPress.**
+
+##Compatibility
+This plugin is compatible with the latest versions of WordPress and WooCommerce.
+
+Keywords: WooCommerce, stock management, inventory, product stock, out-of-stock, low stock, notifications, filtering, one-page application
 
 == Frequently Asked Questions ==
 
