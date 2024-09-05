@@ -1,5 +1,6 @@
 import { Bars3Icon, PencilSquareIcon, TrashIcon } from '@heroicons/react/24/outline';
 import Table from '../../../../components/Table';
+import Toggler from '../../../../components/Toggler';
 
 const BadgesTable = () => {
   return (
@@ -22,7 +23,9 @@ const BadgesTable = () => {
           <Table.Data className='wmx-my-auto wmx-py-3 wmx-w-8'>
             <Bars3Icon className='wmx-size-6' />
           </Table.Data>
-          <Table.Data>Active</Table.Data>
+          <Table.Data>
+            <Toggler onChange={() => {}} checked={false} />
+          </Table.Data>
           <Table.Data>All Product Except New Arrival</Table.Data>
           <Table.Data>23 Jan, 2024</Table.Data>
           <Table.Data>23 Dec, 2024</Table.Data>
@@ -42,7 +45,9 @@ const BadgesTable = () => {
             <Bars3Icon className='wmx-size-6' />
           </Table.Data>
 
-          <Table.Data>Inactive</Table.Data>
+          <Table.Data>
+            <Toggler onChange={() => {}} checked={true} />
+          </Table.Data>
 
           <Table.Data>Only Winter Category Product Under 5$</Table.Data>
           <Table.Data>28 Jan, 2024</Table.Data>
