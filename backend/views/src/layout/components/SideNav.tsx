@@ -9,7 +9,7 @@ const SideNav = () => {
 
   return (
     <div className='wmx-bg-white wmx-flex-shrink-0 wmx-w-48'>
-      <div className=' wmx-sticky wmx-top-16'>
+      <div className=' wmx-sticky wmx-top-[84px]'>
         <div className='wmx-mt-8'>
           <h3 className='wmx-flex wmx-flex-col wmx-items-center'>
             <span className='wmx-text-lg wmx-font-medium wmx-text-gray-700'>
