@@ -127,6 +127,11 @@ class BadgeApi extends WP_REST_Controller {
         $badge_id = $request['id'];
         $result = BadgeHelper::get_badge( $badge_id );
 
+        // Check if the result is an instance of WP_Error
+        if ( is_wp_error( $result ) ) {
+            return $result; // Return the WP_Error object as is
+        }
+
         $response = $this->prepare_item_for_response( $result, $request );
 
         return $response;
@@ -143,6 +148,11 @@ class BadgeApi extends WP_REST_Controller {
         $inserted_id = BadgeHelper::save_badge( $badge_data );
         $inserted_data = BadgeHelper::get_badge( $inserted_id );
 
+        // Check if the result is an instance of WP_Error
+        if ( is_wp_error( $inserted_data ) ) {
+            return $inserted_data; // Return the WP_Error object as is
+        }
+
         return $this->prepare_item_for_response( $inserted_data, $request );
     }
 
@@ -157,6 +167,10 @@ class BadgeApi extends WP_REST_Controller {
         $update_data = $request->get_json_params();
         $update_data = $this->prepare_item_for_database($update_data);
         $updated_id = BadgeHelper::update_badge( $badge_id, $update_data );
+        // Check if the result is an instance of WP_Error
+        if ( is_wp_error( $updated_id ) ) {
+            return $updated_id; // Return the WP_Error object as is
+        }
         $updated_data = BadgeHelper::get_badge( $updated_id );
 
         return $this->prepare_item_for_response( $updated_data, $request );
@@ -170,8 +184,12 @@ class BadgeApi extends WP_REST_Controller {
 	 */
     public function delete_item( $request ) {
         $badge_id = $request['id'];
-        $deleted_data = BadgeHelper::delete_badge( $badge_id );
-        return $this->prepare_item_for_response( $deleted_data, $request );
+        $response = BadgeHelper::delete_badge( $badge_id );
+        // Check if the result is an instance of WP_Error
+        if ( is_wp_error( $response ) ) {
+            return $response; // Return the WP_Error object as is
+        }
+        return $this->prepare_item_for_response( $response, $request );
     }
 
     /**

@@ -20,7 +20,7 @@ class BadgeHelper {
         $query = "SELECT * FROM $table_name";
         $results = $wpdb->get_results($query, ARRAY_A); // ARRAY_A returns an associative array
         
-        if (empty($results)) {
+        if ( empty($results ) ) {
             return new \WP_Error(
                 'rest_no_badges',
                 __( 'No badges found.', 'store-manager-for-woocommerce' ),
