@@ -98,12 +98,12 @@ class BadgeApi extends WP_REST_Controller {
     public function get_items( $request ) {
         $results = BadgeHelper::get_badges();
 
-         // Check if the result is an instance of WP_Error
-         if ( is_wp_error( $results ) ) {
+        // Check if the result is an instance of WP_Error
+        if ( is_wp_error( $results ) ) {
             return $results; // Return the WP_Error object as is
         }
 
-        if( empty( $badges ) ) {
+        if( empty( $results ) ) {
             return array();
         }
 
@@ -113,7 +113,7 @@ class BadgeApi extends WP_REST_Controller {
 
         }
 
-        $total    = count( $badges );
+        $total    = count( $results );
 		$response = rest_ensure_response( $data );
 
 		$response->header( 'X-WP-Total', (int) $total );
