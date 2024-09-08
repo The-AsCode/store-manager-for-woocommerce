@@ -14,6 +14,7 @@ namespace STORE_MANAGER\Rest;
 use WP_Error;
 use WP_REST_Controller;
 use WP_REST_Server;
+use WP_REST_Response;
 use STORE_MANAGER\App\Utilities\BadgeHelper;
 
 class BadgeApi extends WP_REST_Controller {
@@ -101,12 +102,19 @@ class BadgeApi extends WP_REST_Controller {
             return array();
         }
 
-        $response_badge = array();
         foreach( $badges as $badge ) {
-            $response_badge[] = $this->prepare_item_for_response( $badge, $request );
+            $response = $this->prepare_item_for_response( $badge, $$badge );
+            $data[]   = $this->prepare_response_for_collection( $response );
+
         }
 
-        return $response_badge;
+        $total    = count( $badges );
+		$response = rest_ensure_response( $data );
+
+		$response->header( 'X-WP-Total', (int) $total );
+		$response->header( 'X-WP-TotalPages', (int) $total );
+
+        return $response;
     }
 
     /**
@@ -367,6 +375,30 @@ class BadgeApi extends WP_REST_Controller {
 				'href' => rest_url( $base ),
 			),
 		);
+	}
+
+    /**
+	 * Prepares a response for insertion into a collection.
+	 *
+	 * @since 4.7.0
+	 *
+	 * @param WP_REST_Response $response Response object.
+	 * @return array|mixed Response data, ready for insertion into collection data.
+	 */
+	public function prepare_response_for_collection( $response ) {
+		if ( ! ( $response instanceof WP_REST_Response ) ) {
+			return $response;
+		}
+
+		$data   = (array) $response->get_data();
+		$server = rest_get_server();
+		$links  = $server::get_compact_response_links( $response );
+
+		if ( ! empty( $links ) ) {
+			$data['_links'] = $links;
+		}
+
+		return $data;
 	}
 
     /**
