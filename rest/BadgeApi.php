@@ -377,67 +377,50 @@ class BadgeApi extends WP_REST_Controller {
 	 */
     protected function prepare_item_for_database( $request ) {
 
+        $prepared_data = array();
+    
         // Validate and sanitize the badge_name
-        if ( empty( $request['badge_name'] ) ) {
-            return new WP_Error( 'missing_badge_name', __( 'Badge name is required.', 'store-manager-for-woocommerce' ), array( 'status' => 400 ) );
+        if ( isset( $request['badge_name'] ) ) {
+            $prepared_data['badge_name'] = sanitize_text_field( $request['badge_name'] );
         }
-        $badge_name = sanitize_text_field( $request['badge_name'] );
-
+    
         // Validate and sanitize the badge_type
-        if ( empty( $request['badge_type'] ) ) {
-            return new WP_Error( 'missing_badge_type', __( 'Badge type is required.', 'store-manager-for-woocommerce' ), array( 'status' => 400 ) );
+        if ( isset( $request['badge_type'] ) ) {
+            $prepared_data['badge_type'] = sanitize_text_field( $request['badge_type'] );
         }
-        $badge_type = sanitize_text_field( $request['badge_type'] );
-
+    
         // Validate and sanitize the priority
-        if ( ! isset( $request['priority'] ) || ! is_numeric( $request['priority'] ) ) {
-            return new WP_Error( 'invalid_priority', __( 'Priority must be a valid number.', 'store-manager-for-woocommerce' ), array( 'status' => 400 ) );
+        if ( isset( $request['priority'] ) && is_numeric( $request['priority'] ) ) {
+            $prepared_data['priority'] = absint( $request['priority'] );
         }
-        $priority = absint( $request['priority'] );
-
+    
         // Validate and sanitize the status
-        if ( ! isset( $request['status'] ) || ! is_numeric( $request['status'] ) ) {
-            return new WP_Error( 'invalid_status', __( 'Status must be a valid number.', 'store-manager-for-woocommerce' ), array( 'status' => 400 ) );
+        if ( isset( $request['status'] ) && is_numeric( $request['status'] ) ) {
+            $prepared_data['status'] = absint( $request['status'] );
         }
-        $status = absint( $request['status'] );
-
+    
         // Validate and sanitize the filter
-        if ( ! isset( $request['filter'] ) ) {
-            return new WP_Error( 'invalid_filter', __( 'Filter must be a valid.', 'store-manager-for-woocommerce' ), array( 'status' => 400 ) );
+        if ( isset( $request['filter'] ) ) {
+            $prepared_data['filter'] = maybe_serialize( $request['filter'] );
         }
-        $filter = $request['filter'];
-
-        // Validate start date
-        if ( ! isset( $request['valid_from'] ) ) {
-            return new WP_Error( 'invalid_date', __( 'Validate from mustbe date.', 'store-manager-for-woocommerce' ), array( 'status' => 400 ) );
+    
+        // Validate and sanitize the start date
+        if ( isset( $request['valid_from'] ) ) {
+            $prepared_data['valid_from'] = strtotime( $request['valid_from'] );
         }
-        $valid_from = absint( $request['valid_from'] );
-
-        // Validate end date
-        if ( ! isset( $request['valid_to'] ) ) {
-            return new WP_Error( 'invalid_date', __( 'Validate to mustbe date.', 'store-manager-for-woocommerce' ), array( 'status' => 400 ) );
+    
+        // Validate and sanitize the end date
+        if ( isset( $request['valid_to'] ) ) {
+            $prepared_data['valid_to'] = strtotime( $request['valid_to'] );
         }
-        $valid_to = absint( $request['valid_to'] );
-
-        // Badge style (assuming it's an array and already sanitized by another process)
-        if ( ! isset( $request['badge_style'] ) ) {
-            return new WP_Error( 'invalid_badge_style', __( 'Badge style must be a valid array.', 'store-manager-for-woocommerce' ), array( 'status' => 400 ) );
+    
+        // Badge style (assuming it's an array and already sanitized elsewhere)
+        if ( isset( $request['badge_style'] ) ) {
+            $prepared_data['badge_style'] = maybe_serialize( $request['badge_style'] );
         }
-        $badge_style = $request['badge_style'];
-
-        $prepared_data = array(
-            'badge_name'    => $badge_name,
-            'badge_type'    => $badge_type,
-            'filter'        => maybe_serialize($filter),
-            'badge_style'   => maybe_serialize( $badge_style ),
-            'priority'      => $priority,
-            'status'        => $status,
-            'valid_from'    => $valid_from,
-            'valid_to'      => $valid_to
-        );
-        
+    
         return $prepared_data;
-    }
+    }    
 
     /**
 	 * Prepares the item for the REST response.
