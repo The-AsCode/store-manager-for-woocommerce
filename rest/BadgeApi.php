@@ -96,14 +96,19 @@ class BadgeApi extends WP_REST_Controller {
 	 * @return \WP_REST_Response|\WP_Error
 	 */
     public function get_items( $request ) {
-        $badges = BadgeHelper::get_badges();
+        $results = BadgeHelper::get_badges();
+
+         // Check if the result is an instance of WP_Error
+         if ( is_wp_error( $results ) ) {
+            return $results; // Return the WP_Error object as is
+        }
 
         if( empty( $badges ) ) {
             return array();
         }
 
-        foreach( $badges as $badge ) {
-            $response = $this->prepare_item_for_response( $badge, $$badge );
+        foreach( $results as $badge ) {
+            $response = $this->prepare_item_for_response( $badge, $request );
             $data[]   = $this->prepare_response_for_collection( $response );
 
         }
@@ -524,21 +529,21 @@ class BadgeApi extends WP_REST_Controller {
 			$data['created_by'] = $item['created_by'];
 		}
 
-        $data['valid_from'] = '';
+        // Validate and format valid_from date
+        if ( ! empty( $item['valid_from'] ) ) {
+            $timestamp = strtotime( $item['valid_from'] );
+            if ( $timestamp !== false ) {
+                $data['valid_from'] = gmdate( DATE_W3C, $timestamp );
+            }
+        }
 
-		if ( ! empty( $item['valid_from'] ) ) {
-			$created_date = gmdate( DATE_W3C, strtotime( $item['valid_from'] ) );
-
-			$data['valid_from'] = $created_date;
-		}
-
-        $data['valid_to'] = '';
-
-		if ( ! empty( $item['valid_to'] ) ) {
-			$created_date = gmdate( DATE_W3C, strtotime( $item['valid_to'] ) );
-
-			$data['valid_to'] = $created_date;
-		}
+        // Validate and format valid_to date
+        if ( ! empty( $item['valid_to'] ) ) {
+            $timestamp = strtotime( $item['valid_to'] );
+            if ( $timestamp !== false ) {
+                $data['valid_to'] = gmdate( DATE_W3C, $timestamp );
+            }
+        }
 
 		$data['created_at'] = '';
 
