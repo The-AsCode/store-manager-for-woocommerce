@@ -249,15 +249,15 @@ class BadgeApi extends WP_REST_Controller {
             ),
             'filter' => array(
                 'description'       => __( 'Filter data', 'store-manager-for-woocommerce' ),
-                'type'              => 'object',
-                // 'sanitize_callback' => 'sanitize_text_field',
-                // 'validate_callback' => 'rest_validate_request_arg',
+                'type'              => array( 'array', 'string', 'integer' ),
+                'sanitize_callback' => [$this, 'custom_sanitize_filter_data'],
+                'validate_callback' => 'rest_validate_request_arg',
             ),
             'badge_style' => array(
                 'description'       => __( 'Badge Style data', 'store-manager-for-woocommerce' ),
                 'type'              => 'string',
-                // 'sanitize_callback' => 'sanitize_text_field',
-                // 'validate_callback' => 'rest_validate_request_arg',
+                'sanitize_callback' => 'wp_kses_post',
+                'validate_callback' => 'rest_validate_request_arg',
             ),
             'priority' => array(
                 'description'       => __( 'Badge priority', 'store-manager-for-woocommerce' ),
@@ -286,7 +286,28 @@ class BadgeApi extends WP_REST_Controller {
                 'validate_callback' => 'rest_validate_request_arg',
             ),
         );
-    }    
+    } 
+    
+    /**
+     * Custom sanitize filter data 
+     * Validate if the data types can be different types 
+     * 
+     * @param $value, $request, $param
+     * 
+     * @return string|int|array
+     */
+    public function custom_sanitize_filter_data( $value, $request, $param ) {
+        if ( is_string( $value ) ) {
+            return sanitize_text_field( $value );
+        }
+        // If the value is an integer, return the integer directly
+        elseif ( is_int( $value ) ) {
+            return intval( $value );
+        }
+        // For other types, just return the value as is (or null for safety)
+        return $value;
+    }
+    
 
     /**
      * Get the Product schema, conforming to JSON Schema.
