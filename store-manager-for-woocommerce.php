@@ -131,8 +131,11 @@ final class Store_Manager {
      * @return void
      */
     public function init_plugin() {
+        $base_dir = ABSPATH . 'wp-content/plugins/shop-manager-x/backend/views/assets/badge/badge-images';
+        $json_file = ABSPATH . 'wp-content/plugins/shop-manager-x/backend/views/assets/badge/badgeImageData.json';
         if (is_admin()) {
             new STORE_MANAGER\Backend\Menu();
+            new STORE_MANAGER\App\Image\Image( $base_dir, $json_file);
         }
 
         new STORE_MANAGER\Rest\Api();
