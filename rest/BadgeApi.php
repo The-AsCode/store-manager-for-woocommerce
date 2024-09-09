@@ -482,12 +482,12 @@ class BadgeApi extends WP_REST_Controller {
     
         // Validate and sanitize the start date
         if ( isset( $request['valid_from'] ) ) {
-            $prepared_data['valid_from'] = $request['valid_from'];
+            $prepared_data['valid_from'] = gmdate( DATE_W3C, strtotime( $request['valid_from'] ) );
         }
     
         // Validate and sanitize the end date
         if ( isset( $request['valid_to'] ) ) {
-            $prepared_data['valid_to'] = $request['valid_to'];
+            $prepared_data['valid_to'] = gmdate( DATE_W3C, strtotime( $request['valid_to'] ) );
         }
     
         // Badge style (assuming it's an array and already sanitized elsewhere)
@@ -552,12 +552,12 @@ class BadgeApi extends WP_REST_Controller {
 
         // Validate and format valid_from date
         if ( ! empty( $item['valid_from'] ) ) {
-            $data['valid_from'] = $item['valid_from'];
+            $data['valid_from'] = gmdate( DATE_W3C, strtotime( $item['valid_from'] ) );
         }
 
         // Validate and format valid_to date
         if ( ! empty( $item['valid_to'] ) ) {
-            $data['valid_to'] = $item['valid_to'];
+            $data['valid_to'] = gmdate( DATE_W3C, strtotime( $item['valid_to'] ));
         }
 
 		$data['created_at'] = '';
