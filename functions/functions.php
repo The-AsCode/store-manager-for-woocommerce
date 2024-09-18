@@ -23,7 +23,7 @@ function add_text_overlay_to_product_image_html($image, $product, $size, $attr, 
     return $custom_html;
 }
 // add_action( 'woocommerce_before_shop_loop_item_title', 'wish_me_add_icon_to_product_image' );
-add_filter('woocommerce_product_get_image', 'wish_me_add_icon_to_product_image', 10, 2);
+// add_filter('woocommerce_product_get_image', 'wish_me_add_icon_to_product_image', 10, 2);
 //	add_filter( 'woocommerce_cart_item_thumbnail', 'wish_me_add_icon_to_product_image', 10, 2 );
 // add_filter('woocommerce_single_product_image_html', 'wish_me_add_icon_to_product_image', 10, 2);
 // add_filter('woocommerce_single_product_image_thumbnail_html', 'wish_me_add_icon_to_product_image', 10, 2);
