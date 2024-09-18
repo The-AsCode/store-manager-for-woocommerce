@@ -16,7 +16,7 @@
 			"STORE_MANAGER\\Rest\\": "rest/",
             "STORE_MANAGER\\App\\": "app/"
 		},
-		"files": []
+		"files": ["functions/functions.php"]
 	},
     "minimum-stability": "dev",
     "require": {}
