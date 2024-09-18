@@ -17,7 +17,6 @@ class Image {
      */
     public function generate_badge_json($base_dir, $json_file) {
         $badges = [];
-        $flatBadges = [];
     
         // Scan through the base directory
         $categories = scandir($base_dir);
@@ -41,13 +40,7 @@ class Image {
                     $image_name = pathinfo($image, PATHINFO_FILENAME);
                     $image_src = str_replace($base_dir . DIRECTORY_SEPARATOR, '', $category_path) . DIRECTORY_SEPARATOR . $image;
     
-                    // Add image data to the flat list
-                    $flatBadges[] = [
-                        'name' => $image_name,
-                        'src'  => $image_src
-                    ];
-    
-                    // Add image data to the category-based array without the nested keys
+                    // Add image data to the category-based array
                     $category_badges[] = [
                         'name' => $image_name,
                         'src'  => $image_src
@@ -61,17 +54,9 @@ class Image {
             }
         }
     
-        // Combine both structured and flat data into a single array
-        $data = [
-            'badges' => $badges,
-            'flatBadges' => $flatBadges
-        ];
-    
-        // Write JSON data to the file
-        $json_data = json_encode($data, JSON_PRETTY_PRINT);
+        // Write only the badges data to the file
+        $json_data = json_encode(['badges' => $badges], JSON_PRETTY_PRINT);
         file_put_contents($json_file, $json_data);
-    }
-    
-    
+    } 
 
 }
