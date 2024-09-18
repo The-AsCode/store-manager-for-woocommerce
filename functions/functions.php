@@ -6,7 +6,6 @@
 if (!defined('ABSPATH')) {
     exit;
 }
-error_log(print_r('test', true));
 
 
 // Add text overlay on WooCommerce product image using woocommerce_product_get_image filter
