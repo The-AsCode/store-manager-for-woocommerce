@@ -520,6 +520,12 @@ class BadgeApi extends WP_REST_Controller {
 			$data['badge_name'] = $item['badge_name'];
 		}
 
+        $data['badge_type'] = '';
+
+		if ( ! empty( $item['badge_type'] ) ) {
+			$data['badge_type'] = $item['badge_type'];
+		}
+
 		$data['filter'] = array();
 
 		if ( ! empty( $item['filter'] ) ) {
