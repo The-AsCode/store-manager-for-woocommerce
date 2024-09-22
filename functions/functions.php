@@ -45,13 +45,13 @@ function add_custom_text_to_product_image($image, $product) {
     // Apply the badge to the product
     $badge = apply_product_badges( '', $product );
 
-    // If badge is available, add it as an overlay
-    if ( ! empty( $badge ) ) {
-        // Customize the style of the badge overlay
-        $badge_overlay = '<div class="custom-overlay" style="position: absolute; top: 10px; left: 10px; background: rgba(255, 0, 0, 0.5); color: white; padding: 5px; z-index: 10;">' . esc_html( $badge ) . '</div>';
-    } else {
-        $badge_overlay = '';  // No badge, no overlay
+    if( empty( $badge ) ) {
+        return $image;
     }
+
+    // Customize the style of the badge overlay
+    $badge_overlay = '<div class="custom-overlay" style="position: absolute; top: 10px; left: 10px; background: rgba(255, 0, 0, 0.5); color: white; padding: 5px; z-index: 10;">' . esc_html( $badge ) . '</div>';
+
 
     // Wrap the original image with a div and append the badge overlay
     $new_image = '<div class="custom-image-wrapper" style="position: relative; display: inline-block;">' .
