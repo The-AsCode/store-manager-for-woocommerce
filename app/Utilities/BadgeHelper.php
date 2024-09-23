@@ -184,5 +184,46 @@ class BadgeHelper {
         return $previous;
     }
 
+    public static function get_badges_for_apply( $status = null, $badge_type = null ) {
+        global $wpdb;
+        
+        $table_name = $wpdb->prefix . 'store_manager_badges';
+        
+        // Build the query dynamically based on status and badge type
+        $query = "SELECT * FROM $table_name WHERE 1=1";
+        
+        // Add condition for status if provided
+        if ( ! is_null( $status ) ) {
+            $query .= $wpdb->prepare( " AND status = %s", $status );
+        }
+        
+        // Add condition for badge type if provided
+        if ( ! is_null( $badge_type ) ) {
+            $query .= $wpdb->prepare( " AND badge_type = %s", $badge_type );
+        }
+        
+        // Add order by priority in ascending order
+        $query .= " ORDER BY priority ASC";
+        
+        // Execute the query
+        $results = $wpdb->get_results( $query, ARRAY_A ); // ARRAY_A returns an associative array
+        
+        if ( empty( $results ) ) {
+            // Return an empty array if no results found
+            return [];
+        }
+        
+        // Decode JSON fields
+        foreach ( $results as &$badge ) {
+            if ( ! empty( $badge['filter'] ) ) {
+                $badge['filter'] = maybe_unserialize( $badge['filter'], true ); // true for associative array
+            }
+            if ( ! empty( $badge['badge_style'] ) ) {
+                $badge['badge_style'] = maybe_unserialize( $badge['badge_style'], true ); // true for associative array
+            }
+        }
+        
+        return $results;
+    }    
 
 }
