@@ -22,11 +22,12 @@ if (!defined('ABSPATH')) {
  if ( !function_exists( 'apply_product_badges' ) ) {
 
 	/**
-	 * Get the discounted price of a product.
+	 * Apply badge in a product.
 	 *
-	 * @param float       $price Product Price.
-	 * @param \WC_Product $product Product Object.
-	 * @return float
+	 * @param $badge Product badge
+     * @param $product product object
+     * 
+     * @return html
 	 */
 	function apply_product_badges( $badge, $product ) {
 		return ( new Badge )->apply_product_badges( $badge, $product );
