@@ -43,23 +43,13 @@ function add_custom_text_to_product_image($image, $product) {
     }
 
     // Apply the badge to the product
-    $badge = apply_product_badges( '', $product );
+    $badge = apply_product_badges( $image, $product );
 
     if( empty( $badge ) ) {
         return $image;
     }
 
-    // Customize the style of the badge overlay
-    $badge_overlay = '<div class="custom-overlay" style="position: absolute; top: 10px; left: 10px; background: rgba(255, 0, 0, 0.5); color: white; padding: 5px; z-index: 10;">' . esc_html( $badge ) . '</div>';
-
-
-    // Wrap the original image with a div and append the badge overlay
-    $new_image = '<div class="custom-image-wrapper" style="position: relative; display: inline-block;">' .
-                 $image . 
-                 $badge_overlay .  // Add the badge overlay if exists
-                 '</div>';
-
-    return $new_image;
+    return $badge;
 }
 add_filter('woocommerce_product_get_image', 'add_custom_text_to_product_image', 10, 2);
 
