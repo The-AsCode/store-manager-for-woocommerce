@@ -8,13 +8,13 @@ if (!defined('ABSPATH')) {
 }
 
 /**
- * Disco
+ * Badge
  *
- * @package   Disco
- * @author    Ohidul Islam <wahid0003@gmail.com>
+ * @package   Store Managet
+ * @author    ShopManagerX
  * @link      http://domain.tld
  * @license   GPL 2.0+
- * @copyright 2022 WebAppick
+ * @copyright 2024 ShopManagerX
  */
 
  use STORE_MANAGER\App\Badge;
