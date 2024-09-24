@@ -49,10 +49,13 @@ class BadgeHelper {
      * @return int
      */
     public static function save_badge($badge_data) {
-
         global $wpdb;
         $table_name = $wpdb->prefix . 'store_manager_badges';
     
+        // Get the highest priority from the table
+        $highest_priority = $wpdb->get_var( "SELECT MAX(priority) FROM $table_name" );
+        
+        $badge_data['priority'] = $highest_priority ? $highest_priority + 1 : 1;
         // Ensure 'created_by' is set to the current user ID
         $badge_data['created_by'] = get_current_user_id();
         
@@ -203,7 +206,7 @@ class BadgeHelper {
         }
         
         // Add order by priority in ascending order
-        $query .= " ORDER BY priority ASC";
+        $query .= " ORDER BY priority DESC";
         
         // Execute the query
         $results = $wpdb->get_results( $query, ARRAY_A ); // ARRAY_A returns an associative array
