@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
@@ -6,9 +7,15 @@ const initialState = {
   styles: {
     color: '#ffffff',
     backgroundColor: '#000000',
-    height: 30,
-    width: 100,
-    margin: 5,
+    height: 60,
+    width: 60,
+    margin: 10,
+    borderTopLeftRadius: 0,
+    borderTopRightRadius: 0,
+    borderBottomLeftRadius: 0,
+    borderBottomRightRadius: 0,
+    fontSize: 16,
+    fontWeight: 700,
   },
 };
 

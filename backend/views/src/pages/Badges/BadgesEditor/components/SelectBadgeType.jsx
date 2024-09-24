@@ -1,6 +1,12 @@
+// @ts-nocheck
 import { useDispatch, useSelector } from 'react-redux';
 import { changeBadgeSetting } from '../../../../features/badges/badgesSlice';
 import cn from '../../../../utils/cn';
+
+const badgeType = {
+  custom: 'Custom',
+  image: 'Image',
+};
 
 const SelectBadgeType = () => {
   const dispatch = useDispatch();
@@ -14,23 +20,18 @@ const SelectBadgeType = () => {
   return (
     <div className='wmx-mt-6'>
       <p className='wmx-text-base'>Badge Type</p>
-      <div className='wmx-flex wmx-gap-4 wmx-mt-2'>
-        <button
-          onClick={() => handleBadgeType('custom')}
-          className={cn('wmx-bg-gray-200 wmx-font-semibold wmx-px-4 wmx-py-2 wmx-rounded-lg wmx-w-24', {
-            'wmx-bg-primary wmx-text-white': type === 'custom',
-          })}
-        >
-          Custom
-        </button>
-        <button
-          onClick={() => handleBadgeType('image')}
-          className={cn('wmx-bg-gray-200 wmx-px-4 wmx-py-2 wmx-rounded-lg wmx-w-24', {
-            'wmx-bg-primary wmx-text-white': type === 'image',
-          })}
-        >
-          Image
-        </button>
+      <div className='wmx-flex wmx-gap-4 wmx-mt-2 wmx-bg-primary/10 wmx-p-2 wmx-rounded-lg'>
+        {Object.entries(badgeType).map(([key, value]) => (
+          <button
+            key={key}
+            onClick={() => handleBadgeType(key)}
+            className={cn('wmx-bg-gray-200 wmx-font-semibold wmx-px-4 wmx-py-1.5 wmx-rounded-lg wmx-w-24', {
+              'wmx-bg-primary wmx-text-white': type === key,
+            })}
+          >
+            {value}
+          </button>
+        ))}
       </div>
     </div>
   );

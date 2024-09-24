@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { useSelector } from 'react-redux';
 import Input from '../../../components/Input';
 import CustomSettings from './components/CustomSettings';
@@ -25,12 +26,18 @@ const BadgesEditor = () => {
   };
 
   const generateBadgeHtml = () => {
-    return `<div style="
+    return `<div data-position="${position}" style="
         margin:${styles.margin}px;
         color: ${styles.color};
         background-color: ${styles.backgroundColor};
         height: ${styles.height}px;
         width: ${styles.width}px;
+        border-top-left-radius: ${styles.borderTopLeftRadius}px;
+        border-top-right-radius: ${styles.borderTopRightRadius}px;
+        border-bottom-left-radius: ${styles.borderBottomLeftRadius}px;
+        border-bottom-right-radius: ${styles.borderBottomRightRadius}px;
+        font-size: ${styles.fontSize}px;
+        font-weight: ${styles.fontWeight};
         ${getPositionStyles()}
         position: absolute;
         display: flex;
@@ -43,7 +50,7 @@ const BadgesEditor = () => {
 
   console.log(generateBadgeHtml());
   return (
-    <div className='wmx-flex '>
+    <div className='wmx-flex wmx-gap-4'>
       <div className='wmx-flex-grow'>
         <div className=''>
           <label className='wmx-block wmx-mb-1' htmlFor=''>
