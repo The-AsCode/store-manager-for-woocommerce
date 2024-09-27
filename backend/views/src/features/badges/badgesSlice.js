@@ -4,18 +4,21 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
   type: 'custom',
   position: 'top-right',
+  badgeText: 'Badge Text',
   styles: {
     color: '#ffffff',
     backgroundColor: '#000000',
-    height: 60,
-    width: 60,
+    height: 36,
+    width: 100,
     margin: 10,
     borderTopLeftRadius: 0,
     borderTopRightRadius: 0,
     borderBottomLeftRadius: 0,
     borderBottomRightRadius: 0,
-    fontSize: 16,
+    fontSize: 14,
     fontWeight: 700,
+    borderWidth: 1,
+    borderColor: '#007CF5',
   },
 };
 

@@ -9464,9 +9464,11 @@ const Input = ({
   className,
   onChange,
   placeholder = 'Placeholder',
-  min
+  min,
+  id
 }) => {
   return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("input", {
+    id: id,
     ...(type === 'number' && typeof min === 'number' && {
       min
     }),
@@ -9802,18 +9804,21 @@ __webpack_require__.r(__webpack_exports__);
 const initialState = {
   type: 'custom',
   position: 'top-right',
+  badgeText: 'Badge Text',
   styles: {
     color: '#ffffff',
     backgroundColor: '#000000',
-    height: 60,
-    width: 60,
+    height: 36,
+    width: 100,
     margin: 10,
     borderTopLeftRadius: 0,
     borderTopRightRadius: 0,
     borderBottomLeftRadius: 0,
     borderBottomRightRadius: 0,
-    fontSize: 16,
-    fontWeight: 700
+    fontSize: 14,
+    fontWeight: 700,
+    borderWidth: 1,
+    borderColor: '#007CF5'
   }
 };
 const badgesSlice = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_0__.createSlice)({
@@ -10076,7 +10081,8 @@ const BadgesEditor = () => {
   const {
     type,
     styles,
-    position
+    position,
+    badgeText
   } = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useSelector)(state => state.badges);
   const getPositionStyles = () => {
     switch (position) {
@@ -10107,13 +10113,14 @@ const BadgesEditor = () => {
         border-bottom-right-radius: ${styles.borderBottomRightRadius}px;
         font-size: ${styles.fontSize}px;
         font-weight: ${styles.fontWeight};
+        border: ${styles.borderWidth}px solid ${styles.borderColor};
         ${getPositionStyles()}
         position: absolute;
         display: flex;
         justify-content: center;
         align-items: center;
       ">
-        Hello
+        ${badgeText}
     </div>`;
   };
   console.log(generateBadgeHtml());
@@ -10122,6 +10129,10 @@ const BadgesEditor = () => {
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "wmx-flex-grow"
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: "wmx-py-2 wmx-border-b wmx-sticky wmx-top-8 wmx-border-gray-400 wmx-mb-4 wmx-bg-[#ddd]"
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("h3", {
+    className: "wmx-text-2xl wmx-font-bold"
+  }, "Create Badge")), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: ""
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("label", {
     className: "wmx-block wmx-mb-1",
@@ -10131,13 +10142,13 @@ const BadgesEditor = () => {
     onChange: () => {},
     placeholder: "Summer Sale Badge"
   })), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_components_SelectBadgeType__WEBPACK_IMPORTED_MODULE_5__["default"], null), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", null, type === 'custom' ? (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_components_CustomSettings__WEBPACK_IMPORTED_MODULE_3__["default"], null) : (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_components_ImageSettings__WEBPACK_IMPORTED_MODULE_4__["default"], null)))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
-    className: "wmx-w-64 wmx-min-h-[calc(100vh-120px)]"
+    className: "wmx-w-72 2xl:wmx-w-80"
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "wmx-border wmx-bg-white  wmx-p-4 wmx-sticky wmx-top-[52px]"
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("h3", {
     className: "wmx-font-semibold wmx-mb-2 wmx-text-center"
   }, "Preview"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
-    className: "wmx-aspect-square wmx-bg-gray-200 wmx-relative",
+    className: "wmx-h-80 2xl:wmx-h-96 wmx-bg-gray-200 wmx-relative",
     dangerouslySetInnerHTML: {
       __html: generateBadgeHtml()
     }
@@ -10202,7 +10213,8 @@ const CustomSettings = () => {
   const dispatch = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useDispatch)();
   const {
     styles,
-    position
+    position,
+    badgeText
   } = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useSelector)(state => state.badges);
   const handleStyleChange = (property, value) => {
     dispatch((0,_features_badges_badgesSlice__WEBPACK_IMPORTED_MODULE_3__.updateStyles)({
@@ -10210,13 +10222,25 @@ const CustomSettings = () => {
       value
     }));
   };
-  const handleBadgePositionChange = value => {
+  const handleBadgeSettingChange = (setting, value) => {
     dispatch((0,_features_badges_badgesSlice__WEBPACK_IMPORTED_MODULE_3__.changeBadgeSetting)({
-      setting: 'position',
+      setting,
       value
     }));
   };
   return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: "wmx-mt-4"
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("label", {
+    htmlFor: "badge-text",
+    className: "wmx-font-semibold wmx-text-base wmx-mb-1"
+  }, "Badge Text"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_components_Input__WEBPACK_IMPORTED_MODULE_2__["default"], {
+    id: "badge-text",
+    placeholder: "Summer Sell",
+    className: "wmx-w-full",
+    type: "text",
+    value: badgeText,
+    onChange: e => handleBadgeSettingChange('badgeText', e.target.value)
+  })), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "wmx-mt-4"
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", {
     className: "wmx-font-semibold wmx-text-base wmx-mb-1"
@@ -10224,7 +10248,7 @@ const CustomSettings = () => {
     className: "wmx-flex wmx-gap-2 wmx-items-center"
   }, positionsButtons.map(button => (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("button", {
     key: button.value,
-    onClick: () => handleBadgePositionChange(button.value),
+    onClick: () => handleBadgeSettingChange('position', button.value),
     className: (0,_utils_cn__WEBPACK_IMPORTED_MODULE_4__["default"])('wmx-px-2 wmx-rounded wmx-py-1.5 wmx-bg-gray-200 wmx-text-sm wmx-font-semibold', {
       'wmx-bg-primary wmx-text-white': position === button.value
     })
@@ -10249,6 +10273,16 @@ const CustomSettings = () => {
     value: styles.width,
     onChange: e => handleStyleChange('width', e.target.value)
   })), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: "wmx-flex wmx-gap-2 wmx-items-center"
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("label", {
+    htmlFor: "borderWidth"
+  }, "Border Width:"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_components_Input__WEBPACK_IMPORTED_MODULE_2__["default"], {
+    className: "!wmx-outline-none !wmx-border-none focus:!wmx-shadow-none",
+    id: "borderWidth",
+    type: "number",
+    value: styles.borderWidth,
+    onChange: e => handleStyleChange('borderWidth', e.target.value)
+  })), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "wmx-flex wmx-gap-2 wmx-items-center wmx-mt-2"
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("label", {
     htmlFor: "backgroundColor"
@@ -10266,6 +10300,13 @@ const CustomSettings = () => {
     value: styles.color,
     onChange: e => handleStyleChange('color', e.target.value)
   })), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: "wmx-flex wmx-gap-2 wmx-items-center"
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("label", null, "Border Color:"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("input", {
+    className: "!wmx-outline-none !wmx-border-none focus:!wmx-shadow-none",
+    type: "color",
+    value: styles.borderColor,
+    onChange: e => handleStyleChange('borderColor', e.target.value)
+  })), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "wmx-flex wmx-gap-2 wmx-items-center wmx-mt-2"
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("label", {
     htmlFor: "margin"
@@ -10277,6 +10318,7 @@ const CustomSettings = () => {
   })), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "wmx-flex wmx-gap-2 wmx-items-center wmx-mt-2"
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("label", null, "Border Radius:"), borderRadiusInputs.map(input => (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_components_Input__WEBPACK_IMPORTED_MODULE_2__["default"], {
+    className: "wmx-w-20",
     key: input.value,
     id: input.value,
     type: "number",

@@ -7,11 +7,13 @@ type InputType = {
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   placeholder?: string;
   min: number;
+  id?: string;
 };
 
-const Input = ({ type = 'text', value, className, onChange, placeholder = 'Placeholder', min }: InputType) => {
+const Input = ({ type = 'text', value, className, onChange, placeholder = 'Placeholder', min, id }: InputType) => {
   return (
     <input
+      id={id}
       {...(type === 'number' && typeof min === 'number' && { min })}
       value={value}
       onChange={onChange}

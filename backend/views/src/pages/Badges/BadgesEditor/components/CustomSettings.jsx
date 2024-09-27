@@ -20,25 +20,39 @@ const borderRadiusInputs = [
 ];
 const CustomSettings = () => {
   const dispatch = useDispatch();
-  const { styles, position } = useSelector((state) => state.badges);
+  const { styles, position, badgeText } = useSelector((state) => state.badges);
 
   const handleStyleChange = (property, value) => {
     dispatch(updateStyles({ property, value }));
   };
 
-  const handleBadgePositionChange = (value) => {
-    dispatch(changeBadgeSetting({ setting: 'position', value }));
+  const handleBadgeSettingChange = (setting, value) => {
+    dispatch(changeBadgeSetting({ setting, value }));
   };
 
   return (
     <div>
+      <div className='wmx-mt-4'>
+        <label htmlFor='badge-text' className='wmx-font-semibold wmx-text-base wmx-mb-1'>
+          Badge Text
+        </label>
+        <Input
+          id='badge-text'
+          placeholder='Summer Sell'
+          className='wmx-w-full'
+          type='text'
+          value={badgeText}
+          onChange={(e) => handleBadgeSettingChange('badgeText', e.target.value)}
+        />
+      </div>
+
       <div className='wmx-mt-4'>
         <p className='wmx-font-semibold wmx-text-base wmx-mb-1'>Badge Position</p>
         <div className='wmx-flex wmx-gap-2 wmx-items-center'>
           {positionsButtons.map((button) => (
             <button
               key={button.value}
-              onClick={() => handleBadgePositionChange(button.value)}
+              onClick={() => handleBadgeSettingChange('position', button.value)}
               className={cn('wmx-px-2 wmx-rounded wmx-py-1.5 wmx-bg-gray-200 wmx-text-sm wmx-font-semibold', {
                 'wmx-bg-primary wmx-text-white': position === button.value,
               })}
@@ -71,6 +85,17 @@ const CustomSettings = () => {
         />
       </div>
 
+      <div className='wmx-flex wmx-gap-2 wmx-items-center'>
+        <label htmlFor='borderWidth'>Border Width:</label>
+        <Input
+          className='!wmx-outline-none !wmx-border-none focus:!wmx-shadow-none'
+          id='borderWidth'
+          type='number'
+          value={styles.borderWidth}
+          onChange={(e) => handleStyleChange('borderWidth', e.target.value)}
+        />
+      </div>
+
       <div className='wmx-flex wmx-gap-2 wmx-items-center wmx-mt-2'>
         <label htmlFor='backgroundColor'>Background Color:</label>
         <input
@@ -90,6 +115,15 @@ const CustomSettings = () => {
           onChange={(e) => handleStyleChange('color', e.target.value)}
         />
       </div>
+      <div className='wmx-flex wmx-gap-2 wmx-items-center'>
+        <label>Border Color:</label>
+        <input
+          className='!wmx-outline-none !wmx-border-none focus:!wmx-shadow-none'
+          type='color'
+          value={styles.borderColor}
+          onChange={(e) => handleStyleChange('borderColor', e.target.value)}
+        />
+      </div>
 
       <div className='wmx-flex wmx-gap-2 wmx-items-center wmx-mt-2'>
         <label htmlFor='margin'>Margin:</label>
@@ -105,6 +139,7 @@ const CustomSettings = () => {
         <label>Border Radius:</label>
         {borderRadiusInputs.map((input) => (
           <Input
+            className='wmx-w-20'
             key={input.value}
             id={input.value}
             type='number'

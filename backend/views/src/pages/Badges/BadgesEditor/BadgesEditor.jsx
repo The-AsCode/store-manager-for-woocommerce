@@ -6,7 +6,7 @@ import ImageSettings from './components/ImageSettings';
 import SelectBadgeType from './components/SelectBadgeType';
 
 const BadgesEditor = () => {
-  const { type, styles, position } = useSelector((state) => state.badges);
+  const { type, styles, position, badgeText } = useSelector((state) => state.badges);
 
   const getPositionStyles = () => {
     switch (position) {
@@ -38,13 +38,14 @@ const BadgesEditor = () => {
         border-bottom-right-radius: ${styles.borderBottomRightRadius}px;
         font-size: ${styles.fontSize}px;
         font-weight: ${styles.fontWeight};
+        border: ${styles.borderWidth}px solid ${styles.borderColor};
         ${getPositionStyles()}
         position: absolute;
         display: flex;
         justify-content: center;
         align-items: center;
       ">
-        Hello
+        ${badgeText}
     </div>`;
   };
 
@@ -52,6 +53,9 @@ const BadgesEditor = () => {
   return (
     <div className='wmx-flex wmx-gap-4'>
       <div className='wmx-flex-grow'>
+        <div className='wmx-py-2 wmx-border-b wmx-sticky wmx-top-8 wmx-border-gray-400 wmx-mb-4 wmx-bg-[#ddd]'>
+          <h3 className='wmx-text-2xl wmx-font-bold'>Create Badge</h3>
+        </div>
         <div className=''>
           <label className='wmx-block wmx-mb-1' htmlFor=''>
             Badge Name
@@ -65,11 +69,11 @@ const BadgesEditor = () => {
           <div>{type === 'custom' ? <CustomSettings /> : <ImageSettings />}</div>
         </div>
       </div>
-      <div className='wmx-w-64 wmx-min-h-[calc(100vh-120px)]'>
+      <div className='wmx-w-72 2xl:wmx-w-80'>
         <div className='wmx-border wmx-bg-white  wmx-p-4 wmx-sticky wmx-top-[52px]'>
           <h3 className='wmx-font-semibold wmx-mb-2 wmx-text-center'>Preview</h3>
           <div
-            className='wmx-aspect-square wmx-bg-gray-200 wmx-relative'
+            className='wmx-h-80 2xl:wmx-h-96 wmx-bg-gray-200 wmx-relative'
             dangerouslySetInnerHTML={{ __html: generateBadgeHtml() }}
           />
         </div>
