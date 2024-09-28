@@ -4,15 +4,16 @@
  * Plugin Name:       Store Manager for WooCommerce
  * Plugin URI:        https://github.com/The-AsCode/store-manager-for-woocommerce/
  * Description:       A ultimate plugin for manage WooCommerce Store.
- * Version:           1.0.2
+ * Version:           1.0.6
  * Requires at least: 5.2
  * Requires PHP:      7.4
- * Author:            Osman Haider Adnan
+ * Author:            Shop ManagerX
  * Author URI:        https://osmanhaideradnan.wordpress.com/
  * License:           GPLv3 or later
  * License URI:       http://www.gnu.org/licenses/gpl-3.0.txt
  * Text Domain:       store-manager-for-woocommerce
  * Domain Path:       /languages
+ * * Requires Plugins: woocommerce
  * @package     Store Manager For WooCommerce
  * @author      Adnan <osmanhaider159@gmail.com>, Tareq <tarekulislam7060@gmail.com>
  * @copyright   Copyright (C) 2023 Shop Manager X. All rights reserved.
@@ -119,7 +120,7 @@ final class Store_Manager {
             // Check if plugin is being updated
             $our_plugin = plugin_basename(__FILE__);
             if (isset($options['plugins']) && in_array($our_plugin, $options['plugins'])) {
-                \STORE_MANAGER\Backend\ActDeact :: create_plugin_table();
+                new \STORE_MANAGER\Backend\ActDeact();
             }
         }
     }
@@ -130,8 +131,11 @@ final class Store_Manager {
      * @return void
      */
     public function init_plugin() {
+        $base_dir = ABSPATH . 'wp-content/plugins/store-manager-for-woocommerce/backend/views/assets/badge/badge-images';
+        $json_file = ABSPATH . 'wp-content/plugins/store-manager-for-woocommerce/backend/views/assets/badge/badgeImageData.json';
         if (is_admin()) {
             new STORE_MANAGER\Backend\Menu();
+            new STORE_MANAGER\App\Image\Image( $base_dir, $json_file);
         }
 
         new STORE_MANAGER\Rest\Api();

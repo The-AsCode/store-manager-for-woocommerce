@@ -72,7 +72,7 @@ class SrearchApi extends WP_REST_Controller {
 	}
 
     /**
-	 * Checks if a given request has access to read campaigns.
+	 * Checks if a given request has access to read item.
 	 *
 	 * @param \WP_REST_Request $request Full data about the request.
 	 * @return bool

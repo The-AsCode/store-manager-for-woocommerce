@@ -1,0 +1,32 @@
+{
+    "badges": {
+        "black-friday": [
+            {
+                "name": "8dee8e86-b3cc-4cc9-934a-0b6daf8caef2",
+                "src": "black-friday\/8dee8e86-b3cc-4cc9-934a-0b6daf8caef2.JPG"
+            },
+            {
+                "name": "P1036146",
+                "src": "black-friday\/P1036146.jpg"
+            },
+            {
+                "name": "P1036162",
+                "src": "black-friday\/P1036162.jpg"
+            },
+            {
+                "name": "Untitled design (1)",
+                "src": "black-friday\/Untitled design (1).png"
+            }
+        ],
+        "new-year": [
+            {
+                "name": "P1036162",
+                "src": "new-year\/P1036162.jpg"
+            },
+            {
+                "name": "Untitled design (1)",
+                "src": "new-year\/Untitled design (1).png"
+            }
+        ]
+    }
+}
