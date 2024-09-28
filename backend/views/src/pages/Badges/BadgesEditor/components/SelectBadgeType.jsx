@@ -10,11 +10,10 @@ const badgeType = {
 
 const SelectBadgeType = () => {
   const dispatch = useDispatch();
-  const { type } = useSelector((state) => state.badges);
-  console.log(type);
+  const { badge_type } = useSelector((state) => state.badges);
 
-  const handleBadgeType = (type) => {
-    dispatch(changeBadgeSetting({ setting: 'type', value: type }));
+  const handleBadgeType = (badge_type) => {
+    dispatch(changeBadgeSetting({ setting: 'badge_type', value: badge_type }));
   };
 
   return (
@@ -26,7 +25,7 @@ const SelectBadgeType = () => {
             key={key}
             onClick={() => handleBadgeType(key)}
             className={cn('wmx-bg-gray-200 wmx-font-semibold wmx-px-4 wmx-py-1.5 wmx-rounded-lg wmx-w-24', {
-              'wmx-bg-primary wmx-text-white': type === key,
+              'wmx-bg-primary wmx-text-white': badge_type === key,
             })}
           >
             {value}

@@ -39,11 +39,36 @@ class ComposerStaticInit8ca1004d92518d0dd9664a19c4b4e376
         ),
     );
 
+    public static $classMap = array (
+        'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
+        'STORE_MANAGER\\App\\Badge' => __DIR__ . '/../..' . '/app/Badge.php',
+        'STORE_MANAGER\\App\\Filter' => __DIR__ . '/../..' . '/app/Filter.php',
+        'STORE_MANAGER\\App\\Image\\Image' => __DIR__ . '/../..' . '/app/Image/Image.php',
+        'STORE_MANAGER\\App\\Product\\Product' => __DIR__ . '/../..' . '/app/Product/Product.php',
+        'STORE_MANAGER\\App\\Utilities\\BadgeHelper' => __DIR__ . '/../..' . '/app/Utilities/BadgeHelper.php',
+        'STORE_MANAGER\\App\\Utilities\\DropDown' => __DIR__ . '/../..' . '/app/Utilities/DropDown.php',
+        'STORE_MANAGER\\App\\Utilities\\ProductHelper' => __DIR__ . '/../..' . '/app/Utilities/ProductHelper.php',
+        'STORE_MANAGER\\App\\Utilities\\Search' => __DIR__ . '/../..' . '/app/Utilities/Search.php',
+        'STORE_MANAGER\\Backend\\ActDeact' => __DIR__ . '/../..' . '/backend/ActDeact.php',
+        'STORE_MANAGER\\Backend\\Enqueue' => __DIR__ . '/../..' . '/backend/Enqueue.php',
+        'STORE_MANAGER\\Backend\\Menu' => __DIR__ . '/../..' . '/backend/Menu.php',
+        'STORE_MANAGER\\Rest\\Api' => __DIR__ . '/../..' . '/rest/Api.php',
+        'STORE_MANAGER\\Rest\\BadgeApi' => __DIR__ . '/../..' . '/rest/BadgeApi.php',
+        'STORE_MANAGER\\Rest\\DropDownApi' => __DIR__ . '/../..' . '/rest/DropDownApi.php',
+        'STORE_MANAGER\\Rest\\FilterApi' => __DIR__ . '/../..' . '/rest/FilterApi.php',
+        'STORE_MANAGER\\Rest\\ProductApi' => __DIR__ . '/../..' . '/rest/ProductApi.php',
+        'STORE_MANAGER\\Rest\\ProductCategoryApi' => __DIR__ . '/../..' . '/rest/ProductCategoryApi.php',
+        'STORE_MANAGER\\Rest\\ProductTypeApi' => __DIR__ . '/../..' . '/rest/ProductTypeApi.php',
+        'STORE_MANAGER\\Rest\\ProductsCountApi' => __DIR__ . '/../..' . '/rest/ProductsCountApi.php',
+        'STORE_MANAGER\\Rest\\SrearchApi' => __DIR__ . '/../..' . '/rest/SrearchApi.php',
+    );
+
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
             $loader->prefixLengthsPsr4 = ComposerStaticInit8ca1004d92518d0dd9664a19c4b4e376::$prefixLengthsPsr4;
             $loader->prefixDirsPsr4 = ComposerStaticInit8ca1004d92518d0dd9664a19c4b4e376::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInit8ca1004d92518d0dd9664a19c4b4e376::$classMap;
 
         }, null, ClassLoader::class);
     }

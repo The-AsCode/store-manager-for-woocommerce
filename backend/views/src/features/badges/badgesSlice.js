@@ -2,10 +2,11 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  type: 'custom',
+  badge_name: '30% Off All Products',
+  badge_type: 'custom',
   position: 'top-right',
   badgeText: 'Badge Text',
-  styles: {
+  badge_styles: {
     color: '#ffffff',
     backgroundColor: '#000000',
     height: 36,
@@ -30,7 +31,7 @@ const badgesSlice = createSlice({
       state[action.payload.setting] = action.payload.value;
     },
     updateStyles: (state, action) => {
-      state.styles[action.payload.property] = action.payload.value;
+      state.badge_styles[action.payload.property] = action.payload.value;
     },
   },
 });

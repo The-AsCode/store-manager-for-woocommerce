@@ -678,6 +678,10 @@ video {
   margin-top: 0.5rem;
 }
 
+.wmx-mt-3{
+  margin-top: 0.75rem;
+}
+
 .wmx-mt-4{
   margin-top: 1rem;
 }
@@ -777,6 +781,10 @@ video {
 
 .wmx-w-32{
   width: 8rem;
+}
+
+.wmx-w-36{
+  width: 9rem;
 }
 
 .wmx-w-4{
@@ -927,6 +935,14 @@ video {
   justify-content: space-between;
 }
 
+.wmx-gap-0{
+  gap: 0px;
+}
+
+.wmx-gap-0\.5{
+  gap: 0.125rem;
+}
+
 .wmx-gap-2{
   gap: 0.5rem;
 }
@@ -941,6 +957,10 @@ video {
 
 .wmx-gap-6{
   gap: 1.5rem;
+}
+
+.wmx-gap-1{
+  gap: 0.25rem;
 }
 
 .wmx-divide-y > :not([hidden]) ~ :not([hidden]){
@@ -1151,6 +1171,11 @@ video {
 .wmx-px-2{
   padding-left: 0.5rem;
   padding-right: 0.5rem;
+}
+
+.wmx-px-2\.5{
+  padding-left: 0.625rem;
+  padding-right: 0.625rem;
 }
 
 .wmx-px-4{

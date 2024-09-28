@@ -1,9 +1,9 @@
 <?php return array(
     'root' => array(
         'name' => 'shop/manager',
-        'pretty_version' => 'dev-master',
-        'version' => 'dev-master',
-        'reference' => '688a1d6049b4f4cf461846fc87ebe258aa677985',
+        'pretty_version' => 'dev-develop',
+        'version' => 'dev-develop',
+        'reference' => '9cb3207389b974b9639cf0d9e7b02405fb926fe3',
         'type' => 'wordpress-plugin',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -11,9 +11,9 @@
     ),
     'versions' => array(
         'shop/manager' => array(
-            'pretty_version' => 'dev-master',
-            'version' => 'dev-master',
-            'reference' => '688a1d6049b4f4cf461846fc87ebe258aa677985',
+            'pretty_version' => 'dev-develop',
+            'version' => 'dev-develop',
+            'reference' => '9cb3207389b974b9639cf0d9e7b02405fb926fe3',
             'type' => 'wordpress-plugin',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

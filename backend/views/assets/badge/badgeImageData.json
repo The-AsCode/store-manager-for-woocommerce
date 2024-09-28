@@ -2,30 +2,22 @@
     "badges": {
         "black-friday": [
             {
-                "name": "8dee8e86-b3cc-4cc9-934a-0b6daf8caef2",
-                "src": "black-friday\/8dee8e86-b3cc-4cc9-934a-0b6daf8caef2.JPG"
+                "name": "black-friday-icon",
+                "src": "black-friday\\black-friday-icon.png"
             },
             {
-                "name": "P1036146",
-                "src": "black-friday\/P1036146.jpg"
+                "name": "black-friday-icon",
+                "src": "black-friday\\black-friday-icon.svg"
             },
             {
-                "name": "P1036162",
-                "src": "black-friday\/P1036162.jpg"
-            },
-            {
-                "name": "Untitled design (1)",
-                "src": "black-friday\/Untitled design (1).png"
+                "name": "icon-256x256",
+                "src": "black-friday\\icon-256x256.jpeg"
             }
         ],
         "new-year": [
             {
-                "name": "P1036162",
-                "src": "new-year\/P1036162.jpg"
-            },
-            {
-                "name": "Untitled design (1)",
-                "src": "new-year\/Untitled design (1).png"
+                "name": "icon-256x256",
+                "src": "new-year\\icon-256x256.jpeg"
             }
         ]
     }
