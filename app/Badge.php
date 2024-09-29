@@ -106,6 +106,11 @@ class Badge {
      *              range is specified. False if the current date is outside the valid range.
      */
     public static function is_in_valid_date( $badge_config ) {
+        error_log(print_r($badge_config['valid_from'], true));
+        if( empty( $badge_config['valid_from'] ) ){
+            $badge_config['valid_from'] = gmdate( 'Y-m-d H:i:s' );
+        }
+
         if ( empty( $badge_config['valid_from'] ) && empty( $badge_config['valid_to'] ) ) {
             return true;
         }
