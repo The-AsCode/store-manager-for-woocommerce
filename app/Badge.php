@@ -53,11 +53,8 @@ class Badge {
      * @return string The product image HTML with the badge overlay applied.
      */ 
     public static function apply_badge_style( $badge, $badge_config ) {
-        // Customize the style of the badge overlay
-        $badge_overlay = '<div class="custom-overlay" style="position: absolute; top: 10px; left: 10px; background: rgba(255, 0, 0, 0.5); color: white; padding: 5px; z-index: 10;">'. $badge_config['badge_style'] . '</div>';
-
         // Wrap the original image with a div and append the badge overlay
-        $new_image = $badge . $badge_overlay;
+        $new_image = $badge . $badge_config['badge_style'];
 
         return $new_image;
     }

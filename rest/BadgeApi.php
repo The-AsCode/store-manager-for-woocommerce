@@ -481,13 +481,17 @@ class BadgeApi extends WP_REST_Controller {
         }
     
         // Validate and sanitize the start date
-        if ( isset( $request['valid_from'] ) ) {
+        if ( !empty( $request['valid_from'] ) ) {
             $prepared_data['valid_from'] = gmdate( DATE_W3C, strtotime( $request['valid_from'] ) );
+        } else {
+            $prepared_data['valid_from'] = '';
         }
     
         // Validate and sanitize the end date
-        if ( isset( $request['valid_to'] ) ) {
+        if ( !empty( $request['valid_to'] ) ) {
             $prepared_data['valid_to'] = gmdate( DATE_W3C, strtotime( $request['valid_to'] ) );
+        } else {
+            $prepared_data['valid_to'] = '';
         }
     
         // Badge style (assuming it's an array and already sanitized elsewhere)
