@@ -30,6 +30,11 @@ if (!defined('ABSPATH')) {
      * @return html
 	 */
 	function store_manager_apply_product_badges( $badge, $product ) {
+        //@TODO: Check theme compitiblity, for sticky, sidebar product. 
+        if( wp_doing_ajax() ) {
+            return;
+        }
+
 		return ( new Badge )->apply_product_badges( $badge, $product );
 	}
 
@@ -63,4 +68,3 @@ if( !function_exists( 'store_manager_add_badge_to_product_image' ) ){
 // add_filter('woocommerce_single_product_image_html', 'wish_me_add_icon_to_product_image', 10, 2);
 // add_filter('woocommerce_single_product_image_thumbnail_html', 'store_manager_add_badge_to_product_image_single', 10, 2);
 // add_filter('woocommerce_single_product_image_thumbnail_html', 'wish_me_add_icon_to_product_image', 10, 2);
-
