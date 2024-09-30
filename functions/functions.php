@@ -56,11 +56,12 @@ if( !function_exists( 'store_manager_add_badge_to_shop_product_image' ) ){
             return $image;
         }
 
-        return $badge;
+        return '<div style="position:relative;">' . $badge . '</div>';
     }
 
     add_filter('woocommerce_product_get_image', 'store_manager_add_badge_to_shop_product_image', PHP_INT_MAX, 2);
 }
+
 
 if( !function_exists( 'store_manager_add_badge_to_single_product_image' ) ){
     // Add text overlay on WooCommerce product image using woocommerce_single_product_image_thumbnail_html filter
