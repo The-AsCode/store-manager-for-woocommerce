@@ -41,9 +41,9 @@ if (!defined('ABSPATH')) {
 }
 
 
-if( !function_exists( 'store_manager_add_badge_to_product_image' ) ){
+if( !function_exists( 'store_manager_add_badge_to_shop_product_image' ) ){
     // Add text overlay on WooCommerce product image using woocommerce_product_get_image filter
-    function store_manager_add_badge_to_product_image($image, $product) {
+    function store_manager_add_badge_to_shop_product_image($image, $product) {
         // Make sure product object exists
         if ( ! $product ) {
             return $image;
@@ -59,7 +59,29 @@ if( !function_exists( 'store_manager_add_badge_to_product_image' ) ){
         return $badge;
     }
 
-    add_filter('woocommerce_product_get_image', 'store_manager_add_badge_to_product_image', 10, 2);
+    add_filter('woocommerce_product_get_image', 'store_manager_add_badge_to_shop_product_image', PHP_INT_MAX, 2);
+}
+
+if( !function_exists( 'store_manager_add_badge_to_single_product_image' ) ){
+    // Add text overlay on WooCommerce product image using woocommerce_single_product_image_thumbnail_html filter
+    function store_manager_add_badge_to_single_product_image( $image, $attachment_id ) {
+        $product = wc_get_product( get_post_parent( $attachment_id ) );
+        // Make sure product object exists
+        if ( ! $product ) {
+            return $image;
+        }
+
+        // Apply the badge to the product
+        $badge = store_manager_apply_product_badges( $image, $product );
+
+        if( empty( $badge ) ) {
+            return $image;
+        }
+
+        return $badge;
+    }
+
+    add_filter('woocommerce_single_product_image_thumbnail_html', 'store_manager_add_badge_to_single_product_image', PHP_INT_MAX, 2);
 }
 
 // add_action( 'woocommerce_before_shop_loop_item_title', 'add_custom_text_to_product_image' );
