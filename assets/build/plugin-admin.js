@@ -9822,6 +9822,8 @@ const apiSlice = (0,_reduxjs_toolkit_query_react__WEBPACK_IMPORTED_MODULE_0__.cr
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   useAddBadgeMutation: () => (/* binding */ useAddBadgeMutation),
+/* harmony export */   useDeleteBadgeMutation: () => (/* binding */ useDeleteBadgeMutation),
+/* harmony export */   useGetBadgeQuery: () => (/* binding */ useGetBadgeQuery),
 /* harmony export */   useGetBadgesQuery: () => (/* binding */ useGetBadgesQuery)
 /* harmony export */ });
 /* harmony import */ var _api_apiSlice__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../api/apiSlice */ "./backend/views/src/features/api/apiSlice.ts");
@@ -9832,6 +9834,10 @@ const badgeApi = _api_apiSlice__WEBPACK_IMPORTED_MODULE_0__.apiSlice.injectEndpo
       query: () => `badges`,
       providesTags: ['Badges']
     }),
+    getBadge: builder.query({
+      query: id => `badges/${id}`,
+      providesTags: ['Badges']
+    }),
     addBadge: builder.mutation({
       query: body => ({
         url: `badges`,
@@ -9839,12 +9845,21 @@ const badgeApi = _api_apiSlice__WEBPACK_IMPORTED_MODULE_0__.apiSlice.injectEndpo
         body
       }),
       invalidatesTags: ['Badges']
+    }),
+    deleteBadge: builder.mutation({
+      query: id => ({
+        url: `badges/${id}`,
+        method: 'DELETE'
+      }),
+      invalidatesTags: ['Badges']
     })
   })
 });
 const {
   useGetBadgesQuery,
-  useAddBadgeMutation
+  useAddBadgeMutation,
+  useDeleteBadgeMutation,
+  useGetBadgeQuery
 } = badgeApi;
 
 /***/ }),
@@ -10623,6 +10638,7 @@ const PreviewBadge = () => {
   };
   const generateBadgeHtml = () => {
     return `<div data-position='${position}' style='
+        display: flex;
         margin:${badge_styles.margin}px;
         color: ${badge_styles.color};
         background-color: ${badge_styles.backgroundColor};
@@ -10637,7 +10653,6 @@ const PreviewBadge = () => {
         border: ${badge_styles.borderWidth}px solid ${badge_styles.borderColor};
         ${getPositionStyles()}
         position: absolute;
-        display: flex;
         justify-content: center;
         align-items: center;
       '>${badgeText}</div>`;
@@ -10749,13 +10764,13 @@ __webpack_require__.r(__webpack_exports__);
 
 const BadgesManager = () => {
   const navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_3__.useNavigate)();
-  const handleNewFilter = () => {
+  const handleNewBadge = () => {
     navigate('editor');
   };
   return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "wmx-flex wmx-justify-end wmx-mb-6"
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_components_Button__WEBPACK_IMPORTED_MODULE_1__["default"], {
-    onClick: handleNewFilter
+    onClick: handleNewBadge
   }, "New Badge")), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "wmx-flex wmx-gap-4"
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
@@ -10784,16 +10799,49 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _heroicons_react_24_outline__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @heroicons/react/24/outline */ "./node_modules/@heroicons/react/24/outline/esm/Bars3Icon.js");
-/* harmony import */ var _heroicons_react_24_outline__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @heroicons/react/24/outline */ "./node_modules/@heroicons/react/24/outline/esm/PencilSquareIcon.js");
-/* harmony import */ var _heroicons_react_24_outline__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @heroicons/react/24/outline */ "./node_modules/@heroicons/react/24/outline/esm/TrashIcon.js");
+/* harmony import */ var _heroicons_react_24_outline__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @heroicons/react/24/outline */ "./node_modules/@heroicons/react/24/outline/esm/Bars3Icon.js");
+/* harmony import */ var _heroicons_react_24_outline__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @heroicons/react/24/outline */ "./node_modules/@heroicons/react/24/outline/esm/PencilSquareIcon.js");
+/* harmony import */ var _heroicons_react_24_outline__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @heroicons/react/24/outline */ "./node_modules/@heroicons/react/24/outline/esm/TrashIcon.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/dist/index.js");
 /* harmony import */ var _components_Table__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../../components/Table */ "./backend/views/src/components/Table.tsx");
 /* harmony import */ var _components_Toggler__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../components/Toggler */ "./backend/views/src/components/Toggler.tsx");
+/* harmony import */ var _features_badges_badgesApi__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../features/badges/badgesApi */ "./backend/views/src/features/badges/badgesApi.js");
+/* harmony import */ var _utils_booleanConverter__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../../utils/booleanConverter */ "./backend/views/src/utils/booleanConverter.js");
+/* harmony import */ var _utils_formatISODate__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../../utils/formatISODate */ "./backend/views/src/utils/formatISODate.js");
+
+// @ts-nocheck
+
+
+
+
 
 
 
 
 const BadgesTable = () => {
+  const navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_6__.useNavigate)();
+  const {
+    data,
+    isLoading
+  } = (0,_features_badges_badgesApi__WEBPACK_IMPORTED_MODULE_3__.useGetBadgesQuery)();
+  const [deleteBadge] = (0,_features_badges_badgesApi__WEBPACK_IMPORTED_MODULE_3__.useDeleteBadgeMutation)();
+  const [sortedData, setSortedData] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]);
+  const handleDelete = async id => {
+    const confirmation = window.confirm('Are you sure you want to delete this badge?');
+    if (confirmation) {
+      const result = await deleteBadge(id).unwrap();
+      console.log(result);
+    }
+  };
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    if (data && data.length > 0) {
+      const dataCopy = [...data];
+      setSortedData(dataCopy.sort((a, b) => Number(b.priority) - Number(a.priority)));
+    }
+  }, [data]);
+  if (isLoading) {
+    return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", null, "Loading...");
+  }
   return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_components_Table__WEBPACK_IMPORTED_MODULE_1__["default"], null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("thead", {
     className: "wmx-bg-white"
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("tr", null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_components_Table__WEBPACK_IMPORTED_MODULE_1__["default"].Heading, {
@@ -10802,33 +10850,30 @@ const BadgesTable = () => {
     className: "wmx-w-20 wmx-text-center"
   }, "Actions"))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("tbody", {
     className: "wmx-divide-y wmx-divide-gray-200 wmx-bg-white"
-  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("tr", null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_components_Table__WEBPACK_IMPORTED_MODULE_1__["default"].Data, {
+  }, sortedData.map(badge => (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("tr", null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_components_Table__WEBPACK_IMPORTED_MODULE_1__["default"].Data, {
     className: "wmx-my-auto wmx-py-3 wmx-w-8"
-  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_heroicons_react_24_outline__WEBPACK_IMPORTED_MODULE_3__["default"], {
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_heroicons_react_24_outline__WEBPACK_IMPORTED_MODULE_7__["default"], {
     className: "wmx-size-6"
   })), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_components_Table__WEBPACK_IMPORTED_MODULE_1__["default"].Data, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_components_Toggler__WEBPACK_IMPORTED_MODULE_2__["default"], {
     onChange: () => {},
-    checked: false
-  })), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_components_Table__WEBPACK_IMPORTED_MODULE_1__["default"].Data, null, "All Product Except New Arrival"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_components_Table__WEBPACK_IMPORTED_MODULE_1__["default"].Data, null, "23 Jan, 2024"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_components_Table__WEBPACK_IMPORTED_MODULE_1__["default"].Data, null, "23 Dec, 2024"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_components_Table__WEBPACK_IMPORTED_MODULE_1__["default"].Data, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", {
+    checked: (0,_utils_booleanConverter__WEBPACK_IMPORTED_MODULE_4__["default"])(badge.status)
+  })), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_components_Table__WEBPACK_IMPORTED_MODULE_1__["default"].Data, null, badge.badge_name), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_components_Table__WEBPACK_IMPORTED_MODULE_1__["default"].Data, null, (0,_utils_formatISODate__WEBPACK_IMPORTED_MODULE_5__["default"])(badge.valid_from)), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_components_Table__WEBPACK_IMPORTED_MODULE_1__["default"].Data, null, (0,_utils_formatISODate__WEBPACK_IMPORTED_MODULE_5__["default"])(badge.valid_to)), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_components_Table__WEBPACK_IMPORTED_MODULE_1__["default"].Data, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", {
     className: "wmx-flex wmx-items-center wmx-justify-center wmx-gap-2"
-  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("button", null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_heroicons_react_24_outline__WEBPACK_IMPORTED_MODULE_4__["default"], {
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("button", {
+    onClick: () => {
+      navigate(`editor?id=${badge.id}`, {
+        state: {
+          badge
+        }
+      });
+    }
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_heroicons_react_24_outline__WEBPACK_IMPORTED_MODULE_8__["default"], {
     className: "wmx-w-5 wmx-h-5"
-  })), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("button", null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_heroicons_react_24_outline__WEBPACK_IMPORTED_MODULE_5__["default"], {
+  })), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("button", {
+    onClick: () => handleDelete(badge.id)
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_heroicons_react_24_outline__WEBPACK_IMPORTED_MODULE_9__["default"], {
     className: "wmx-w-5 wmx-h-5"
-  }))))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("tr", null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_components_Table__WEBPACK_IMPORTED_MODULE_1__["default"].Data, {
-    className: "wmx-my-auto wmx-py-3 wmx-w-8"
-  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_heroicons_react_24_outline__WEBPACK_IMPORTED_MODULE_3__["default"], {
-    className: "wmx-size-6"
-  })), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_components_Table__WEBPACK_IMPORTED_MODULE_1__["default"].Data, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_components_Toggler__WEBPACK_IMPORTED_MODULE_2__["default"], {
-    onChange: () => {},
-    checked: true
-  })), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_components_Table__WEBPACK_IMPORTED_MODULE_1__["default"].Data, null, "Only Winter Category Product Under 5$"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_components_Table__WEBPACK_IMPORTED_MODULE_1__["default"].Data, null, "28 Jan, 2024"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_components_Table__WEBPACK_IMPORTED_MODULE_1__["default"].Data, null, "22 Dec, 2024"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_components_Table__WEBPACK_IMPORTED_MODULE_1__["default"].Data, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", {
-    className: "wmx-flex wmx-items-center wmx-justify-center wmx-gap-2"
-  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("button", null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_heroicons_react_24_outline__WEBPACK_IMPORTED_MODULE_4__["default"], {
-    className: "wmx-w-5 wmx-h-5"
-  })), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("button", null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_heroicons_react_24_outline__WEBPACK_IMPORTED_MODULE_5__["default"], {
-    className: "wmx-w-5 wmx-h-5"
-  })))))));
+  }))))))));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (BadgesTable);
 
@@ -11692,6 +11737,28 @@ const router = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_8__.createHashRouter
 
 /***/ }),
 
+/***/ "./backend/views/src/utils/booleanConverter.js":
+/*!*****************************************************!*\
+  !*** ./backend/views/src/utils/booleanConverter.js ***!
+  \*****************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+// @ts-nocheck
+const booleanConverter = value => {
+  const falsyValues = [false, 'false', 0, '0', '', null, undefined];
+  if (Number.isNaN(value)) {
+    return false;
+  }
+  return !falsyValues.includes(value);
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (booleanConverter);
+
+/***/ }),
+
 /***/ "./backend/views/src/utils/cn.ts":
 /*!***************************************!*\
   !*** ./backend/views/src/utils/cn.ts ***!
@@ -11713,6 +11780,35 @@ const cn = (...inputs) => {
   return prefixMerge((0,clsx__WEBPACK_IMPORTED_MODULE_0__.clsx)(...inputs));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (cn);
+
+/***/ }),
+
+/***/ "./backend/views/src/utils/formatISODate.js":
+/*!**************************************************!*\
+  !*** ./backend/views/src/utils/formatISODate.js ***!
+  \**************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+// @ts-nocheck
+function formatISODate(dateString) {
+  const date = new Date(dateString);
+  if (isNaN(date.getTime())) {
+    return '-';
+  }
+  const day = date.getDate();
+  const month = date.toLocaleString('default', {
+    month: 'short'
+  });
+  const year = date.getFullYear();
+  const hours = date.getHours().toString().padStart(2, '0');
+  const minutes = date.getMinutes().toString().padStart(2, '0');
+  return `${day} ${month}, ${year}, ${hours}:${minutes}`;
+}
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (formatISODate);
 
 /***/ }),
 

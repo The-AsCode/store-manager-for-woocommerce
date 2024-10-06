@@ -26,6 +26,7 @@ const PreviewBadge = () => {
 
   const generateBadgeHtml = () => {
     return `<div data-position='${position}' style='
+        display: flex;
         margin:${badge_styles.margin}px;
         color: ${badge_styles.color};
         background-color: ${badge_styles.backgroundColor};
@@ -40,7 +41,6 @@ const PreviewBadge = () => {
         border: ${badge_styles.borderWidth}px solid ${badge_styles.borderColor};
         ${getPositionStyles()}
         position: absolute;
-        display: flex;
         justify-content: center;
         align-items: center;
       '>${badgeText}</div>`;

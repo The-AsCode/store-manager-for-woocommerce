@@ -4,13 +4,13 @@ import BadgesTable from './components/BadgesTable';
 
 const BadgesManager = () => {
   const navigate = useNavigate();
-  const handleNewFilter = () => {
+  const handleNewBadge = () => {
     navigate('editor');
   };
   return (
     <div>
       <div className='wmx-flex wmx-justify-end wmx-mb-6'>
-        <Button onClick={handleNewFilter}>New Badge</Button>
+        <Button onClick={handleNewBadge}>New Badge</Button>
       </div>
       <div className='wmx-flex wmx-gap-4'>
         <div className='wmx-flex-grow'>
