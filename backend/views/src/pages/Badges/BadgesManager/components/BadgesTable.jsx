@@ -2,15 +2,17 @@
 import { Bars3Icon, PencilSquareIcon, TrashIcon } from '@heroicons/react/24/outline';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import Table from '../../../../components/Table';
 import Toggler from '../../../../components/Toggler';
 import { useDeleteBadgeMutation, useGetBadgesQuery } from '../../../../features/badges/badgesApi';
 import booleanConverter from '../../../../utils/booleanConverter';
+import cn from '../../../../utils/cn';
 import formatISODate from '../../../../utils/formatISODate';
 
-const BadgesTable = () => {
+const BadgesTable = ({ setSelectedBadge, selectedBadge }) => {
   const navigate = useNavigate();
-  const { data, isLoading } = useGetBadgesQuery();
+  const { data, isLoading, isError } = useGetBadgesQuery();
   const [deleteBadge] = useDeleteBadgeMutation();
   const [sortedData, setSortedData] = useState([]);
 
@@ -18,16 +20,30 @@ const BadgesTable = () => {
     const confirmation = window.confirm('Are you sure you want to delete this badge?');
     if (confirmation) {
       const result = await deleteBadge(id).unwrap();
-      console.log(result);
+      if (result.id) {
+        toast.success('Badge Deleted Successfully');
+      }
+    }
+  };
+
+  const handleBadgeSelect = (badge) => {
+    if (selectedBadge.id !== badge.id) {
+      setSelectedBadge(badge);
     }
   };
 
   useEffect(() => {
+    if (isError) {
+      setSortedData([]);
+      return;
+    }
+
     if (data && data.length > 0) {
       const dataCopy = [...data];
       setSortedData(dataCopy.sort((a, b) => Number(b.priority) - Number(a.priority)));
+      setSelectedBadge(dataCopy[0]);
     }
-  }, [data]);
+  }, [data, isError]);
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -50,14 +66,20 @@ const BadgesTable = () => {
       </thead>
       <tbody className='wmx-divide-y wmx-divide-gray-200 wmx-bg-white'>
         {sortedData.map((badge) => (
-          <tr>
+          <tr
+            className={cn({
+              'wmx-bg-primary/10': selectedBadge?.id === badge.id,
+            })}
+          >
             <Table.Data className='wmx-my-auto wmx-py-3 wmx-w-8'>
               <Bars3Icon className='wmx-size-6' />
             </Table.Data>
             <Table.Data>
               <Toggler onChange={() => {}} checked={booleanConverter(badge.status)} />
             </Table.Data>
-            <Table.Data>{badge.badge_name}</Table.Data>
+            <Table.Data onClick={() => handleBadgeSelect(badge)} className={cn('wmx-cursor-pointer')}>
+              {badge.badge_name}
+            </Table.Data>
             <Table.Data>{formatISODate(badge.valid_from)}</Table.Data>
             <Table.Data>{formatISODate(badge.valid_to)}</Table.Data>
             <Table.Data>

@@ -4,6 +4,7 @@ import cn from '../utils/cn';
 type TableElementType = {
   children: ReactNode;
   className?: string;
+  onClick?: () => void;
 };
 
 const Table = ({ children }: TableElementType) => {
@@ -18,8 +19,12 @@ const Heading = ({ children, className }: TableElementType) => {
   );
 };
 
-const Data = ({ children, className }: TableElementType) => {
-  return <td className={`wmx-py-1.5 wmx-px-2 wmx-text-sm wmx-font-medium ${className}`}>{children}</td>;
+const Data = ({ children, className, onClick }: TableElementType) => {
+  return (
+    <td onClick={onClick} className={`wmx-py-1.5 wmx-px-2 wmx-text-sm wmx-font-medium ${className}`}>
+      {children}
+    </td>
+  );
 };
 
 Table.Heading = Heading;

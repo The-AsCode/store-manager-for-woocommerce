@@ -2,7 +2,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import Input from '../../../../../../components/Input';
 import Label from '../../../../../../components/Label';
-import { updateStyles } from '../../../../../../features/badges/badgesSlice';
+import { changeBadgeSetting, updateStyles } from '../../../../../../features/badges/badgesSlice';
 
 const BadgeContents = () => {
   const dispatch = useDispatch();
@@ -11,6 +11,11 @@ const BadgeContents = () => {
   const handleStyleChange = (property, value) => {
     dispatch(updateStyles({ property, value }));
   };
+
+  const handleBadgeSettingChange = (setting, value) => {
+    dispatch(changeBadgeSetting({ setting, value }));
+  };
+
   return (
     <div className='wmx-mt-6'>
       <div className='wmx-bg-primary/10 wmx-py-1 wmx-px-2 wmx-font-bold'>Badge Content</div>

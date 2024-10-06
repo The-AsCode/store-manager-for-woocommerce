@@ -56,7 +56,6 @@ const PreviewBadge = () => {
       valid_to: '',
     };
     const result = await addBadge(dataForSave).unwrap();
-    console.log(result);
   };
 
   return (

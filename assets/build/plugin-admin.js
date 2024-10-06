@@ -9713,9 +9713,11 @@ const Heading = ({
 };
 const Data = ({
   children,
-  className
+  className,
+  onClick
 }) => {
   return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("td", {
+    onClick: onClick,
     className: `wmx-py-1.5 wmx-px-2 wmx-text-sm wmx-font-medium ${className}`
   }, children);
 };
@@ -10317,6 +10319,12 @@ const BadgeContents = () => {
       value
     }));
   };
+  const handleBadgeSettingChange = (setting, value) => {
+    dispatch((0,_features_badges_badgesSlice__WEBPACK_IMPORTED_MODULE_4__.changeBadgeSetting)({
+      setting,
+      value
+    }));
+  };
   return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "wmx-mt-6"
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
@@ -10667,7 +10675,6 @@ const PreviewBadge = () => {
       valid_to: ''
     };
     const result = await addBadge(dataForSave).unwrap();
-    console.log(result);
   };
   return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "wmx-w-72 2xl:wmx-w-80"
@@ -10759,10 +10766,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_Button__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../components/Button */ "./backend/views/src/components/Button.tsx");
 /* harmony import */ var _components_BadgesTable__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/BadgesTable */ "./backend/views/src/pages/Badges/BadgesManager/components/BadgesTable.jsx");
 
+// @ts-nocheck
+
 
 
 
 const BadgesManager = () => {
+  const [selectedBadge, setSelectedBadge] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null);
   const navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_3__.useNavigate)();
   const handleNewBadge = () => {
     navigate('editor');
@@ -10775,12 +10785,18 @@ const BadgesManager = () => {
     className: "wmx-flex wmx-gap-4"
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "wmx-flex-grow"
-  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_components_BadgesTable__WEBPACK_IMPORTED_MODULE_2__["default"], null)), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_components_BadgesTable__WEBPACK_IMPORTED_MODULE_2__["default"], {
+    setSelectedBadge: setSelectedBadge,
+    selectedBadge: selectedBadge
+  })), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "wmx-w-64 wmx-border wmx-p-4 wmx-bg-white"
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("h3", {
     className: "wmx-font-semibold wmx-mb-2 wmx-text-center"
   }, "Preview"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
-    className: "wmx-aspect-square wmx-bg-gray-200"
+    className: "wmx-aspect-square wmx-bg-gray-200 wmx-relative",
+    dangerouslySetInnerHTML: {
+      __html: selectedBadge?.badge_style || ''
+    }
   }))));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (BadgesManager);
@@ -10799,15 +10815,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _heroicons_react_24_outline__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @heroicons/react/24/outline */ "./node_modules/@heroicons/react/24/outline/esm/Bars3Icon.js");
-/* harmony import */ var _heroicons_react_24_outline__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @heroicons/react/24/outline */ "./node_modules/@heroicons/react/24/outline/esm/PencilSquareIcon.js");
-/* harmony import */ var _heroicons_react_24_outline__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @heroicons/react/24/outline */ "./node_modules/@heroicons/react/24/outline/esm/TrashIcon.js");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/dist/index.js");
-/* harmony import */ var _components_Table__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../../components/Table */ "./backend/views/src/components/Table.tsx");
-/* harmony import */ var _components_Toggler__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../components/Toggler */ "./backend/views/src/components/Toggler.tsx");
-/* harmony import */ var _features_badges_badgesApi__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../features/badges/badgesApi */ "./backend/views/src/features/badges/badgesApi.js");
-/* harmony import */ var _utils_booleanConverter__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../../utils/booleanConverter */ "./backend/views/src/utils/booleanConverter.js");
-/* harmony import */ var _utils_formatISODate__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../../utils/formatISODate */ "./backend/views/src/utils/formatISODate.js");
+/* harmony import */ var _heroicons_react_24_outline__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @heroicons/react/24/outline */ "./node_modules/@heroicons/react/24/outline/esm/Bars3Icon.js");
+/* harmony import */ var _heroicons_react_24_outline__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @heroicons/react/24/outline */ "./node_modules/@heroicons/react/24/outline/esm/PencilSquareIcon.js");
+/* harmony import */ var _heroicons_react_24_outline__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @heroicons/react/24/outline */ "./node_modules/@heroicons/react/24/outline/esm/TrashIcon.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/dist/index.js");
+/* harmony import */ var react_toastify__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-toastify */ "./node_modules/react-toastify/dist/react-toastify.esm.mjs");
+/* harmony import */ var _components_Table__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../components/Table */ "./backend/views/src/components/Table.tsx");
+/* harmony import */ var _components_Toggler__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../components/Toggler */ "./backend/views/src/components/Toggler.tsx");
+/* harmony import */ var _features_badges_badgesApi__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../../features/badges/badgesApi */ "./backend/views/src/features/badges/badgesApi.js");
+/* harmony import */ var _utils_booleanConverter__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../../utils/booleanConverter */ "./backend/views/src/utils/booleanConverter.js");
+/* harmony import */ var _utils_cn__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../../../utils/cn */ "./backend/views/src/utils/cn.ts");
+/* harmony import */ var _utils_formatISODate__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../../../utils/formatISODate */ "./backend/views/src/utils/formatISODate.js");
 
 // @ts-nocheck
 
@@ -10818,46 +10836,71 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-const BadgesTable = () => {
-  const navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_6__.useNavigate)();
+
+
+const BadgesTable = ({
+  setSelectedBadge,
+  selectedBadge
+}) => {
+  const navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_8__.useNavigate)();
   const {
     data,
-    isLoading
-  } = (0,_features_badges_badgesApi__WEBPACK_IMPORTED_MODULE_3__.useGetBadgesQuery)();
-  const [deleteBadge] = (0,_features_badges_badgesApi__WEBPACK_IMPORTED_MODULE_3__.useDeleteBadgeMutation)();
+    isLoading,
+    isError
+  } = (0,_features_badges_badgesApi__WEBPACK_IMPORTED_MODULE_4__.useGetBadgesQuery)();
+  const [deleteBadge] = (0,_features_badges_badgesApi__WEBPACK_IMPORTED_MODULE_4__.useDeleteBadgeMutation)();
   const [sortedData, setSortedData] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]);
   const handleDelete = async id => {
     const confirmation = window.confirm('Are you sure you want to delete this badge?');
     if (confirmation) {
       const result = await deleteBadge(id).unwrap();
-      console.log(result);
+      if (result.id) {
+        react_toastify__WEBPACK_IMPORTED_MODULE_1__.toast.success('Badge Deleted Successfully');
+      }
+    }
+  };
+  const handleBadgeSelect = badge => {
+    if (selectedBadge.id !== badge.id) {
+      setSelectedBadge(badge);
     }
   };
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    if (isError) {
+      setSortedData([]);
+      return;
+    }
     if (data && data.length > 0) {
       const dataCopy = [...data];
       setSortedData(dataCopy.sort((a, b) => Number(b.priority) - Number(a.priority)));
+      setSelectedBadge(dataCopy[0]);
     }
-  }, [data]);
+  }, [data, isError]);
   if (isLoading) {
     return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", null, "Loading...");
   }
-  return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_components_Table__WEBPACK_IMPORTED_MODULE_1__["default"], null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("thead", {
+  return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_components_Table__WEBPACK_IMPORTED_MODULE_2__["default"], null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("thead", {
     className: "wmx-bg-white"
-  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("tr", null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_components_Table__WEBPACK_IMPORTED_MODULE_1__["default"].Heading, {
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("tr", null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_components_Table__WEBPACK_IMPORTED_MODULE_2__["default"].Heading, {
     className: "wmx-pl-4"
-  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", null)), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_components_Table__WEBPACK_IMPORTED_MODULE_1__["default"].Heading, null, "Status"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_components_Table__WEBPACK_IMPORTED_MODULE_1__["default"].Heading, null, "Badge Name"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_components_Table__WEBPACK_IMPORTED_MODULE_1__["default"].Heading, null, "Valid From"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_components_Table__WEBPACK_IMPORTED_MODULE_1__["default"].Heading, null, "Valid To"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_components_Table__WEBPACK_IMPORTED_MODULE_1__["default"].Heading, {
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", null)), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_components_Table__WEBPACK_IMPORTED_MODULE_2__["default"].Heading, null, "Status"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_components_Table__WEBPACK_IMPORTED_MODULE_2__["default"].Heading, null, "Badge Name"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_components_Table__WEBPACK_IMPORTED_MODULE_2__["default"].Heading, null, "Valid From"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_components_Table__WEBPACK_IMPORTED_MODULE_2__["default"].Heading, null, "Valid To"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_components_Table__WEBPACK_IMPORTED_MODULE_2__["default"].Heading, {
     className: "wmx-w-20 wmx-text-center"
   }, "Actions"))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("tbody", {
     className: "wmx-divide-y wmx-divide-gray-200 wmx-bg-white"
-  }, sortedData.map(badge => (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("tr", null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_components_Table__WEBPACK_IMPORTED_MODULE_1__["default"].Data, {
+  }, sortedData.map(badge => (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("tr", {
+    className: (0,_utils_cn__WEBPACK_IMPORTED_MODULE_6__["default"])({
+      'wmx-bg-primary/10': selectedBadge?.id === badge.id
+    })
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_components_Table__WEBPACK_IMPORTED_MODULE_2__["default"].Data, {
     className: "wmx-my-auto wmx-py-3 wmx-w-8"
-  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_heroicons_react_24_outline__WEBPACK_IMPORTED_MODULE_7__["default"], {
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_heroicons_react_24_outline__WEBPACK_IMPORTED_MODULE_9__["default"], {
     className: "wmx-size-6"
-  })), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_components_Table__WEBPACK_IMPORTED_MODULE_1__["default"].Data, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_components_Toggler__WEBPACK_IMPORTED_MODULE_2__["default"], {
+  })), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_components_Table__WEBPACK_IMPORTED_MODULE_2__["default"].Data, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_components_Toggler__WEBPACK_IMPORTED_MODULE_3__["default"], {
     onChange: () => {},
-    checked: (0,_utils_booleanConverter__WEBPACK_IMPORTED_MODULE_4__["default"])(badge.status)
-  })), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_components_Table__WEBPACK_IMPORTED_MODULE_1__["default"].Data, null, badge.badge_name), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_components_Table__WEBPACK_IMPORTED_MODULE_1__["default"].Data, null, (0,_utils_formatISODate__WEBPACK_IMPORTED_MODULE_5__["default"])(badge.valid_from)), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_components_Table__WEBPACK_IMPORTED_MODULE_1__["default"].Data, null, (0,_utils_formatISODate__WEBPACK_IMPORTED_MODULE_5__["default"])(badge.valid_to)), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_components_Table__WEBPACK_IMPORTED_MODULE_1__["default"].Data, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", {
+    checked: (0,_utils_booleanConverter__WEBPACK_IMPORTED_MODULE_5__["default"])(badge.status)
+  })), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_components_Table__WEBPACK_IMPORTED_MODULE_2__["default"].Data, {
+    onClick: () => handleBadgeSelect(badge),
+    className: (0,_utils_cn__WEBPACK_IMPORTED_MODULE_6__["default"])('wmx-cursor-pointer')
+  }, badge.badge_name), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_components_Table__WEBPACK_IMPORTED_MODULE_2__["default"].Data, null, (0,_utils_formatISODate__WEBPACK_IMPORTED_MODULE_7__["default"])(badge.valid_from)), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_components_Table__WEBPACK_IMPORTED_MODULE_2__["default"].Data, null, (0,_utils_formatISODate__WEBPACK_IMPORTED_MODULE_7__["default"])(badge.valid_to)), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_components_Table__WEBPACK_IMPORTED_MODULE_2__["default"].Data, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", {
     className: "wmx-flex wmx-items-center wmx-justify-center wmx-gap-2"
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("button", {
     onClick: () => {
@@ -10867,11 +10910,11 @@ const BadgesTable = () => {
         }
       });
     }
-  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_heroicons_react_24_outline__WEBPACK_IMPORTED_MODULE_8__["default"], {
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_heroicons_react_24_outline__WEBPACK_IMPORTED_MODULE_10__["default"], {
     className: "wmx-w-5 wmx-h-5"
   })), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("button", {
     onClick: () => handleDelete(badge.id)
-  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_heroicons_react_24_outline__WEBPACK_IMPORTED_MODULE_9__["default"], {
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_heroicons_react_24_outline__WEBPACK_IMPORTED_MODULE_11__["default"], {
     className: "wmx-w-5 wmx-h-5"
   }))))))));
 };
