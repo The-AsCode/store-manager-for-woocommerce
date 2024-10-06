@@ -135,7 +135,7 @@ final class Store_Manager {
         $json_file = ABSPATH . 'wp-content/plugins/store-manager-for-woocommerce/backend/views/assets/badge/badgeImageData.json';
         if (is_admin()) {
             new STORE_MANAGER\Backend\Menu();
-            new STORE_MANAGER\App\Image\Image( $base_dir, $json_file);
+            // new STORE_MANAGER\App\Image\Image( $base_dir, $json_file);
         }
 
         new STORE_MANAGER\Rest\Api();

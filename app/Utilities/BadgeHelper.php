@@ -49,6 +49,14 @@ class BadgeHelper {
      * @return int
      */
     public static function save_badge($badge_data) {
+
+        // Ensure proper handling of null values for valid_from and valid_to
+        foreach ($badge_data as $key => $value) {
+            if ($value === '' || null) {
+                $badge_data[$key] = null; // Set empty strings to null
+            }
+        }
+
         global $wpdb;
         $table_name = $wpdb->prefix . 'store_manager_badges';
     
@@ -122,11 +130,18 @@ class BadgeHelper {
     public static function update_badge($badge_id, $badge_data) {
         global $wpdb;
         $table_name = $wpdb->prefix . 'store_manager_badges';
-        
+    
+        // Ensure proper handling of null values for valid_from and valid_to
+        foreach ($badge_data as $key => $value) {
+            if ($value === '' || null) {
+                $badge_data[$key] = null; // Set empty strings to null
+            }
+        }
+    
         // Prepare and execute the query to update the specific badge
         $where = array('id' => $badge_id);
         $updated = $wpdb->update($table_name, $badge_data, $where);
-        
+    
         if (false === $updated) {
             return new \WP_Error(
                 'rest_not_updated',
@@ -134,10 +149,11 @@ class BadgeHelper {
                 array('status' => 400)
             );
         }
-        
+    
         // Return the ID of the updated badge
         return $badge_id;
     }
+    
 
     /**
      * Delete badge
