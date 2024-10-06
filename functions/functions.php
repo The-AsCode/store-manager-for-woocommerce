@@ -31,7 +31,7 @@ if (!defined('ABSPATH')) {
 	 */
 	function store_manager_apply_product_badges( $badge, $product ) {
         //@TODO: Check theme compitiblity, for sticky, sidebar product. 
-        if( wp_doing_ajax() ) {
+        if( wp_doing_ajax() || is_admin() ) {
             return;
         }
 

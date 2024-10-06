@@ -256,7 +256,6 @@ class BadgeApi extends WP_REST_Controller {
             'badge_style' => array(
                 'description'       => __( 'Badge Style data', 'store-manager-for-woocommerce' ),
                 'type'              => 'string',
-                'sanitize_callback' => 'wp_kses_post',
                 'validate_callback' => 'rest_validate_request_arg',
             ),
             'priority' => array(
