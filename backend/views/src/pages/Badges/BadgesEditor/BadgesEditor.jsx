@@ -1,6 +1,9 @@
 // @ts-nocheck
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useLocation, useSearchParams } from 'react-router-dom';
 import Input from '../../../components/Input';
+import { useGetBadgeQuery } from '../../../features/badges/badgesApi';
 import { changeBadgeSetting } from '../../../features/badges/badgesSlice';
 import CustomSettings from './components/CustomSettings/CustomSettings';
 import ImageSettings from './components/ImageSettings';
@@ -10,6 +13,47 @@ import SelectBadgeType from './components/SelectBadgeType';
 const BadgesEditor = () => {
   const dispatch = useDispatch();
   const { badge_type, badge_name } = useSelector((state) => state.badges);
+  const [skip, setSkip] = useState(true);
+  const [editedData, setEditedData] = useState(null);
+
+  const { state } = useLocation();
+  const [searchParams] = useSearchParams();
+  const badgeId = searchParams.get('id');
+  const [loading, setLoading] = useState(true);
+  const { data, isLoading } = useGetBadgeQuery(badgeId, { skip });
+
+  if (!badgeId) {
+    setLoading(false);
+  }
+
+  useEffect(() => {
+    const badgeFromState = state?.badge;
+
+    if (badgeFromState) {
+      setEditedData(badgeFromState);
+      setLoading(false);
+    } else if (badgeId) {
+      setSkip(false);
+      setLoading(false);
+    }
+  }, [state, badgeId]);
+
+  useEffect(() => {
+    if (data) {
+      setEditedData(data);
+    }
+  }, [data]);
+
+  useEffect(() => {
+    if (editedData) {
+      dispatch(changeBadgeSetting({ setting: 'badge_name', value: editedData.badge_name }));
+      console.log('Edited Data:', editedData);
+    }
+  }, [editedData, dispatch]);
+
+  if (isLoading || loading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div className='wmx-flex wmx-gap-4'>

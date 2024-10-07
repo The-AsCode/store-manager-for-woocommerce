@@ -10162,14 +10162,20 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/dist/index.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/dist/index.js");
 /* harmony import */ var _components_Input__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../components/Input */ "./backend/views/src/components/Input.tsx");
-/* harmony import */ var _features_badges_badgesSlice__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../features/badges/badgesSlice */ "./backend/views/src/features/badges/badgesSlice.js");
-/* harmony import */ var _components_CustomSettings_CustomSettings__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/CustomSettings/CustomSettings */ "./backend/views/src/pages/Badges/BadgesEditor/components/CustomSettings/CustomSettings.jsx");
-/* harmony import */ var _components_ImageSettings__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/ImageSettings */ "./backend/views/src/pages/Badges/BadgesEditor/components/ImageSettings.jsx");
-/* harmony import */ var _components_PreviewBadge__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/PreviewBadge */ "./backend/views/src/pages/Badges/BadgesEditor/components/PreviewBadge.jsx");
-/* harmony import */ var _components_SelectBadgeType__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/SelectBadgeType */ "./backend/views/src/pages/Badges/BadgesEditor/components/SelectBadgeType.jsx");
+/* harmony import */ var _features_badges_badgesApi__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../features/badges/badgesApi */ "./backend/views/src/features/badges/badgesApi.js");
+/* harmony import */ var _features_badges_badgesSlice__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../features/badges/badgesSlice */ "./backend/views/src/features/badges/badgesSlice.js");
+/* harmony import */ var _components_CustomSettings_CustomSettings__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/CustomSettings/CustomSettings */ "./backend/views/src/pages/Badges/BadgesEditor/components/CustomSettings/CustomSettings.jsx");
+/* harmony import */ var _components_ImageSettings__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/ImageSettings */ "./backend/views/src/pages/Badges/BadgesEditor/components/ImageSettings.jsx");
+/* harmony import */ var _components_PreviewBadge__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/PreviewBadge */ "./backend/views/src/pages/Badges/BadgesEditor/components/PreviewBadge.jsx");
+/* harmony import */ var _components_SelectBadgeType__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/SelectBadgeType */ "./backend/views/src/pages/Badges/BadgesEditor/components/SelectBadgeType.jsx");
 
 // @ts-nocheck
+
+
+
 
 
 
@@ -10183,6 +10189,50 @@ const BadgesEditor = () => {
     badge_type,
     badge_name
   } = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useSelector)(state => state.badges);
+  const [skip, setSkip] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(true);
+  const [editedData, setEditedData] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null);
+  const {
+    state
+  } = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_9__.useLocation)();
+  const [searchParams] = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_10__.useSearchParams)();
+  const badgeId = searchParams.get('id');
+  const [loading, setLoading] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(true);
+  const {
+    data,
+    isLoading
+  } = (0,_features_badges_badgesApi__WEBPACK_IMPORTED_MODULE_3__.useGetBadgeQuery)(badgeId, {
+    skip
+  });
+  if (!badgeId) {
+    setLoading(false);
+  }
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    const badgeFromState = state?.badge;
+    if (badgeFromState) {
+      setEditedData(badgeFromState);
+      setLoading(false);
+    } else if (badgeId) {
+      setSkip(false);
+      setLoading(false);
+    }
+  }, [state, badgeId]);
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    if (data) {
+      setEditedData(data);
+    }
+  }, [data]);
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    if (editedData) {
+      dispatch((0,_features_badges_badgesSlice__WEBPACK_IMPORTED_MODULE_4__.changeBadgeSetting)({
+        setting: 'badge_name',
+        value: editedData.badge_name
+      }));
+      console.log('Edited Data:', editedData);
+    }
+  }, [editedData, dispatch]);
+  if (isLoading || loading) {
+    return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", null, "Loading...");
+  }
   return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "wmx-flex wmx-gap-4"
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
@@ -10200,13 +10250,13 @@ const BadgesEditor = () => {
     value: badge_name,
     className: "wmx-w-96",
     onChange: e => {
-      dispatch((0,_features_badges_badgesSlice__WEBPACK_IMPORTED_MODULE_3__.changeBadgeSetting)({
+      dispatch((0,_features_badges_badgesSlice__WEBPACK_IMPORTED_MODULE_4__.changeBadgeSetting)({
         setting: 'badge_name',
         value: e.target.value
       }));
     },
     placeholder: "Summer Sale Badge"
-  })), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_components_SelectBadgeType__WEBPACK_IMPORTED_MODULE_7__["default"], null), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", null, badge_type === 'custom' ? (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_components_CustomSettings_CustomSettings__WEBPACK_IMPORTED_MODULE_4__["default"], null) : (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_components_ImageSettings__WEBPACK_IMPORTED_MODULE_5__["default"], null)))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_components_PreviewBadge__WEBPACK_IMPORTED_MODULE_6__["default"], null));
+  })), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_components_SelectBadgeType__WEBPACK_IMPORTED_MODULE_8__["default"], null), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", null, badge_type === 'custom' ? (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_components_CustomSettings_CustomSettings__WEBPACK_IMPORTED_MODULE_5__["default"], null) : (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_components_ImageSettings__WEBPACK_IMPORTED_MODULE_6__["default"], null)))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_components_PreviewBadge__WEBPACK_IMPORTED_MODULE_7__["default"], null));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (BadgesEditor);
 
