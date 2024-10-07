@@ -4,7 +4,9 @@ import Button from '../../../../components/Button';
 import { useAddBadgeMutation } from '../../../../features/badges/badgesApi';
 
 const PreviewBadge = () => {
-  const { badge_type, badge_name, badge_styles, position, badgeText } = useSelector((state) => state.badges);
+  const { badge_type, badge_name, badge_styles, position, badgeText, valid_from, valid_to } = useSelector(
+    (state) => state.badges
+  );
   const [addBadge] = useAddBadgeMutation();
 
   const getPositionStyles = () => {
@@ -52,8 +54,8 @@ const PreviewBadge = () => {
       badge_type,
       filter: 'all',
       badge_style: generateBadgeHtml(),
-      valid_from: '',
-      valid_to: '',
+      valid_from,
+      valid_to,
     };
     const result = await addBadge(dataForSave).unwrap();
   };

@@ -21,6 +21,15 @@ const badgeApi = apiSlice.injectEndpoints({
       invalidatesTags: ['Badges'],
     }),
 
+    updateBadge: builder.mutation({
+      query: ({ id, body }) => ({
+        url: `badges/${id}`,
+        method: 'PATCH',
+        body,
+      }),
+      invalidatesTags: ['Badges'],
+    }),
+
     deleteBadge: builder.mutation({
       query: (id) => ({
         url: `badges/${id}`,
@@ -31,4 +40,10 @@ const badgeApi = apiSlice.injectEndpoints({
   }),
 });
 
-export const { useGetBadgesQuery, useAddBadgeMutation, useDeleteBadgeMutation, useGetBadgeQuery } = badgeApi;
+export const {
+  useGetBadgesQuery,
+  useAddBadgeMutation,
+  useDeleteBadgeMutation,
+  useGetBadgeQuery,
+  useUpdateBadgeMutation,
+} = badgeApi;

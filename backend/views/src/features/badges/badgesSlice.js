@@ -6,6 +6,8 @@ const initialState = {
   badge_type: 'custom',
   position: 'top-right',
   badgeText: 'Badge Text',
+  valid_from: '',
+  valid_to: '',
   badge_styles: {
     color: '#ffffff',
     backgroundColor: '#000000',

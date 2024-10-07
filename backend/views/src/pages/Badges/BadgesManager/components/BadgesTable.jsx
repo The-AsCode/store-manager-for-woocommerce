@@ -5,7 +5,11 @@ import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import Table from '../../../../components/Table';
 import Toggler from '../../../../components/Toggler';
-import { useDeleteBadgeMutation, useGetBadgesQuery } from '../../../../features/badges/badgesApi';
+import {
+  useDeleteBadgeMutation,
+  useGetBadgesQuery,
+  useUpdateBadgeMutation,
+} from '../../../../features/badges/badgesApi';
 import booleanConverter from '../../../../utils/booleanConverter';
 import cn from '../../../../utils/cn';
 import formatISODate from '../../../../utils/formatISODate';
@@ -13,6 +17,7 @@ import formatISODate from '../../../../utils/formatISODate';
 const BadgesTable = ({ setSelectedBadge, selectedBadge }) => {
   const navigate = useNavigate();
   const { data, isLoading, isError } = useGetBadgesQuery();
+  const [updateBadge] = useUpdateBadgeMutation();
   const [deleteBadge] = useDeleteBadgeMutation();
   const [sortedData, setSortedData] = useState([]);
 
@@ -29,6 +34,14 @@ const BadgesTable = ({ setSelectedBadge, selectedBadge }) => {
   const handleBadgeSelect = (badge) => {
     if (selectedBadge.id !== badge.id) {
       setSelectedBadge(badge);
+    }
+  };
+
+  const handleBadgeStatus = (badge) => {
+    if (badge.status === '0' || badge.status === '') {
+      updateBadge({ id: badge.id, body: { status: '1' } });
+    } else {
+      updateBadge({ id: badge.id, body: { status: '0' } });
     }
   };
 
@@ -76,7 +89,7 @@ const BadgesTable = ({ setSelectedBadge, selectedBadge }) => {
               <Bars3Icon className='wmx-size-6' />
             </Table.Data>
             <Table.Data>
-              <Toggler onChange={() => {}} checked={booleanConverter(badge.status)} />
+              <Toggler onChange={() => handleBadgeStatus(badge)} checked={booleanConverter(badge.status)} />
             </Table.Data>
             <Table.Data onClick={() => handleBadgeSelect(badge)} className={cn('wmx-cursor-pointer')}>
               {badge.badge_name}

@@ -9826,7 +9826,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   useAddBadgeMutation: () => (/* binding */ useAddBadgeMutation),
 /* harmony export */   useDeleteBadgeMutation: () => (/* binding */ useDeleteBadgeMutation),
 /* harmony export */   useGetBadgeQuery: () => (/* binding */ useGetBadgeQuery),
-/* harmony export */   useGetBadgesQuery: () => (/* binding */ useGetBadgesQuery)
+/* harmony export */   useGetBadgesQuery: () => (/* binding */ useGetBadgesQuery),
+/* harmony export */   useUpdateBadgeMutation: () => (/* binding */ useUpdateBadgeMutation)
 /* harmony export */ });
 /* harmony import */ var _api_apiSlice__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../api/apiSlice */ "./backend/views/src/features/api/apiSlice.ts");
 
@@ -9848,6 +9849,17 @@ const badgeApi = _api_apiSlice__WEBPACK_IMPORTED_MODULE_0__.apiSlice.injectEndpo
       }),
       invalidatesTags: ['Badges']
     }),
+    updateBadge: builder.mutation({
+      query: ({
+        id,
+        body
+      }) => ({
+        url: `badges/${id}`,
+        method: 'PATCH',
+        body
+      }),
+      invalidatesTags: ['Badges']
+    }),
     deleteBadge: builder.mutation({
       query: id => ({
         url: `badges/${id}`,
@@ -9861,7 +9873,8 @@ const {
   useGetBadgesQuery,
   useAddBadgeMutation,
   useDeleteBadgeMutation,
-  useGetBadgeQuery
+  useGetBadgeQuery,
+  useUpdateBadgeMutation
 } = badgeApi;
 
 /***/ }),
@@ -9886,6 +9899,8 @@ const initialState = {
   badge_type: 'custom',
   position: 'top-right',
   badgeText: 'Badge Text',
+  valid_from: '',
+  valid_to: '',
   badge_styles: {
     color: '#ffffff',
     backgroundColor: '#000000',
@@ -10213,7 +10228,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_BadgeContents__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/BadgeContents */ "./backend/views/src/pages/Badges/BadgesEditor/components/CustomSettings/components/BadgeContents.jsx");
 /* harmony import */ var _components_BadgeDimension__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/BadgeDimension */ "./backend/views/src/pages/Badges/BadgesEditor/components/CustomSettings/components/BadgeDimension.jsx");
 /* harmony import */ var _components_BadgePosition__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/BadgePosition */ "./backend/views/src/pages/Badges/BadgesEditor/components/CustomSettings/components/BadgePosition.jsx");
-/* harmony import */ var _components_OtherProperty__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/OtherProperty */ "./backend/views/src/pages/Badges/BadgesEditor/components/CustomSettings/components/OtherProperty.jsx");
+/* harmony import */ var _components_BadgeValidity__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/BadgeValidity */ "./backend/views/src/pages/Badges/BadgesEditor/components/CustomSettings/components/BadgeValidity.jsx");
+/* harmony import */ var _components_OtherProperty__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/OtherProperty */ "./backend/views/src/pages/Badges/BadgesEditor/components/CustomSettings/components/OtherProperty.jsx");
 
 // @ts-nocheck
 
@@ -10221,8 +10237,9 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
 const CustomSettings = () => {
-  return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_components_BadgeContents__WEBPACK_IMPORTED_MODULE_2__["default"], null), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_components_BadgeDimension__WEBPACK_IMPORTED_MODULE_3__["default"], null), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_components_BadgeColors__WEBPACK_IMPORTED_MODULE_1__["default"], null), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_components_BadgePosition__WEBPACK_IMPORTED_MODULE_4__["default"], null), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_components_OtherProperty__WEBPACK_IMPORTED_MODULE_5__["default"], null));
+  return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_components_BadgeValidity__WEBPACK_IMPORTED_MODULE_5__["default"], null), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_components_BadgeContents__WEBPACK_IMPORTED_MODULE_2__["default"], null), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_components_BadgeDimension__WEBPACK_IMPORTED_MODULE_3__["default"], null), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_components_BadgeColors__WEBPACK_IMPORTED_MODULE_1__["default"], null), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_components_BadgePosition__WEBPACK_IMPORTED_MODULE_4__["default"], null), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_components_OtherProperty__WEBPACK_IMPORTED_MODULE_6__["default"], null));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (CustomSettings);
 
@@ -10500,6 +10517,72 @@ const BadgePosition = () => {
 
 /***/ }),
 
+/***/ "./backend/views/src/pages/Badges/BadgesEditor/components/CustomSettings/components/BadgeValidity.jsx":
+/*!************************************************************************************************************!*\
+  !*** ./backend/views/src/pages/Badges/BadgesEditor/components/CustomSettings/components/BadgeValidity.jsx ***!
+  \************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _components_Input__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../../components/Input */ "./backend/views/src/components/Input.tsx");
+/* harmony import */ var _components_Label__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../../../components/Label */ "./backend/views/src/components/Label.jsx");
+/* harmony import */ var _features_badges_badgesSlice__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../../../../features/badges/badgesSlice */ "./backend/views/src/features/badges/badgesSlice.js");
+
+// @ts-nocheck
+
+
+
+
+const BadgeValidity = () => {
+  const dispatch = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useDispatch)();
+  const {
+    badge_styles
+  } = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useSelector)(state => state.badges);
+  const handleBadgeSettingChange = (setting, value) => {
+    dispatch((0,_features_badges_badgesSlice__WEBPACK_IMPORTED_MODULE_4__.changeBadgeSetting)({
+      setting,
+      value
+    }));
+  };
+  return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: "wmx-mt-6"
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: "wmx-bg-primary/10 wmx-py-1 wmx-px-2 wmx-font-bold"
+  }, "Badge Validity"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: "wmx-flex wmx-items-center wmx-gap-4 wmx-mt-3"
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: "wmx-flex wmx-flex-col wmx-gap-1"
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_components_Label__WEBPACK_IMPORTED_MODULE_3__["default"], {
+    htmlFor: "validFrom"
+  }, "Start Date:"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_components_Input__WEBPACK_IMPORTED_MODULE_2__["default"], {
+    id: "validFrom",
+    className: "wmx-w-full",
+    type: "datetime-local",
+    value: badge_styles.valid_from,
+    onChange: e => handleBadgeSettingChange('valid_from', e.target.value)
+  })), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: "wmx-flex wmx-flex-col wmx-gap-1"
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_components_Label__WEBPACK_IMPORTED_MODULE_3__["default"], {
+    htmlFor: "validTo"
+  }, "End Date:"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_components_Input__WEBPACK_IMPORTED_MODULE_2__["default"], {
+    id: "validTo",
+    type: "datetime-local",
+    min: 0,
+    value: badge_styles.valid_to,
+    className: "wmx-w-full",
+    onChange: e => handleBadgeSettingChange('valid_to', e.target.value)
+  }))));
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (BadgeValidity);
+
+/***/ }),
+
 /***/ "./backend/views/src/pages/Badges/BadgesEditor/components/CustomSettings/components/OtherProperty.jsx":
 /*!************************************************************************************************************!*\
   !*** ./backend/views/src/pages/Badges/BadgesEditor/components/CustomSettings/components/OtherProperty.jsx ***!
@@ -10625,7 +10708,9 @@ const PreviewBadge = () => {
     badge_name,
     badge_styles,
     position,
-    badgeText
+    badgeText,
+    valid_from,
+    valid_to
   } = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useSelector)(state => state.badges);
   const [addBadge] = (0,_features_badges_badgesApi__WEBPACK_IMPORTED_MODULE_3__.useAddBadgeMutation)();
   const getPositionStyles = () => {
@@ -10671,8 +10756,8 @@ const PreviewBadge = () => {
       badge_type,
       filter: 'all',
       badge_style: generateBadgeHtml(),
-      valid_from: '',
-      valid_to: ''
+      valid_from,
+      valid_to
     };
     const result = await addBadge(dataForSave).unwrap();
   };
@@ -10848,6 +10933,7 @@ const BadgesTable = ({
     isLoading,
     isError
   } = (0,_features_badges_badgesApi__WEBPACK_IMPORTED_MODULE_4__.useGetBadgesQuery)();
+  const [updateBadge] = (0,_features_badges_badgesApi__WEBPACK_IMPORTED_MODULE_4__.useUpdateBadgeMutation)();
   const [deleteBadge] = (0,_features_badges_badgesApi__WEBPACK_IMPORTED_MODULE_4__.useDeleteBadgeMutation)();
   const [sortedData, setSortedData] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]);
   const handleDelete = async id => {
@@ -10862,6 +10948,23 @@ const BadgesTable = ({
   const handleBadgeSelect = badge => {
     if (selectedBadge.id !== badge.id) {
       setSelectedBadge(badge);
+    }
+  };
+  const handleBadgeStatus = badge => {
+    if (badge.status === '0' || badge.status === '') {
+      updateBadge({
+        id: badge.id,
+        body: {
+          status: '1'
+        }
+      });
+    } else {
+      updateBadge({
+        id: badge.id,
+        body: {
+          status: '0'
+        }
+      });
     }
   };
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
@@ -10896,7 +10999,7 @@ const BadgesTable = ({
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_heroicons_react_24_outline__WEBPACK_IMPORTED_MODULE_9__["default"], {
     className: "wmx-size-6"
   })), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_components_Table__WEBPACK_IMPORTED_MODULE_2__["default"].Data, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_components_Toggler__WEBPACK_IMPORTED_MODULE_3__["default"], {
-    onChange: () => {},
+    onChange: () => handleBadgeStatus(badge),
     checked: (0,_utils_booleanConverter__WEBPACK_IMPORTED_MODULE_5__["default"])(badge.status)
   })), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_components_Table__WEBPACK_IMPORTED_MODULE_2__["default"].Data, {
     onClick: () => handleBadgeSelect(badge),
