@@ -10867,6 +10867,7 @@ const BadgesTable = ({
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
     if (isError) {
       setSortedData([]);
+      setSelectedBadge(null);
       return;
     }
     if (data && data.length > 0) {

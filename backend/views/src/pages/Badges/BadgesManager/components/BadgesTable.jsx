@@ -35,6 +35,7 @@ const BadgesTable = ({ setSelectedBadge, selectedBadge }) => {
   useEffect(() => {
     if (isError) {
       setSortedData([]);
+      setSelectedBadge(null);
       return;
     }
 
