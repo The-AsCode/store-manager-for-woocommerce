@@ -258,6 +258,12 @@ class BadgeApi extends WP_REST_Controller {
                 'type'              => 'string',
                 'validate_callback' => 'rest_validate_request_arg',
             ),
+            'badge_settings' => array(
+                'description'       => __( 'Badge settings', 'store-manager-for-woocommerce' ),
+                'type'              => 'obejct',
+                'serialize_callback' => 'maybe_serialize',
+                'validate_callback' => 'rest_validate_request_arg',
+            ),
             'priority' => array(
                 'description'       => __( 'Badge priority', 'store-manager-for-woocommerce' ),
                 'type'              => 'integer',
@@ -340,6 +346,12 @@ class BadgeApi extends WP_REST_Controller {
                 'badge_style' => array(
                     'description' => __( 'Badge Style.', 'store-manager-for-woocommerce' ),
                     'type'        => 'string',
+                    'context'     => array( 'view' ),
+                    'readonly'    => true,
+                ),
+                'badge_settings' => array(
+                    'description' => __( 'Badge settings.', 'store-manager-for-woocommerce' ),
+                    'type'        => 'object',
                     'context'     => array( 'view' ),
                     'readonly'    => true,
                 ),
@@ -497,6 +509,10 @@ class BadgeApi extends WP_REST_Controller {
         if ( isset( $request['badge_style'] ) ) {
             $prepared_data['badge_style'] = maybe_serialize( $request['badge_style'] );
         }
+
+        if( isset( $request['badge_settings'] ) ) {
+            $prepared_data['badge_settings'] = maybe_serialize( $request['badge_settings'] );
+        }
     
         return $prepared_data;
     }    
@@ -540,6 +556,11 @@ class BadgeApi extends WP_REST_Controller {
 		if ( ! empty( $item['badge_style'] ) ) {
 			$data['badge_style'] = $item['badge_style'];
 		}
+
+        $data['badge_settings'] = array();
+        if( !empty( $item['badge_settings'] ) ) {
+            $data['badge_settings'] = maybe_unserialize( $item['badge_settings'] );
+        }
 
 		$data['priority'] = '';
 
