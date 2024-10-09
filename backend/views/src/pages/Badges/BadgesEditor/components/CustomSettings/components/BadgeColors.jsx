@@ -1,6 +1,6 @@
 // @ts-nocheck
 import { useDispatch, useSelector } from 'react-redux';
-import { updateStyles } from '../../../../../../features/badges/badgesSlice';
+import { changeBadgeSettingProperties } from '../../../../../../features/badges/badgesSlice';
 
 const colors = {
   backgroundColor: 'Background Color',
@@ -10,10 +10,10 @@ const colors = {
 
 const BadgeColors = () => {
   const dispatch = useDispatch();
-  const { badge_styles } = useSelector((state) => state.badges);
+  const { badge_settings } = useSelector((state) => state.badges);
 
-  const handleStyleChange = (property, value) => {
-    dispatch(updateStyles({ property, value }));
+  const handleBadgeColorChange = (name, value) => {
+    dispatch(changeBadgeSettingProperties({ name, value }));
   };
 
   return (
@@ -27,8 +27,8 @@ const BadgeColors = () => {
               className='!wmx-outline-none !wmx-border-none focus:!wmx-shadow-none'
               id={key}
               type='color'
-              value={badge_styles[key]}
-              onChange={(e) => handleStyleChange(key, e.target.value)}
+              value={badge_settings[key]}
+              onChange={(e) => handleBadgeColorChange(key, e.target.value)}
             />
           </div>
         ))}

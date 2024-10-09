@@ -2,18 +2,14 @@
 import { useDispatch, useSelector } from 'react-redux';
 import Input from '../../../../../../components/Input';
 import Label from '../../../../../../components/Label';
-import { changeBadgeSetting, updateStyles } from '../../../../../../features/badges/badgesSlice';
+import { changeBadgeSettingProperties } from '../../../../../../features/badges/badgesSlice';
 
 const BadgeContents = () => {
   const dispatch = useDispatch();
-  const { badgeText, badge_styles } = useSelector((state) => state.badges);
+  const { badgeText, badge_settings } = useSelector((state) => state.badges);
 
-  const handleStyleChange = (property, value) => {
-    dispatch(updateStyles({ property, value }));
-  };
-
-  const handleBadgeSettingChange = (setting, value) => {
-    dispatch(changeBadgeSetting({ setting, value }));
+  const handleBadgeContentChange = (name, value) => {
+    dispatch(changeBadgeSettingProperties({ name, value }));
   };
 
   return (
@@ -28,8 +24,8 @@ const BadgeContents = () => {
             placeholder='Summer Sell'
             className='wmx-w-full'
             type='text'
-            value={badgeText}
-            onChange={(e) => handleBadgeSettingChange('badgeText', e.target.value)}
+            value={badge_settings.text}
+            onChange={(e) => handleBadgeContentChange('text', e.target.value)}
           />
         </div>
 
@@ -39,9 +35,9 @@ const BadgeContents = () => {
             id='fontSize'
             type='number'
             min={0}
-            value={badge_styles.fontSize}
+            value={badge_settings.fontSize}
             className='wmx-w-full'
-            onChange={(e) => handleStyleChange('fontSize', e.target.value)}
+            onChange={(e) => handleBadgeContentChange('fontSize', e.target.value)}
           />
         </div>
 
@@ -50,8 +46,8 @@ const BadgeContents = () => {
           <select
             className='!wmx-border !wmx-w-32 !wmx-shadow-none !wmx-border-gray-200 focus:!wmx-border-primary !wmx-bg-white !wmx-py-1.5 wmx-rounded'
             id='fontWeight'
-            value={badge_styles.fontWeight}
-            onChange={(e) => handleStyleChange('fontWeight', e.target.value)}
+            value={badge_settings.fontWeight}
+            onChange={(e) => handleBadgeContentChange('fontWeight', e.target.value)}
           >
             <option value='400'>Normal</option>
             <option value='500'>Medium</option>

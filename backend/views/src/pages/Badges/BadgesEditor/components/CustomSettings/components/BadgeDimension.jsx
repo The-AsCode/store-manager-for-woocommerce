@@ -1,7 +1,7 @@
 // @ts-nocheck
 import { useDispatch, useSelector } from 'react-redux';
 import Input from '../../../../../../components/Input';
-import { updateStyles } from '../../../../../../features/badges/badgesSlice';
+import { changeBadgeSettingProperties } from '../../../../../../features/badges/badgesSlice';
 
 const dimensions = {
   height: 'Height',
@@ -11,10 +11,10 @@ const dimensions = {
 
 const BadgeDimension = () => {
   const dispatch = useDispatch();
-  const { badge_styles } = useSelector((state) => state.badges);
+  const { badge_settings } = useSelector((state) => state.badges);
 
-  const handleStyleChange = (property, value) => {
-    dispatch(updateStyles({ property, value }));
+  const handleBadgeDimensionChange = (name, value) => {
+    dispatch(changeBadgeSettingProperties({ name, value }));
   };
 
   return (
@@ -30,8 +30,8 @@ const BadgeDimension = () => {
               className='!wmx-outline-none wmx-w-36 !wmx-border-none focus:!wmx-shadow-none'
               id={key}
               type='number'
-              value={badge_styles[key]}
-              onChange={(e) => handleStyleChange(key, e.target.value)}
+              value={badge_settings[key]}
+              onChange={(e) => handleBadgeDimensionChange(key, e.target.value)}
             />
           </div>
         ))}

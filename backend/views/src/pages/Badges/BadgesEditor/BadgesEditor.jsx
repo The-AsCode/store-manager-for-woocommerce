@@ -1,10 +1,10 @@
 // @ts-nocheck
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useSearchParams } from 'react-router-dom';
 import Input from '../../../components/Input';
 import { useGetBadgeQuery } from '../../../features/badges/badgesApi';
-import { changeBadgeSetting } from '../../../features/badges/badgesSlice';
+import { changeBadgeBaseProperties } from '../../../features/badges/badgesSlice';
 import CustomSettings from './components/CustomSettings/CustomSettings';
 import ImageSettings from './components/ImageSettings';
 import PreviewBadge from './components/PreviewBadge';
@@ -22,41 +22,6 @@ const BadgesEditor = () => {
   const [loading, setLoading] = useState(true);
   const { data, isLoading } = useGetBadgeQuery(badgeId, { skip });
 
-  useEffect(() => {
-    if (!badgeId) {
-      setLoading(false);
-    }
-  }, [badgeId]);
-
-  useEffect(() => {
-    const badgeFromState = state?.badge;
-
-    if (badgeFromState) {
-      setEditedData(badgeFromState);
-      setLoading(false);
-    } else if (badgeId) {
-      setSkip(false);
-      setLoading(false);
-    }
-  }, [state, badgeId]);
-
-  useEffect(() => {
-    if (data) {
-      setEditedData(data);
-    }
-  }, [data]);
-
-  useEffect(() => {
-    if (editedData) {
-      dispatch(changeBadgeSetting({ setting: 'badge_name', value: editedData.badge_name }));
-      console.log('Edited Data:', editedData);
-    }
-  }, [editedData]);
-
-  if (isLoading || loading) {
-    return <div>Loading...</div>;
-  }
-
   return (
     <div className='wmx-flex wmx-gap-4'>
       <div className='wmx-flex-grow'>
@@ -71,7 +36,7 @@ const BadgesEditor = () => {
             value={badge_name}
             className='wmx-w-96'
             onChange={(e) => {
-              dispatch(changeBadgeSetting({ setting: 'badge_name', value: e.target.value }));
+              dispatch(changeBadgeBaseProperties({ setting: 'badge_name', value: e.target.value }));
             }}
             placeholder='Summer Sale Badge'
           />

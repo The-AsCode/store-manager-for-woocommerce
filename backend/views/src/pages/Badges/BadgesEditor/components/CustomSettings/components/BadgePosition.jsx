@@ -1,6 +1,6 @@
 // @ts-nocheck
 import { useDispatch, useSelector } from 'react-redux';
-import { changeBadgeSetting } from '../../../../../../features/badges/badgesSlice';
+import { changeBadgeSettingProperties } from '../../../../../../features/badges/badgesSlice';
 import cn from '../../../../../../utils/cn';
 
 const positionsButtons = [
@@ -13,10 +13,10 @@ const positionsButtons = [
 
 const BadgePosition = () => {
   const dispatch = useDispatch();
-  const { position } = useSelector((state) => state.badges);
+  const { badge_settings } = useSelector((state) => state.badges);
 
-  const handleBadgeSettingChange = (setting, value) => {
-    dispatch(changeBadgeSetting({ setting, value }));
+  const handleBadgePositionChange = (name, value) => {
+    dispatch(changeBadgeSettingProperties({ name, value }));
   };
 
   return (
@@ -26,9 +26,9 @@ const BadgePosition = () => {
         {positionsButtons.map((button) => (
           <button
             key={button.value}
-            onClick={() => handleBadgeSettingChange('position', button.value)}
+            onClick={() => handleBadgePositionChange('position', button.value)}
             className={cn('wmx-px-2.5 wmx-py-2 wmx-bg-white wmx-text-sm wmx-font-semibold', {
-              'wmx-bg-primary wmx-text-white': position === button.value,
+              'wmx-bg-primary wmx-text-white': badge_settings.position === button.value,
             })}
           >
             {button.name}

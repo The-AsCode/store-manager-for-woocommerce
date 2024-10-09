@@ -1,6 +1,8 @@
 // @ts-nocheck
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { changeBadgeSetting } from '../../../../features/badges/badgesSlice';
+import { changeBadgeBaseProperties } from '../../../../features/badges/badgesSlice';
+import { badgeCustomSettings, generateBadgeHtml } from '../../../../utils/badgeUtils';
 import cn from '../../../../utils/cn';
 
 const badgeType = {
@@ -10,11 +12,21 @@ const badgeType = {
 
 const SelectBadgeType = () => {
   const dispatch = useDispatch();
-  const { badge_type } = useSelector((state) => state.badges);
+  const { badge_type, badge_settings } = useSelector((state) => state.badges);
 
   const handleBadgeType = (badge_type) => {
-    dispatch(changeBadgeSetting({ setting: 'badge_type', value: badge_type }));
+    dispatch(changeBadgeBaseProperties({ name: 'badge_type', value: badge_type }));
   };
+
+  useEffect(() => {
+    if (badge_type === 'custom') {
+      dispatch(changeBadgeBaseProperties({ name: 'badge_settings', value: { ...badgeCustomSettings } }));
+    }
+  }, [badge_type]);
+
+  useEffect(() => {
+    dispatch(changeBadgeBaseProperties({ name: 'badge_style', value: generateBadgeHtml(badge_settings) }));
+  }, [badge_settings]);
 
   return (
     <div className='wmx-mt-6'>

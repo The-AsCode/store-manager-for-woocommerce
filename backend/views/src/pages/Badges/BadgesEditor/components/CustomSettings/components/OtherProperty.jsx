@@ -2,7 +2,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import Input from '../../../../../../components/Input';
 import Label from '../../../../../../components/Label';
-import { updateStyles } from '../../../../../../features/badges/badgesSlice';
+import { changeBadgeSettingProperties } from '../../../../../../features/badges/badgesSlice';
 
 const borderRadiusInputs = [
   { name: 'Top Left', value: 'borderTopLeftRadius' },
@@ -12,10 +12,10 @@ const borderRadiusInputs = [
 ];
 const OtherProperty = () => {
   const dispatch = useDispatch();
-  const { badge_styles } = useSelector((state) => state.badges);
+  const { badge_settings } = useSelector((state) => state.badges);
 
-  const handleStyleChange = (property, value) => {
-    dispatch(updateStyles({ property, value }));
+  const handleStyleChange = (name, value) => {
+    dispatch(changeBadgeSettingProperties({ name, value }));
   };
 
   return (
@@ -27,7 +27,7 @@ const OtherProperty = () => {
           <Input
             id='margin'
             type='number'
-            value={badge_styles.margin}
+            value={badge_settings.margin}
             onChange={(e) => handleStyleChange('margin', e.target.value)}
           />
         </div>
@@ -41,7 +41,7 @@ const OtherProperty = () => {
                 key={input.value}
                 id={input.value}
                 type='number'
-                value={badge_styles[input.value]}
+                value={badge_settings[input.value]}
                 placeholder={input.name}
                 onChange={(e) => handleStyleChange(input.value, e.target.value)}
               />

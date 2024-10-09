@@ -2,14 +2,14 @@
 import { useDispatch, useSelector } from 'react-redux';
 import Input from '../../../../../../components/Input';
 import Label from '../../../../../../components/Label';
-import { changeBadgeSetting } from '../../../../../../features/badges/badgesSlice';
+import { changeBadgeSettingProperties } from '../../../../../../features/badges/badgesSlice';
 
 const BadgeValidity = () => {
   const dispatch = useDispatch();
-  const { badge_styles } = useSelector((state) => state.badges);
+  const { badge_settings } = useSelector((state) => state.badges);
 
-  const handleBadgeSettingChange = (setting, value) => {
-    dispatch(changeBadgeSetting({ setting, value }));
+  const handleBadgeSettingPropertiesChange = (name, value) => {
+    dispatch(changeBadgeSettingProperties({ name, value }));
   };
 
   return (
@@ -22,8 +22,8 @@ const BadgeValidity = () => {
             id='validFrom'
             className='wmx-w-full'
             type='datetime-local'
-            value={badge_styles.valid_from}
-            onChange={(e) => handleBadgeSettingChange('valid_from', e.target.value)}
+            value={badge_settings.valid_from}
+            onChange={(e) => handleBadgeSettingPropertiesChange('valid_from', e.target.value)}
           />
         </div>
 
@@ -33,9 +33,9 @@ const BadgeValidity = () => {
             id='validTo'
             type='datetime-local'
             min={0}
-            value={badge_styles.valid_to}
+            value={badge_settings.valid_to}
             className='wmx-w-full'
-            onChange={(e) => handleBadgeSettingChange('valid_to', e.target.value)}
+            onChange={(e) => handleBadgeSettingPropertiesChange('valid_to', e.target.value)}
           />
         </div>
       </div>
