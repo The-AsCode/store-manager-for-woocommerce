@@ -43,7 +43,7 @@ final class Store_Manager {
      * 
      * @var string
      */
-    const store_manager_version = '1.0.1';
+    const store_manager_version = '1.0.6';
 
     // Private constructor to enforce singleton pattern.
     private function __construct()
@@ -97,6 +97,7 @@ final class Store_Manager {
      */
     function activate()
     {
+        update_option('store_manager_version', STORE_MANAGER_VERSION);
         // Set an option to store the installation time.
         $installed = get_option('shop_manager_install_time');
 
@@ -136,10 +137,12 @@ final class Store_Manager {
         if (is_admin()) {
             new STORE_MANAGER\Backend\Menu();
             // new STORE_MANAGER\App\Image\Image( $base_dir, $json_file);
+
+            //Check plugin update and change the required need.
+            STORE_MANAGER\Backend\ActDeact::plugin_check_update();
         }
 
         new STORE_MANAGER\Rest\Api();
-
         new STORE_MANAGER\Backend\Enqueue();
     }
 }

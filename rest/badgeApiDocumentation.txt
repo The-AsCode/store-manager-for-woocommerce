@@ -12,6 +12,10 @@ Badge api Dcumentation:
             "badge_type": "image",
             "filter": "all",
             "badge_style": "<h1>all</h1>",
+            "badge_settings": {
+                "display": "flex",
+                "justify_content": "center"
+            }
             "priority": "1",
             "status": "1",
             "created_by": "1",
@@ -38,6 +42,10 @@ Badge api Dcumentation:
             "badge_type": "image",
             "filter": "all",
             "badge_style": "<h1>few</h1>",
+            "badge_settings": {
+                "display": "flex",
+                "justify_content": "center"
+            },
             "priority": "2",
             "status": "1",
             "created_by": "1",
@@ -72,6 +80,10 @@ Badge api Dcumentation:
         "badge_type": "image",
         "filter": "all",
         "badge_style": "<h1>all</h1>",
+        "badge_settings": {
+            "display": "flex",
+            "justify_content": "center"
+        },
         "priority": "1",
         "status": "1",
         "created_by": "1",
@@ -102,6 +114,7 @@ Badge api Dcumentation:
         * badge_type (string): Filter badges by type.
         * filter (mixed): Filter data (string/array/integer).
         * badge_style (string): Filter by badge style.
+        * badge_settings (object): Badge settings object.
         * priority (optional, integer): Filter by priority level.
         * status (optional,integer): Filter by badge status.
         * valid_from (optional,string, date): Filter badges valid from a specific date.
@@ -113,6 +126,10 @@ Badge api Dcumentation:
         "badge_type": "image",
         "filter": "all", // it can be integer or array of object for few products
         "badge_style": "<h1>Top Selling</h1>",
+        "badge_settings": {
+            "display": "flex",
+            "justify-content": "center"
+        }
         "valid_from": "2024-09-09T12:18:30+00:00",
         "valid_to": "2025-09-25T02:18:30+00:00"
     }

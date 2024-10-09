@@ -13,6 +13,7 @@ class ActDeact {
     public function __construct() { 
         self::create_filter_table(); 
         self::create_badge_table();
+        self::update_badge_table();
     } 
 
     /**
@@ -73,5 +74,45 @@ class ActDeact {
         require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
         
         dbDelta( $sql );
+    }
+
+    /**
+     * Method to update the badge table if a new version of the plugin is activated or the plugin is updated
+     * 
+     * @return void
+     */
+    public static function update_badge_table() {
+        global $wpdb;
+
+        $table_name = $wpdb->prefix . 'store_manager_badges';
+
+        // Check if the table exists
+        if ($wpdb->get_var("SHOW TABLES LIKE '$table_name'") == $table_name) {
+            // Check if the 'badge_settings' column exists
+            $column_exists = $wpdb->get_results( "SHOW COLUMNS FROM `$table_name` LIKE 'badge_settings'" );
+            
+            // If the column does not exist, alter the table to add it
+            if (empty($column_exists)) {
+                $wpdb->query("ALTER TABLE $table_name ADD badge_settings text DEFAULT NULL;");
+            }
+        }
+    }
+
+    /** 
+     * Method to check if the plugin needs to be updated
+     * 
+     * @return void
+    */
+    public static function plugin_check_update() {
+        $current_version = STORE_MANAGER_VERSION; // Replace with your plugin's current version
+        $installed_version = get_option('store_manager_version');
+    
+        // If the version is not set or different, run the update logic
+        if ($installed_version != $current_version) {
+            self::update_badge_table(); // Add badge_settings column if not exists
+            
+            // Update the version in the options table
+            update_option('store_manager_version', $current_version);
+        }
     }
 }
