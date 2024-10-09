@@ -22,9 +22,11 @@ const BadgesEditor = () => {
   const [loading, setLoading] = useState(true);
   const { data, isLoading } = useGetBadgeQuery(badgeId, { skip });
 
-  if (!badgeId) {
-    setLoading(false);
-  }
+  useEffect(() => {
+    if (!badgeId) {
+      setLoading(false);
+    }
+  }, [badgeId]);
 
   useEffect(() => {
     const badgeFromState = state?.badge;
@@ -49,7 +51,7 @@ const BadgesEditor = () => {
       dispatch(changeBadgeSetting({ setting: 'badge_name', value: editedData.badge_name }));
       console.log('Edited Data:', editedData);
     }
-  }, [editedData, dispatch]);
+  }, [editedData]);
 
   if (isLoading || loading) {
     return <div>Loading...</div>;

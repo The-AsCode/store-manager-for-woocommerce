@@ -10203,9 +10203,11 @@ const BadgesEditor = () => {
   } = (0,_features_badges_badgesApi__WEBPACK_IMPORTED_MODULE_3__.useGetBadgeQuery)(badgeId, {
     skip
   });
-  if (!badgeId) {
-    setLoading(false);
-  }
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    if (!badgeId) {
+      setLoading(false);
+    }
+  }, [badgeId]);
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
     const badgeFromState = state?.badge;
     if (badgeFromState) {
@@ -10229,7 +10231,7 @@ const BadgesEditor = () => {
       }));
       console.log('Edited Data:', editedData);
     }
-  }, [editedData, dispatch]);
+  }, [editedData]);
   if (isLoading || loading) {
     return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", null, "Loading...");
   }
