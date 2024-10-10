@@ -1,6 +1,9 @@
 // @ts-nocheck
+import { EyeDropperIcon } from '@heroicons/react/24/solid';
+import { __ } from '@wordpress/i18n';
 import { useDispatch, useSelector } from 'react-redux';
 import { changeBadgeSettingProperties } from '../../../../../../features/badges/badgesSlice';
+import SectionContainer from '../../Common/SectionContainer';
 
 const colors = {
   backgroundColor: 'Background Color',
@@ -17,14 +20,24 @@ const BadgeColors = () => {
   };
 
   return (
-    <div className='wmx-mt-6'>
-      <div className='wmx-bg-primary/10 wmx-py-1 wmx-px-2 wmx-font-bold'>Badge Colors</div>
-      <div className='wmx-flex wmx-gap-4 wmx-items-center wmx-mt-3'>
+    <SectionContainer className='wmx-mt-6' title={__('Badge Colors')}>
+      <div className='wmx-flex wmx-gap-6 wmx-items-center'>
         {Object.entries(colors).map(([key, value]) => (
-          <div key={key} className='wmx-flex wmx-gap-1 wmx-items-center'>
-            <label htmlFor={key}>{value}:</label>
+          <div key={key} className='wmx-flex wmx-flex-col'>
+            <label
+              className='wmx-font-medium wmx-text-base wmx-flex wmx-items-center wmx-gap-2 wmx-tedxt'
+              htmlFor={key}
+            >
+              {value}:
+              <span
+                style={{ borderColor: badge_settings[key] }}
+                className='wmx-flex wmx-justify-center wmx-bg-white wmx-size-10 wmx-border-2 wmx-rounded-full wmx-items-center'
+              >
+                <EyeDropperIcon className='wmx-h-5 wmx-w-5' />
+              </span>
+            </label>
             <input
-              className='!wmx-outline-none !wmx-border-none focus:!wmx-shadow-none'
+              className='!wmx-outline-none -wmx-mt-7 wmx-invisible !wmx-border-none focus:!wmx-shadow-none'
               id={key}
               type='color'
               value={badge_settings[key]}
@@ -33,7 +46,7 @@ const BadgeColors = () => {
           </div>
         ))}
       </div>
-    </div>
+    </SectionContainer>
   );
 };
 export default BadgeColors;

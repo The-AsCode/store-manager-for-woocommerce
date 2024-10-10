@@ -1,22 +1,22 @@
 // @ts-nocheck
+import { __ } from '@wordpress/i18n';
 import { useDispatch, useSelector } from 'react-redux';
 import Input from '../../../../../../components/Input';
 import Label from '../../../../../../components/Label';
 import { changeBadgeSettingProperties } from '../../../../../../features/badges/badgesSlice';
+import SectionContainer from '../../Common/SectionContainer';
 
 const BadgeContents = () => {
   const dispatch = useDispatch();
-  const { badgeText, badge_settings } = useSelector((state) => state.badges);
+  const { badge_settings } = useSelector((state) => state.badges);
 
   const handleBadgeContentChange = (name, value) => {
     dispatch(changeBadgeSettingProperties({ name, value }));
   };
 
   return (
-    <div className='wmx-mt-6'>
-      <div className='wmx-bg-primary/10 wmx-py-1 wmx-px-2 wmx-font-bold'>Badge Content</div>
-
-      <div className='wmx-flex wmx-items-center wmx-gap-4 wmx-mt-3'>
+    <SectionContainer className='wmx-mt-6' title={__('Badge Contents')}>
+      <div className='wmx-flex wmx-items-center wmx-gap-4'>
         <div className='wmx-flex wmx-flex-col wmx-gap-1'>
           <Label htmlFor='badge-text'>Badge Text:</Label>
           <Input
@@ -44,7 +44,7 @@ const BadgeContents = () => {
         <div className='wmx-flex wmx-flex-col wmx-gap-1'>
           <Label htmlFor='fontWeight'>Font Weight:</Label>
           <select
-            className='!wmx-border !wmx-w-32 !wmx-shadow-none !wmx-border-gray-200 focus:!wmx-border-primary !wmx-bg-white !wmx-py-1.5 wmx-rounded'
+            className='!wmx-border !wmx-rounded-md !wmx-w-32 !wmx-shadow-none !wmx-border-gray-200 focus:!wmx-border-primary !wmx-bg-white !wmx-py-1.5'
             id='fontWeight'
             value={badge_settings.fontWeight}
             onChange={(e) => handleBadgeContentChange('fontWeight', e.target.value)}
@@ -56,7 +56,7 @@ const BadgeContents = () => {
           </select>
         </div>
       </div>
-    </div>
+    </SectionContainer>
   );
 };
 export default BadgeContents;

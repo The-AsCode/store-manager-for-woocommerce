@@ -1,7 +1,9 @@
 // @ts-nocheck
+import { __ } from '@wordpress/i18n';
 import { useDispatch, useSelector } from 'react-redux';
 import { changeBadgeSettingProperties } from '../../../../../../features/badges/badgesSlice';
 import cn from '../../../../../../utils/cn';
+import SectionContainer from '../../Common/SectionContainer';
 
 const positionsButtons = [
   { name: 'Top Right', value: 'top-right' },
@@ -20,14 +22,13 @@ const BadgePosition = () => {
   };
 
   return (
-    <div className='wmx-mt-6'>
-      <div className='wmx-bg-primary/10 wmx-py-1 wmx-px-2 wmx-font-bold'>Badge Position</div>
-      <div className='wmx-flex wmx-gap-2 wmx-items-center wmx-mt-3'>
+    <SectionContainer className='wmx-mt-6' title={__('Badge Position')}>
+      <div className='wmx-flex wmx-gap-3 wmx-items-center '>
         {positionsButtons.map((button) => (
           <button
             key={button.value}
             onClick={() => handleBadgePositionChange('position', button.value)}
-            className={cn('wmx-px-2.5 wmx-py-2 wmx-bg-white wmx-text-sm wmx-font-semibold', {
+            className={cn('wmx-px-4 wmx-py-2.5 wmx-bg-white wmx-text-sm wmx-rounded-lg wmx-font-semibold', {
               'wmx-bg-primary wmx-text-white': badge_settings.position === button.value,
             })}
           >
@@ -35,7 +36,7 @@ const BadgePosition = () => {
           </button>
         ))}
       </div>
-    </div>
+    </SectionContainer>
   );
 };
 export default BadgePosition;

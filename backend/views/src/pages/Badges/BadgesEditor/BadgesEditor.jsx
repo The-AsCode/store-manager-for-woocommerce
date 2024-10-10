@@ -1,55 +1,75 @@
 // @ts-nocheck
-import { useState } from 'react';
+import { __ } from '@wordpress/i18n';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useLocation, useSearchParams } from 'react-router-dom';
-import Input from '../../../components/Input';
+import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import { useGetBadgeQuery } from '../../../features/badges/badgesApi';
-import { changeBadgeBaseProperties } from '../../../features/badges/badgesSlice';
+import { setCompleteBadgeState } from '../../../features/badges/badgesSlice';
+import BadgeName from './components/Common/BadgeName';
+import FooterActions from './components/Common/FooterActions';
+import PreviewBadge from './components/Common/PreviewBadge';
+import SelectBadgeType from './components/Common/SelectBadgeType';
 import CustomSettings from './components/CustomSettings/CustomSettings';
-import ImageSettings from './components/ImageSettings';
-import PreviewBadge from './components/PreviewBadge';
-import SelectBadgeType from './components/SelectBadgeType';
+import ImageSettings from './components/ImageSettings/ImageSettings';
 
 const BadgesEditor = () => {
   const dispatch = useDispatch();
-  const { badge_type, badge_name } = useSelector((state) => state.badges);
+  const navigate = useNavigate();
+  const badgeSettings = useSelector((state) => state.badges);
   const [skip, setSkip] = useState(true);
-  const [editedData, setEditedData] = useState(null);
-
   const { state } = useLocation();
   const [searchParams] = useSearchParams();
   const badgeId = searchParams.get('id');
   const [loading, setLoading] = useState(true);
-  const { data, isLoading } = useGetBadgeQuery(badgeId, { skip });
+  const { data, isLoading, isError } = useGetBadgeQuery(badgeId, { skip });
+
+  useEffect(() => {
+    if (state && badgeId) {
+      dispatch(setCompleteBadgeState(state.badge));
+      setLoading(false);
+    } else {
+      if (badgeId) {
+        setSkip(false);
+      } else {
+        setLoading(false);
+      }
+    }
+  }, [state, badgeId]);
+
+  useEffect(() => {
+    if (data) {
+      dispatch(setCompleteBadgeState(data));
+      setLoading(false);
+      setSkip(true);
+    }
+  }, [data]);
+
+  useEffect(() => {
+    if (isError) {
+      navigate('/badges');
+    }
+  }, [isError]);
+
+  if (loading || isLoading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div className='wmx-flex wmx-gap-4'>
       <div className='wmx-flex-grow'>
-        <div className='wmx-py-2 wmx-border-b wmx-sticky wmx-top-8 wmx-border-gray-400 wmx-mb-4 wmx-bg-[#ddd]'>
-          <h3 className='wmx-text-2xl wmx-font-bold'>Create Badge</h3>
+        <div className='wmx-py-2.5 wmx-px-4 wmx-border-b wmx-rounded-lg wmx-sticky wmx-top-8 wmx-bg-[#E4EAF1] wmx-border-b-gray-100 wmx-mb-4'>
+          <h3 className='wmx-text-2xl wmx-font-bold'>{badgeId ? __('Edit Badge') : __('Add New Badge')}</h3>
         </div>
-        <div className=''>
-          <label className='wmx-block wmx-mb-1' htmlFor=''>
-            Badge Name
-          </label>
-          <Input
-            value={badge_name}
-            className='wmx-w-96'
-            onChange={(e) => {
-              dispatch(changeBadgeBaseProperties({ setting: 'badge_name', value: e.target.value }));
-            }}
-            placeholder='Summer Sale Badge'
-          />
-        </div>
-
+        <BadgeName />
         <div>
           <SelectBadgeType />
 
-          <div>{badge_type === 'custom' ? <CustomSettings /> : <ImageSettings />}</div>
+          <div>{badgeSettings.badge_type === 'custom' ? <CustomSettings /> : <ImageSettings />}</div>
         </div>
       </div>
 
       <PreviewBadge />
+      <FooterActions />
     </div>
   );
 };

@@ -18,7 +18,7 @@ const Input = ({ type = 'text', value, className, onChange, placeholder = 'Place
       value={value}
       onChange={onChange}
       className={cn(
-        '!wmx-rounded !wmx-border !wmx-border-gray-200 !wmx-bg-white !wmx-py-1 !wmx-shadow-none focus:!wmx-outline-none focus:!wmx-border-primary',
+        '!wmx-rounded-md !wmx-border !wmx-border-gray-200 !wmx-bg-white !wmx-py-1 !wmx-shadow-none focus:!wmx-outline-none focus:!wmx-border-primary',
         className
       )}
       type={type}

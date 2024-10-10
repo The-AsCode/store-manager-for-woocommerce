@@ -1,28 +1,30 @@
 // @ts-nocheck
+import { __ } from '@wordpress/i18n';
 import { useDispatch, useSelector } from 'react-redux';
-import Input from '../../../../../../components/Input';
-import Label from '../../../../../../components/Label';
-import { changeBadgeSettingProperties } from '../../../../../../features/badges/badgesSlice';
+import Input from '../../../../../components/Input';
+import Label from '../../../../../components/Label';
+import { changeBadgeBaseProperties } from '../../../../../features/badges/badgesSlice';
+import formatToLocalDateTime from '../../../../../utils/formatToLocalDateTime';
+import SectionContainer from './SectionContainer';
 
 const BadgeValidity = () => {
   const dispatch = useDispatch();
-  const { badge_settings } = useSelector((state) => state.badges);
+  const { valid_from, valid_to } = useSelector((state) => state.badges);
 
   const handleBadgeSettingPropertiesChange = (name, value) => {
-    dispatch(changeBadgeSettingProperties({ name, value }));
+    dispatch(changeBadgeBaseProperties({ name, value }));
   };
 
   return (
-    <div className='wmx-mt-6'>
-      <div className='wmx-bg-primary/10 wmx-py-1 wmx-px-2 wmx-font-bold'>Badge Validity</div>
-      <div className='wmx-flex wmx-items-center wmx-gap-4 wmx-mt-3'>
+    <SectionContainer className='wmx-mt-6' title={__('Badge Validity')}>
+      <div className='wmx-flex wmx-items-center wmx-gap-4'>
         <div className='wmx-flex wmx-flex-col wmx-gap-1'>
           <Label htmlFor='validFrom'>Start Date:</Label>
           <Input
             id='validFrom'
             className='wmx-w-full'
             type='datetime-local'
-            value={badge_settings.valid_from}
+            value={formatToLocalDateTime(valid_from)}
             onChange={(e) => handleBadgeSettingPropertiesChange('valid_from', e.target.value)}
           />
         </div>
@@ -33,13 +35,13 @@ const BadgeValidity = () => {
             id='validTo'
             type='datetime-local'
             min={0}
-            value={badge_settings.valid_to}
+            value={formatToLocalDateTime(valid_to)}
             className='wmx-w-full'
             onChange={(e) => handleBadgeSettingPropertiesChange('valid_to', e.target.value)}
           />
         </div>
       </div>
-    </div>
+    </SectionContainer>
   );
 };
 export default BadgeValidity;

@@ -7,8 +7,12 @@ type TableElementType = {
   onClick?: () => void;
 };
 
-const Table = ({ children }: TableElementType) => {
-  return <table className='wmx-min-w-full wmx-table-fixed wmx-divide-y wmx-divide-gray-200'>{children}</table>;
+const Table = ({ className, children }: TableElementType) => {
+  return (
+    <table className={cn('wmx-min-w-full wmx-table-fixed wmx-divide-y wmx-divide-gray-200', className)}>
+      {children}
+    </table>
+  );
 };
 
 const Heading = ({ children, className }: TableElementType) => {

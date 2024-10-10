@@ -1,7 +1,10 @@
 // @ts-nocheck
+import { __ } from '@wordpress/i18n';
 import { useDispatch, useSelector } from 'react-redux';
 import Input from '../../../../../../components/Input';
+import Label from '../../../../../../components/Label';
 import { changeBadgeSettingProperties } from '../../../../../../features/badges/badgesSlice';
+import SectionContainer from '../../Common/SectionContainer';
 
 const dimensions = {
   height: 'Height',
@@ -18,14 +21,11 @@ const BadgeDimension = () => {
   };
 
   return (
-    <div className='wmx-mt-6'>
-      <div className='wmx-bg-primary/10 wmx-py-1 wmx-px-2 wmx-font-bold'>Badge Dimension</div>
-      <div className='wmx-flex wmx-gap-2 wmx-mt-2'>
+    <SectionContainer className='wmx-mt-6' title={__('Badge Dimensions')}>
+      <div className='wmx-flex wmx-gap-2'>
         {Object.entries(dimensions).map(([key, value]) => (
-          <div className='wmx-flex wmx-flex-col wmx-gap-0.5'>
-            <label className='wmx-font-medium' htmlFor={key}>
-              {value}:
-            </label>
+          <div className='wmx-flex wmx-flex-col wmx-gap-1'>
+            <Label htmlFor={key}>{value}:</Label>
             <Input
               className='!wmx-outline-none wmx-w-36 !wmx-border-none focus:!wmx-shadow-none'
               id={key}
@@ -36,7 +36,7 @@ const BadgeDimension = () => {
           </div>
         ))}
       </div>
-    </div>
+    </SectionContainer>
   );
 };
 export default BadgeDimension;

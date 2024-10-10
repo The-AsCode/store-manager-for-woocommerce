@@ -64,56 +64,60 @@ const BadgesTable = ({ setSelectedBadge, selectedBadge }) => {
   }
 
   return (
-    <Table>
-      <thead className='wmx-bg-white'>
-        <tr>
-          <Table.Heading className='wmx-pl-4'>
-            <span></span>
-          </Table.Heading>
-          <Table.Heading>Status</Table.Heading>
-          <Table.Heading>Badge Name</Table.Heading>
-          <Table.Heading>Valid From</Table.Heading>
-          <Table.Heading>Valid To</Table.Heading>
+    <div className='wmx-shadow wmx-rounded-lg wmx-overflow-hidden wmx-border wmx-border-gray-100'>
+      <Table>
+        <thead className='wmx-bg-white'>
+          <tr>
+            <Table.Heading>
+              <span></span>
+            </Table.Heading>
+            <Table.Heading>Status</Table.Heading>
+            <Table.Heading>Badge Name</Table.Heading>
+            <Table.Heading>Valid From</Table.Heading>
+            <Table.Heading>Valid To</Table.Heading>
 
-          <Table.Heading className='wmx-w-20 wmx-text-center'>Actions</Table.Heading>
-        </tr>
-      </thead>
-      <tbody className='wmx-divide-y wmx-divide-gray-200 wmx-bg-white'>
-        {sortedData.map((badge) => (
-          <tr
-            className={cn({
-              'wmx-bg-primary/10': selectedBadge?.id === badge.id,
-            })}
-          >
-            <Table.Data className='wmx-my-auto wmx-py-3 wmx-w-8'>
-              <Bars3Icon className='wmx-size-6' />
-            </Table.Data>
-            <Table.Data>
-              <Toggler onChange={() => handleBadgeStatus(badge)} checked={booleanConverter(badge.status)} />
-            </Table.Data>
-            <Table.Data onClick={() => handleBadgeSelect(badge)} className={cn('wmx-cursor-pointer')}>
-              {badge.badge_name}
-            </Table.Data>
-            <Table.Data>{formatISODate(badge.valid_from)}</Table.Data>
-            <Table.Data>{formatISODate(badge.valid_to)}</Table.Data>
-            <Table.Data>
-              <span className='wmx-flex wmx-items-center wmx-justify-center wmx-gap-2'>
-                <button
-                  onClick={() => {
-                    navigate(`editor?id=${badge.id}`, { state: { badge } });
-                  }}
-                >
-                  <PencilSquareIcon className='wmx-w-5 wmx-h-5' />
-                </button>
-                <button onClick={() => handleDelete(badge.id)}>
-                  <TrashIcon className='wmx-w-5 wmx-h-5' />
-                </button>
-              </span>
-            </Table.Data>
+            <Table.Heading className='wmx-w-20 wmx-text-center'>Actions</Table.Heading>
           </tr>
-        ))}
-      </tbody>
-    </Table>
+        </thead>
+        <tbody className='wmx-divide-y wmx-divide-gray-200 wmx-bg-white'>
+          {sortedData.map((badge) => (
+            <tr
+              className={cn({
+                'wmx-bg-primary/10': selectedBadge?.id === badge.id,
+              })}
+            >
+              <Table.Data className='wmx-my-auto wmx-py-3 wmx-w-8'>
+                <Bars3Icon className='wmx-size-6' />
+              </Table.Data>
+              <Table.Data>
+                <div className='wmx-flex wmx-items-center'>
+                  <Toggler onChange={() => handleBadgeStatus(badge)} checked={booleanConverter(badge.status)} />
+                </div>
+              </Table.Data>
+              <Table.Data onClick={() => handleBadgeSelect(badge)} className={cn('wmx-cursor-pointer')}>
+                {badge.badge_name}
+              </Table.Data>
+              <Table.Data>{formatISODate(badge.valid_from)}</Table.Data>
+              <Table.Data>{formatISODate(badge.valid_to)}</Table.Data>
+              <Table.Data>
+                <span className='wmx-flex wmx-items-center wmx-justify-center wmx-gap-2'>
+                  <button
+                    onClick={() => {
+                      navigate(`editor?id=${badge.id}`, { state: { badge } });
+                    }}
+                  >
+                    <PencilSquareIcon className='wmx-w-5 wmx-h-5' />
+                  </button>
+                  <button onClick={() => handleDelete(badge.id)}>
+                    <TrashIcon className='wmx-w-5 wmx-h-5' />
+                  </button>
+                </span>
+              </Table.Data>
+            </tr>
+          ))}
+        </tbody>
+      </Table>
+    </div>
   );
 };
 export default BadgesTable;

@@ -24,7 +24,7 @@ const badgeApi = apiSlice.injectEndpoints({
     updateBadge: builder.mutation({
       query: ({ id, body }) => ({
         url: `badges/${id}`,
-        method: 'PATCH',
+        method: 'PUT',
         body,
       }),
       invalidatesTags: ['Badges'],

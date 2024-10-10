@@ -2,7 +2,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  badge_name: '30% Off All Products',
+  badge_name: '',
   badge_type: 'custom',
   valid_from: '',
   valid_to: '',
@@ -22,8 +22,15 @@ const badgesSlice = createSlice({
     changeBadgeSettingProperties: (state, action) => {
       state.badge_settings[action.payload.name] = action.payload.value;
     },
+    setCompleteBadgeState: (state, action) => {
+      return action.payload;
+    },
+    resetBadgeState: () => {
+      return initialState;
+    },
   },
 });
 
-export const { changeBadgeBaseProperties, changeBadgeSettingProperties } = badgesSlice.actions;
+export const { changeBadgeBaseProperties, changeBadgeSettingProperties, setCompleteBadgeState, resetBadgeState } =
+  badgesSlice.actions;
 export default badgesSlice.reducer;
